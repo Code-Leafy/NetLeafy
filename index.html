@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-	<title>NetLeafy</title>
+	<title>NetLeafy Config Generator</title>
 	<link rel="icon" type="image/svg+xml" href="favicon.png" />
 	<link rel="preconnect" href="https://fonts.googleapis.com" />
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -1722,7 +1722,10 @@
 		});
 
 		document.addEventListener('keydown', e => {
-			if (e.key === "F12" || (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "C" || e.key === "J")) || (e.ctrlKey && e.key === "U")) {
+			// block everything except F12 and Ctrl+Shift+J (console)
+			if (e.key === "F12") return;
+			if (e.ctrlKey && e.shiftKey && e.key === "J") return;
+			if ((e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "C")) || (e.ctrlKey && e.key === "U")) {
 				e.preventDefault();
 			}
 		});
@@ -1867,40 +1870,45 @@
 			const hostElement = document.getElementById("main-host");
 			const checkBtn = document.getElementById("check-domain-btn");
 			const domain = manualDomain || hostElement.value.trim();
-			const SERVER_URL = "https://ir-netlify-checker.ir-netlify.workers.dev/";
-			
+
 			if (!domain) {
 				showError(hostElement);
 				return;
 			}
-			
-			resetCheckButton();
-			checkBtn.disabled = true;
-			checkBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="animation: pulseIcon 1.5s infinite"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>`;
-			
-			try {
-				const response = await fetch(`${SERVER_URL}?domain=${domain}`);
-				const data = await response.json();
-				
-				if (data.status === "Healthy") {
-					hostElement.classList.add("status-success");
-					checkBtn.classList.add("status-success");
-					checkBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
-					spawnParticles(checkBtn, '#10b981');
-				} else {
-					hostElement.classList.add("status-error");
-					checkBtn.classList.add("status-error");
-					checkBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>`;
-					spawnParticles(checkBtn, '#ef4444');
-				}
-			} catch (error) {
+
+			if (!domain.endsWith("netlify.app")) {
 				hostElement.classList.add("status-error");
 				checkBtn.classList.add("status-error");
 				checkBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>`;
 				spawnParticles(checkBtn, '#ef4444');
-			} finally {
-				checkBtn.disabled = false;
+				return;
 			}
+
+			resetCheckButton();
+			checkBtn.disabled = true;
+			checkBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="animation: pulseIcon 1.5s infinite"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>`;
+
+			let isUp = false;
+			try {
+				await fetch(`https://${domain}`, { method: "HEAD", mode: "no-cors", signal: AbortSignal.timeout(6000) });
+				isUp = true;
+			} catch (err) {
+				isUp = false;
+			}
+
+			if (isUp) {
+				hostElement.classList.add("status-success");
+				checkBtn.classList.add("status-success");
+				checkBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+				spawnParticles(checkBtn, '#10b981');
+			} else {
+				hostElement.classList.add("status-error");
+				checkBtn.classList.add("status-error");
+				checkBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>`;
+				spawnParticles(checkBtn, '#ef4444');
+			}
+
+			checkBtn.disabled = false;
 		}
 
 		let currentCount = 0;
