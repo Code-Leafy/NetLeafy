@@ -2227,14 +2227,28 @@
 			
 			selectedServers.forEach(srv => {
 				const { user, path, address: serverAddress, name: serverName } = srv;
-				let extraData = { 
-					xPaddingBytes: "1-1", 
-					xPaddingObfsMode: true,
-					scMaxEachPostBytes: "1000000",
-					xPaddingKey: "iran",
-					xPaddingHeader: "iran",
-					headers: { "x-host": serverAddress }
-				};
+				
+				// Custom settings for Parsa server
+				let extraData;
+				if (serverName === "Parsa") {
+					extraData = {
+						headers: { "x-host": "netlify.parsashonam.sbs:444" },
+						xPaddingBytes: "10-50",
+						xPaddingObfsMode: true,
+						xPaddingKey: "Parsashonam",
+						xPaddingHeader: "Parsashonam",
+						scMaxEachPostBytes: 1000000
+					};
+				} else {
+					extraData = { 
+						xPaddingBytes: "1-1", 
+						xPaddingObfsMode: true,
+						scMaxEachPostBytes: "1000000",
+						xPaddingKey: "iran",
+						xPaddingHeader: "iran",
+						headers: { "x-host": serverAddress }
+					};
+				}
 				
 				const encodedExtra = encodeURIComponent(JSON.stringify(extraData));
 				const encodedPath = encodeURIComponent(path);
