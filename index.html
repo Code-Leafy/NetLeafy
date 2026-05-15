@@ -2247,7 +2247,7 @@
 				domains.forEach(sni => {
 					if (netlifyMode === "shecan") {
 						ips.forEach(ip => {
-							const remark = encodeURIComponent(`� CodeLeafy | ${serverName} | SNI: ${sni} | IP: ${ip}`);
+							const remark = encodeURIComponent(`CodeLeafy | ${serverName} | SNI: ${sni} | IP: ${ip}`);
 							results.push(`vless://${user}@${ip}:443?encryption=none&security=tls&sni=${sni}&fp=chrome&alpn=h2%2Chttp%2F1.1&insecure=1&allowInsecure=1&type=xhttp&host=${host}&path=${encodedPath}&mode=auto&extra=${encodedExtra}#${remark}`);
 						});
 					} else {
