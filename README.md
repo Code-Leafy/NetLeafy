@@ -194,12 +194,11 @@ To easily get your server added to the built-in public list, just reach out to m
 ## ⚖️ License
 
 This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
-
----
-
 <div align="center">
 
 Made with ❤️ by [Code-Leafy](https://github.com/Code-Leafy)
+<br/>
+Inspired by IR-Netlify
 
 [![GitHub stars](https://img.shields.io/github/stars/Code-Leafy/NetLeafy?style=social)](https://github.com/Code-Leafy/NetLeafy/stargazers)
 
