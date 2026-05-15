@@ -636,6 +636,7 @@
 			resize: none;
 			flex: 1;
 			min-height: 80px;
+			touch-action: pan-y;
 		}
 
 		input[type="text"]:focus, textarea:focus, select:focus {
@@ -781,6 +782,7 @@
 			border: 1px solid transparent;
 			transition: border 0.3s, box-shadow 0.3s;
 			align-content: start;
+			touch-action: pan-y;
 		}
 
 		#server-checkboxes label {
@@ -1289,6 +1291,7 @@
 				border-radius: 16px;
 				width: 100%;
 				max-width: 100%;
+				touch-action: pan-y;
 			}
 
 			.dynamic-settings-wrapper {
@@ -1310,6 +1313,7 @@
 			#server-checkboxes {
 				max-height: none;
 				grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+				overflow: visible;
 			}
 
 			.sidebar {
