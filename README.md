@@ -38,9 +38,9 @@ Works on any device — desktop, mobile. 100% client-side, no installation requi
 
 Need help getting started? We've prepared detailed, step-by-step tutorials on our Telegram channel to walk you through everything. Click below to read:
 
-[![How to Connect](https://img.shields.io/badge/🚀_How_to_Connect-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white&labelColor=1a1a1a)](https://t.me/CodeLeafy/1)
-[![Get Netlify Domain](https://img.shields.io/badge/🌐_Get_Netlify_Domain-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white&labelColor=1a1a1a)](https://t.me/CodeLeafy/2)
-[![Setup Custom Server](https://img.shields.io/badge/🛠️_Setup_Custom_Server-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white&labelColor=1a1a1a)](https://t.me/CodeLeafy/4)
+[![How to Connect](https://img.shields.io/badge/🚀_How_to_Connect-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white&labelColor=1a1a1a)](https://t.me/CodeLeafy/7)
+[![Get Netlify Domain](https://img.shields.io/badge/🌐_Get_Netlify_Domain-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white&labelColor=1a1a1a)](https://t.me/CodeLeafy/8)
+[![Setup Custom Server](https://img.shields.io/badge/🛠️_Setup_Custom_Server-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white&labelColor=1a1a1a)](https://t.me/CodeLeafy/10)
 
 </div>
 
