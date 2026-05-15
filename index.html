@@ -359,6 +359,23 @@
 			}
 		}
 
+		.credit-link {
+			display: block;
+			text-align: center;
+			text-decoration: none;
+			color: var(--text-secondary);
+			font-size: 0.75rem;
+			margin-top: 12px;
+			padding: 8px;
+			transition: color 0.2s;
+		}
+
+		@media (hover: hover) {
+			.credit-link:hover {
+				color: var(--text-primary);
+			}
+		}
+
 		.main-wrapper {
 			flex: 1;
 			display: flex;
@@ -1436,6 +1453,9 @@
 						</svg>
 						CodeLeafy
 					</span>
+				</a>
+				<a href="https://t.me/IR_NETLIFY" target="_blank" class="credit-link">
+					Inspired by IR_NETLIFY
 				</a>
 			</div>
 		</aside>
