@@ -1295,7 +1295,7 @@
 			}
 
 			.dynamic-settings-wrapper {
-				min-height: 280px;
+				min-height: auto;
 				display: block;
 				position: relative;
 			}
@@ -1314,6 +1314,18 @@
 				max-height: none;
 				grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
 				overflow: visible;
+			}
+
+			.flex-group {
+				flex: none;
+				min-height: auto;
+			}
+
+			textarea {
+				min-height: 120px;
+				max-height: 200px;
+				overflow-y: auto;
+				-webkit-overflow-scrolling: touch;
 			}
 
 			.sidebar {
