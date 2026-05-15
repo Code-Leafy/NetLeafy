@@ -602,7 +602,6 @@
 			display: flex;
 			flex-direction: column;
 			min-height: 80px;
-			/* Cap SNI height so IP list always has room */
 			max-height: 260px;
 		}
 
@@ -925,7 +924,6 @@
 			gap: 16px;
 		}
 
-		/* ── FIXED: IP wrapper now grows to fill remaining panel space ── */
 		.ip-wrapper {
 			overflow: hidden;
 			transition: max-height 0.4s var(--ease-out-expo), opacity 0.3s ease, margin-bottom 0.4s ease, flex 0.4s ease, min-height 0.4s ease;
@@ -1324,7 +1322,6 @@
 				-webkit-overflow-scrolling: touch;
 			}
 
-			/* ── FIXED: mobile IP and SNI textarea heights ── */
 			textarea {
 				min-height: 130px !important;
 				height: auto !important;
@@ -1506,7 +1503,6 @@
 					</div>
 				</header>
 
-				<!-- MAIN GENERATOR VIEW -->
 				<div class="view-section active" id="view-generator">
 					<div class="dashboard-grid">
 						<div class="panel">
@@ -1584,7 +1580,6 @@
 								</div>
 							</div>
 
-							<!-- SNI List -->
 							<div class="flex-group" id="sni-group">
 								<div class="header-row">
 									<label for="domain-list">SNI List</label>
@@ -1597,7 +1592,6 @@
 								<textarea id="domain-list" placeholder="Enter SNI domains, one per line..."></textarea>
 							</div>
 
-							<!-- IP List — FIXED: always fills remaining space, collapses cleanly -->
 							<div class="ip-wrapper" id="ip-wrapper">
 								<div class="ip-inner">
 									<div class="header-row">
