@@ -4,7 +4,7 @@
 
 <br/>
 
-<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=20&pause=800&color=2DC94E&center=true&vCenter=true&width=600&lines=Generate+VLESS+Configs+in+One+Click;Bypass+restrictions+with+ease!;IP+%2B+SNI+%7C+Direct+SNI+Modes;Live+Netlify+Health+Checker;XHTTP+Parameter+Editor;20%2B+Community+Servers" alt="Typing animation" />
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=20&pause=800&color=2DC94E&center=true&vCenter=true&width=600&lines=Generate+VLESS+Configs+in+One+Click;Bypass+restrictions+with+ease!;IP+%2B+SNI+%7C+Direct+SNI+Modes;XHTTP+Parameter+Editor;20%2B+Community+Servers" alt="Typing animation" />
 
 <br/>
 
