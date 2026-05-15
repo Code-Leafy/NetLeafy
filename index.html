@@ -1,0 +1,2457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<title>CodeLeafy Config Generator</title>
+	<link rel="icon" type="image/svg+xml" href="favicon.svg" />
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+	
+	<style>
+		:root {
+			--bg-main: #f8fafc;
+			--bg-card: #ffffff;
+			--bg-sidebar: #ffffff;
+			--bg-input: #f1f5f9;
+			--bg-input-focus: #ffffff;
+			--bg-hover: #f1f5f9;
+			--bg-active: #e2e8f0;
+			--text-primary: #0f172a;
+			--text-secondary: #475569;
+			--text-light: #ffffff;
+			--accent-primary: #0d9488;
+			--accent-secondary: #14b8a6;
+			--accent-primary-hover: #0f766e;
+			--accent-error: #ef4444;
+			--accent-warning: #f97316;
+			--accent-success: #10b981;
+			--border-main: #e2e8f0;
+			--border-focus: #14b8a6;
+			--shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+			--shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+			--shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+			--bg-success-light: #ecfdf5;
+			--bg-success-ultralight: #f0fdf4;
+			--text-success-dark: #047857;
+			--text-success-ultradark: #064e3b;
+			--border-success-light: #a7f3d0;
+			--border-success-main: #34d399;
+			--bg-error-light: #fef2f2;
+			--text-error-dark: #7f1d1d;
+			--border-error-light: #f87171;
+			--bg-overlay: rgba(255, 255, 255, 0.95);
+			--blur-overlay: rgba(240, 253, 244, 0.5);
+			--scrollbar-thumb: #cbd5e1;
+			--scrollbar-thumb-hover: #94a3b8;
+			--artin-bg: #1e293b;
+			--glow-color: rgba(20, 184, 166, 0.08);
+			--btn-join-bg: var(--accent-success);
+			--btn-join-text: #ffffff;
+			--btn-join-hover: #059669;
+			--sidebar-width: 260px;
+			--ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+		}
+
+		*, *::before, *::after {
+			box-sizing: border-box;
+		}
+
+		::-webkit-scrollbar {
+			width: 6px;
+			height: 6px;
+		}
+
+		::-webkit-scrollbar-track {
+			background: transparent;
+		}
+
+		::-webkit-scrollbar-thumb {
+			background-color: var(--scrollbar-thumb);
+			border-radius: 10px;
+			border: 2px solid transparent;
+			background-clip: padding-box;
+			transition: background-color 0.2s;
+		}
+
+		::-webkit-scrollbar-thumb:hover {
+			background-color: var(--scrollbar-thumb-hover);
+		}
+
+		html, body {
+			font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+			background-color: var(--bg-main);
+			color: var(--text-primary);
+			margin: 0;
+			padding: 0;
+			height: 100dvh;
+			width: 100%;
+			overflow: hidden;
+			overscroll-behavior-y: none;
+			-webkit-font-smoothing: antialiased;
+			user-select: none;
+			-webkit-user-select: none;
+		}
+
+		input, textarea, select {
+			user-select: auto;
+			-webkit-user-select: auto;
+		}
+
+		.app-container {
+			display: flex;
+			width: 100%;
+			height: 100%;
+			overflow: hidden;
+		}
+
+		.sidebar {
+			width: var(--sidebar-width);
+			background-color: var(--bg-sidebar);
+			border-right: 1px solid var(--border-main);
+			display: flex;
+			flex-direction: column;
+			flex-shrink: 0;
+			transition: transform 0.4s var(--ease-out-expo);
+			z-index: 1000;
+			height: 100%;
+			position: relative;
+			will-change: transform;
+		}
+
+		.close-sidebar-btn {
+			display: none;
+			position: absolute;
+			top: 16px;
+			right: 16px;
+			background: var(--bg-input);
+			border: none;
+			font-size: 1.5rem;
+			color: var(--text-secondary);
+			cursor: pointer;
+			transition: color 0.2s;
+			border-radius: 50%;
+			width: 36px;
+			height: 36px;
+			align-items: center;
+			justify-content: center;
+			z-index: 20;
+		}
+
+		@media (hover: hover) {
+			.close-sidebar-btn:hover {
+				color: var(--text-primary);
+				background: var(--border-main);
+			}
+		}
+
+		.sidebar-nav {
+			flex: 1;
+			padding: 24px 16px;
+			display: flex;
+			flex-direction: column;
+			gap: 6px;
+			overflow-y: auto;
+			overscroll-behavior: contain;
+		}
+
+		@media (min-width: 851px) {
+			.sidebar-nav {
+				padding-top: 32px;
+			}
+		}
+
+		@media (max-width: 850px) {
+			.sidebar-nav {
+				padding-top: 60px;
+			}
+		}
+
+		.nav-section-title {
+			font-size: 0.75rem;
+			text-transform: uppercase;
+			letter-spacing: 0.05em;
+			color: var(--text-secondary);
+			font-weight: 700;
+			margin-bottom: 8px;
+			padding-left: 12px;
+			margin-top: 16px;
+		}
+
+		.nav-section-title:first-child {
+			margin-top: 0;
+		}
+
+		.nav-item {
+			display: flex;
+			align-items: center;
+			gap: 12px;
+			padding: 12px;
+			text-decoration: none;
+			color: var(--text-secondary);
+			font-weight: 500;
+			border-radius: 8px;
+			transition: all 0.2s ease;
+			font-size: 0.95rem;
+			background: transparent;
+			border: none;
+			width: 100%;
+			text-align: left;
+			cursor: pointer;
+		}
+
+		.nav-item svg {
+			width: 18px;
+			height: 18px;
+			opacity: 0.7;
+			transition: all 0.2s ease;
+			flex-shrink: 0;
+			color: currentColor;
+		}
+
+		.nav-item.active-nav {
+			background-color: var(--bg-hover);
+			color: var(--accent-primary);
+			font-weight: 600;
+		}
+
+		.nav-item.active-nav svg {
+			opacity: 1;
+		}
+
+		@media (hover: hover) {
+			.nav-item:hover {
+				background-color: var(--bg-hover);
+				color: var(--text-primary);
+				transform: translateX(4px);
+			}
+
+			.nav-item:hover svg {
+				opacity: 1;
+				color: var(--accent-primary);
+				transform: scale(1.1);
+			}
+		}
+
+		.accordion-header {
+			justify-content: flex-start;
+			color: var(--accent-success) !important;
+		}
+
+		.accordion-header svg:not(.chevron) {
+			color: var(--accent-success);
+			opacity: 1;
+		}
+
+		.accordion-header .chevron {
+			color: var(--accent-success) !important;
+		}
+
+		.accordion-content {
+			display: none;
+			flex-direction: column;
+			gap: 4px;
+			padding-left: 12px;
+			border-left: 2px solid var(--border-success-light);
+			margin-left: 20px;
+			margin-top: 2px;
+			margin-bottom: 8px;
+		}
+
+		.accordion-content.open {
+			display: flex;
+			animation: slideDown 0.3s ease-out;
+		}
+
+		.child-item {
+			font-size: 0.85rem;
+			padding: 10px;
+		}
+
+		.chevron {
+			margin-left: auto;
+			transition: transform 0.3s;
+			opacity: 0.8 !important;
+		}
+
+		.accordion-header.active .chevron {
+			transform: rotate(180deg);
+		}
+
+		.sidebar-footer {
+			padding: 20px 16px;
+			border-top: 1px solid var(--border-main);
+			padding-bottom: calc(20px + env(safe-area-inset-bottom));
+			display: flex;
+			flex-direction: column;
+		}
+
+		.join-btn {
+			background-color: var(--btn-join-bg);
+			color: var(--btn-join-text);
+			text-decoration: none;
+			padding: 14px;
+			border-radius: 10px;
+			font-weight: 600;
+			font-size: 0.95rem;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 8px;
+			transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s;
+			width: 100%;
+			box-shadow: 0 4px 14px rgba(16, 185, 129, 0.2);
+		}
+
+		.join-btn:active {
+			transform: translateY(1px);
+		}
+
+		@media (hover: hover) {
+			.join-btn:hover {
+				background-color: var(--btn-join-hover);
+				transform: translateY(-1px);
+				box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3);
+			}
+		}
+
+		.join-btn svg {
+			width: 18px;
+			height: 18px;
+		}
+
+		.artin-btn {
+			background-color: transparent;
+			color: var(--text-primary);
+			text-decoration: none;
+			padding: 12px 14px;
+			border-radius: 10px;
+			font-weight: 600;
+			font-size: 0.85rem;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			margin-top: 12px;
+			transition: background-color 0.2s, transform 0.2s;
+			border: 1px solid transparent;
+		}
+
+		.artin-name {
+			display: flex;
+			align-items: center;
+			gap: 6px;
+			background: var(--artin-bg);
+			padding: 4px 8px;
+			border-radius: 6px;
+			font-weight: 700;
+			color: #fff;
+		}
+
+		.artin-btn:active {
+			transform: translateY(1px);
+		}
+
+		@media (hover: hover) {
+			.artin-btn:hover {
+				background-color: var(--bg-hover);
+				transform: translateY(-1px);
+			}
+		}
+
+		.main-wrapper {
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+			position: relative;
+			overflow: hidden;
+			background-image: repeating-linear-gradient(var(--border-main) 0 1px, transparent 1px 100%), repeating-linear-gradient(90deg, var(--border-main) 0 1px, transparent 1px 100%);
+			background-size: 40px 40px;
+			height: 100%;
+			width: 100%;
+		}
+
+		.main-wrapper::before {
+			content: "";
+			position: absolute;
+			width: 800px;
+			height: 500px;
+			top: -100px;
+			left: 50%;
+			transform: translateX(-30%);
+			background: radial-gradient(circle, var(--glow-color), transparent 70%);
+			filter: blur(80px);
+			z-index: 0;
+			pointer-events: none;
+		}
+
+		.mobile-topbar {
+			display: none;
+			padding: 16px 20px;
+			padding-top: calc(16px + env(safe-area-inset-top));
+			background: var(--bg-overlay);
+			border-bottom: 1px solid var(--border-main);
+			align-items: center;
+			justify-content: space-between;
+			position: sticky;
+			top: 0;
+			z-index: 50;
+		}
+
+		.logo {
+			display: flex;
+			align-items: center;
+			gap: 12px;
+			text-decoration: none;
+			color: var(--text-primary);
+			font-weight: 700;
+			font-size: 1.15rem;
+			letter-spacing: -0.02em;
+		}
+
+		.hamburger {
+			background: none;
+			border: none;
+			cursor: pointer;
+			color: var(--text-primary);
+			padding: 4px;
+			transition: transform 0.2s;
+		}
+
+		.hamburger:active {
+			transform: scale(0.9);
+		}
+
+		.page-content {
+			padding: 32px 48px;
+			max-width: 1600px;
+			margin: 0 auto;
+			width: 100%;
+			height: 100%;
+			z-index: 1;
+			display: flex;
+			flex-direction: column;
+			gap: 24px;
+			overflow: hidden;
+		}
+
+		.page-header {
+			display: flex;
+			justify-content: space-between;
+			align-items: flex-end;
+			flex-wrap: wrap;
+			gap: 16px;
+			flex-shrink: 0;
+			animation: fadeDown 0.6s var(--ease-out-expo) backwards;
+			transform: translateZ(0);
+		}
+
+		.header-title h1 {
+			margin: 0 0 6px 0;
+			font-size: 1.75rem;
+			font-weight: 700;
+			color: var(--text-primary);
+			display: flex;
+			align-items: center;
+			gap: 12px;
+		}
+
+		.version-badge {
+			font-size: 0.8rem;
+			color: var(--accent-primary);
+			font-weight: 700;
+			background: transparent;
+			padding: 0;
+			border: none;
+		}
+
+		.header-title p {
+			margin: 0;
+			color: var(--text-secondary);
+			font-size: 0.95rem;
+		}
+
+		.view-section {
+			display: none;
+			flex-direction: column;
+			flex: 1;
+			min-height: 0;
+		}
+
+		.view-section.active {
+			display: flex;
+		}
+
+		.pill-tabs {
+			display: inline-flex;
+			background-color: var(--bg-input);
+			padding: 4px;
+			border-radius: 12px;
+			border: 1px solid var(--border-main);
+			flex-shrink: 0;
+			position: relative;
+		}
+
+		.pill-tab {
+			padding: 10px 18px;
+			background: transparent;
+			border: none;
+			border-radius: 8px;
+			font-weight: 600;
+			font-size: 0.85rem;
+			color: var(--text-secondary);
+			cursor: pointer;
+			transition: all 0.3s var(--ease-out-expo);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 6px;
+			position: relative;
+			z-index: 2;
+		}
+
+		.pill-tab.active {
+			background: var(--bg-card);
+			color: var(--text-primary);
+			box-shadow: var(--shadow-sm);
+		}
+
+		@media (hover: hover) {
+			.pill-tab:hover {
+				color: var(--text-primary);
+			}
+		}
+
+		.dashboard-grid {
+			display: grid;
+			grid-template-columns: 1fr 1.1fr;
+			gap: 28px;
+			flex: 1;
+			min-height: 0;
+		}
+
+		.panel {
+			background: var(--bg-card);
+			border-radius: 20px;
+			padding: 28px;
+			border: 1px solid var(--border-main);
+			box-shadow: var(--shadow-sm);
+			display: flex;
+			flex-direction: column;
+			height: 100%;
+			overflow-y: auto;
+			overflow-x: hidden;
+			gap: 20px;
+			animation: slideUp 0.6s var(--ease-out-expo) backwards;
+			will-change: transform, opacity;
+			transform: translateZ(0);
+		}
+
+		.panel:nth-child(1) {
+			animation-delay: 0.1s;
+		}
+
+		.panel:nth-child(2) {
+			animation-delay: 0.2s;
+		}
+
+		.panel-header {
+			flex-shrink: 0;
+		}
+
+		.panel-header h2 {
+			margin: 0;
+			font-size: 1.25rem;
+			color: var(--text-primary);
+			font-weight: 700;
+		}
+
+		.panel-header p {
+			margin: 4px 0 0 0;
+			font-size: 0.9rem;
+			color: var(--text-secondary);
+		}
+
+		.form-group {
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+			flex-shrink: 0;
+		}
+
+		.flex-group {
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+			min-height: 80px;
+		}
+
+		.header-row {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 8px;
+			width: 100%;
+			flex-shrink: 0;
+		}
+
+		label {
+			font-size: 0.85rem;
+			color: var(--text-secondary);
+			font-weight: 600;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+
+		.header-row label {
+			margin: 0;
+		}
+
+		input[type="text"], select {
+			height: 50px;
+			padding: 0 16px;
+			width: 100%;
+			background: var(--bg-input);
+			border: 1px solid var(--border-main);
+			border-radius: 10px;
+			color: var(--text-primary);
+			font-family: "Menlo", "Consolas", monospace;
+			font-size: 16px;
+			transition: all 0.3s var(--ease-out-expo);
+			outline: none;
+		}
+
+		textarea {
+			width: 100%;
+			padding: 14px 16px;
+			background: var(--bg-input);
+			border: 1px solid var(--border-main);
+			border-radius: 10px;
+			color: var(--text-primary);
+			font-family: "Menlo", "Consolas", monospace;
+			font-size: 16px;
+			transition: all 0.3s var(--ease-out-expo);
+			outline: none;
+			resize: none;
+			flex: 1;
+			min-height: 80px;
+		}
+
+		input[type="text"]:focus, textarea:focus, select:focus {
+			border-color: var(--border-focus);
+			background-color: var(--bg-input-focus);
+			box-shadow: 0 0 0 4px rgba(20, 184, 166, 0.1);
+		}
+
+		.input-with-action {
+			display: flex;
+			gap: 12px;
+			position: relative;
+			align-items: stretch;
+		}
+
+		.input-with-action input {
+			flex: 1;
+		}
+
+		.action-btn-icon {
+			width: 50px;
+			height: 50px;
+			padding: 0;
+			flex-shrink: 0;
+			background: var(--bg-card);
+			border: 1px solid var(--border-main);
+			border-radius: 10px;
+			color: var(--text-secondary);
+			cursor: pointer;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			transition: all 0.3s var(--ease-out-expo);
+			position: relative;
+			box-sizing: border-box;
+		}
+
+		@media (hover: hover) {
+			.action-btn-icon:hover {
+				background: var(--bg-hover);
+				color: var(--text-primary);
+				border-color: var(--border-main);
+			}
+		}
+
+		.input-with-action input.status-success {
+			border-color: var(--accent-success);
+			box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15);
+			background-color: var(--bg-success-ultralight);
+			color: var(--text-success-ultradark);
+		}
+
+		.action-btn-icon.status-success {
+			border-color: var(--accent-success);
+			color: var(--accent-success);
+			background-color: var(--bg-success-ultralight);
+		}
+
+		.input-with-action input.status-error {
+			border-color: var(--accent-error);
+			box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.15);
+			background-color: var(--bg-error-light);
+			color: var(--text-error-dark);
+		}
+
+		.action-btn-icon.status-error {
+			border-color: var(--accent-error);
+			color: var(--accent-error);
+			background-color: var(--bg-error-light);
+		}
+
+		.mini-toolbar {
+			display: flex;
+			gap: 6px;
+		}
+
+		.mini-btn {
+			background: var(--bg-card);
+			padding: 6px 12px;
+			border-radius: 6px;
+			cursor: pointer;
+			font-size: 0.75rem;
+			font-weight: 600;
+			border: 1px solid var(--border-main);
+			color: var(--text-secondary);
+			transition: all 0.2s;
+			position: relative;
+		}
+
+		.btn-clear {
+			color: var(--accent-error);
+		}
+
+		@media (hover: hover) {
+			.mini-btn:hover {
+				background: var(--bg-hover);
+				border-color: var(--border-main);
+				color: var(--text-primary);
+			}
+
+			.btn-clear:hover {
+				background: var(--bg-error-light);
+				border-color: var(--border-error-light);
+				color: var(--text-error-dark);
+			}
+		}
+
+		.dynamic-settings-wrapper {
+			display: grid;
+			grid-template-columns: minmax(0, 1fr);
+			grid-template-rows: minmax(0, 1fr);
+			flex: 1;
+			min-height: 0;
+		}
+
+		.dynamic-state {
+			grid-column: 1;
+			grid-row: 1;
+			display: flex;
+			flex-direction: column;
+			opacity: 0;
+			visibility: hidden;
+			pointer-events: none;
+			transform: scale(0.98) translateY(10px);
+			transition: opacity 0.4s var(--ease-out-expo), transform 0.4s var(--ease-out-expo), visibility 0.4s;
+			min-height: 0;
+		}
+
+		.dynamic-state.active {
+			opacity: 1;
+			visibility: visible;
+			pointer-events: auto;
+			transform: scale(1) translateY(0);
+		}
+
+		#server-checkboxes {
+			display: grid;
+			grid-template-columns: repeat(auto-fill, minmax(135px, 1fr));
+			gap: 12px;
+			overflow-y: auto;
+			padding: 12px;
+			border-radius: 12px;
+			border: 1px solid transparent;
+			transition: border 0.3s, box-shadow 0.3s;
+			align-content: start;
+		}
+
+		#server-checkboxes label {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			color: var(--text-secondary);
+			font-size: 0.85rem;
+			font-weight: 500;
+			cursor: pointer;
+			background: var(--bg-card);
+			padding: 12px;
+			border-radius: 10px;
+			transition: all 0.2s;
+			border: 1px solid var(--border-main);
+			margin: 0;
+		}
+
+		#server-checkboxes label:has(input:checked) {
+			background: var(--bg-success-light);
+			color: var(--text-success-dark);
+			border-color: var(--accent-success);
+			font-weight: 600;
+		}
+
+		#server-checkboxes input[type="checkbox"] {
+			display: none;
+		}
+
+		#server-checkboxes img {
+			width: 20px;
+			height: 20px;
+			border-radius: 50%;
+			object-fit: cover;
+			flex-shrink: 0;
+		}
+
+		/* --- Server Status Pulse Dots --- */
+		.status-dot {
+			width: 10px;
+			height: 10px;
+			border-radius: 50%;
+			flex-shrink: 0;
+			margin-left: auto; /* Pushes dot to the far right inside the label flex container */
+		}
+		.status-dot.working {
+			background-color: var(--accent-success);
+			box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+			animation: pulse-green 1.5s infinite;
+		}
+		.status-dot.down {
+			background-color: var(--accent-error);
+			box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+			animation: pulse-red 1.5s infinite;
+		}
+		
+		@keyframes pulse-green {
+			0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+			70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+			100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+		}
+		@keyframes pulse-red {
+			0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+			70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(239, 68, 68, 0); }
+			100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+		}
+
+		@media (hover: hover) {
+			#server-checkboxes label:hover {
+				background: var(--bg-hover);
+				border-color: var(--border-main);
+				box-shadow: var(--shadow-sm);
+			}
+		}
+
+		.add-server-btn {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			color: var(--text-success-dark);
+			font-size: 0.85rem;
+			font-weight: 600;
+			cursor: pointer;
+			background: var(--bg-success-light);
+			padding: 12px;
+			border-radius: 10px;
+			transition: all 0.2s;
+			border: 2px dashed var(--border-success-main);
+			margin: 0;
+			box-sizing: border-box;
+			min-height: 46px;
+		}
+
+		.add-server-btn-icon {
+			width: 20px;
+			height: 20px;
+			border-radius: 50%;
+			background: var(--text-success-dark);
+			color: var(--bg-main);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-shrink: 0;
+			transition: background 0.2s;
+		}
+
+		@media (hover: hover) {
+			.add-server-btn:hover {
+				background: var(--bg-success-ultralight);
+				border-color: var(--accent-success);
+			}
+		}
+
+		#custom-settings-form {
+			overflow-y: auto;
+			padding: 6px;
+			margin: -6px;
+			display: flex;
+			flex-direction: column;
+			gap: 16px;
+		}
+
+		.ip-wrapper {
+			overflow: hidden;
+			transition: max-height 0.4s var(--ease-out-expo), opacity 0.3s ease, margin-bottom 0.4s ease;
+			max-height: 500px;
+			opacity: 1;
+			margin-bottom: 10px;
+			display: flex;
+			flex-direction: column;
+		}
+
+		.ip-wrapper.collapsed {
+			max-height: 0;
+			opacity: 0;
+			margin-bottom: 0;
+			pointer-events: none;
+		}
+
+		.ip-inner {
+			display: flex;
+			flex-direction: column;
+			gap: 8px;
+			height: 100%;
+		}
+
+		.gen-btn {
+			flex-shrink: 0;
+			background-color: var(--accent-primary);
+			color: #ffffff;
+			border: none;
+			padding: 16px;
+			border-radius: 12px;
+			cursor: pointer;
+			width: 100%;
+			font-weight: 600;
+			font-size: 1rem;
+			text-transform: uppercase;
+			letter-spacing: 0.05em;
+			transition: all 0.3s var(--ease-out-expo);
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			gap: 10px;
+			margin-top: auto;
+		}
+
+		.gen-btn:active {
+			transform: translateY(0);
+			box-shadow: none;
+		}
+
+		@media (hover: hover) {
+			.gen-btn:hover {
+				background-color: var(--accent-primary-hover);
+				transform: translateY(-2px);
+				box-shadow: var(--shadow-md);
+			}
+		}
+
+		.info-icon {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			width: 20px;
+			height: 20px;
+			border-radius: 50%;
+			background: var(--border-main);
+			color: var(--text-secondary);
+			font-size: 11px;
+			font-weight: bold;
+			cursor: pointer;
+			transition: all 0.2s;
+		}
+
+		@media (hover: hover) {
+			.info-icon:hover {
+				background: var(--bg-hover);
+				color: var(--text-primary);
+				transform: scale(1.1);
+			}
+		}
+
+		.info-modal-overlay {
+			display: none;
+			position: fixed;
+			inset: 0;
+			background: var(--blur-overlay);
+			z-index: 2000;
+			justify-content: center;
+			align-items: center;
+			padding: 20px;
+			opacity: 0;
+			transition: opacity 0.3s ease;
+			backdrop-filter: blur(4px);
+		}
+
+		.info-modal-overlay.active {
+			display: flex;
+			opacity: 1;
+		}
+
+		.info-modal-content {
+			background: var(--bg-card);
+			border-radius: 24px;
+			padding: 32px;
+			width: 100%;
+			max-width: 440px;
+			box-shadow: var(--shadow-lg);
+			position: relative;
+			line-height: 1.6;
+			font-size: 1rem;
+			color: var(--text-secondary);
+			transform: scale(0.95) translateY(20px);
+			transition: all 0.4s var(--ease-out-expo);
+			display: flex;
+			flex-direction: column;
+		}
+
+		.info-modal-overlay.active .info-modal-content {
+			transform: scale(1) translateY(0);
+		}
+
+		.config-modal-content {
+			max-width: 750px;
+			height: 75vh;
+			max-height: 650px;
+		}
+
+		.info-modal-content h3 {
+			color: var(--text-primary);
+			margin-top: 0;
+			border-bottom: 1px solid var(--border-main);
+			padding-bottom: 16px;
+			margin-bottom: 16px;
+			font-weight: 700;
+		}
+
+		.info-modal-close {
+			position: absolute;
+			top: 24px;
+			right: 24px;
+			background: var(--bg-input);
+			border: none;
+			width: 32px;
+			height: 32px;
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 1.2rem;
+			color: var(--text-secondary);
+			cursor: pointer;
+			transition: all 0.2s;
+			z-index: 20;
+		}
+
+		@media (hover: hover) {
+			.info-modal-close:hover {
+				background: var(--border-main);
+				color: var(--text-primary);
+			}
+		}
+
+		.modal-ok-btn {
+			margin-top: 24px;
+			width: 100%;
+			padding: 14px;
+			background: var(--accent-success);
+			color: #ffffff;
+			border: none;
+			border-radius: 12px;
+			font-weight: 600;
+			font-size: 0.95rem;
+			cursor: pointer;
+			transition: all 0.2s;
+		}
+
+		@media (hover: hover) {
+			.modal-ok-btn:hover {
+				background: var(--border-success-light);
+				box-shadow: var(--shadow-md);
+			}
+		}
+
+		.modal-ok-btn:active {
+			transform: translateY(1px);
+		}
+
+		.modal-secondary-btn {
+			width: 100%;
+			padding: 14px;
+			background: var(--bg-input);
+			color: var(--text-primary);
+			border: 1px solid var(--border-main);
+			border-radius: 12px;
+			font-weight: 600;
+			font-size: 0.95rem;
+			cursor: pointer;
+			transition: all 0.2s;
+		}
+
+		@media (hover: hover) {
+			.modal-secondary-btn:hover {
+				background: var(--border-main);
+			}
+		}
+
+		.modal-secondary-btn:active {
+			transform: translateY(1px);
+		}
+
+		.modal-actions {
+			display: flex;
+			gap: 12px;
+			margin-top: 20px;
+			width: 100%;
+			flex-shrink: 0;
+			flex-wrap: wrap;
+		}
+
+		.modal-actions .modal-ok-btn, .modal-actions .modal-secondary-btn {
+			margin-top: 0;
+			flex: 1;
+			min-width: 150px;
+		}
+
+		.result-area-container {
+			position: relative;
+			flex: 1;
+			min-height: 150px;
+			width: 100%;
+			border-radius: 12px;
+			border: 2px solid var(--border-success-light);
+			overflow: hidden;
+			background: var(--bg-success-ultralight);
+			display: flex;
+			flex-direction: column;
+		}
+
+		#modal-result-area {
+			width: 100%;
+			height: 100%;
+			background: transparent;
+			border: none;
+			padding: 16px;
+			color: var(--text-success-ultradark);
+			font-family: "Menlo", monospace;
+			font-size: 13px;
+			resize: none;
+			outline: none;
+			transition: filter 0.4s ease;
+			flex: 1;
+			
+			/* Prevent text wrap */
+			white-space: pre;
+			overflow-x: auto;
+			overflow-wrap: normal;
+		}
+
+		#modal-result-area.blurred {
+			filter: blur(6px);
+			pointer-events: none;
+		}
+
+		.result-blur-overlay {
+			position: absolute;
+			inset: 0;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			background: var(--blur-overlay);
+			cursor: pointer;
+			transition: opacity 0.4s ease, visibility 0.4s;
+			z-index: 10;
+			color: var(--accent-success);
+			font-weight: 700;
+			font-size: 1.15rem;
+			gap: 12px;
+		}
+
+		.result-blur-overlay.hidden {
+			opacity: 0;
+			visibility: hidden;
+			pointer-events: none;
+		}
+
+		.bounce-arrow {
+			animation: bounce 1.5s infinite;
+			width: 32px;
+			height: 32px;
+		}
+
+		.error-border {
+			border: 1px solid var(--accent-error) !important;
+			box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1) !important;
+			border-radius: 12px !important;
+		}
+
+		@keyframes pulseIcon {
+			0%, 100% { opacity: 1; }
+			50% { opacity: 0.5; }
+		}
+
+		@keyframes slideDown {
+			from {
+				opacity: 0;
+				transform: translateY(-10px);
+			}
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+
+		@keyframes bounce {
+			0%, 100% { transform: translateY(0); }
+			50% { transform: translateY(8px); }
+		}
+
+		@keyframes slideUp {
+			from { opacity: 0; transform: translateY(20px); }
+			to { opacity: 1; transform: translateY(0); }
+		}
+
+		@keyframes fadeDown {
+			from { opacity: 0; transform: translateY(-10px); }
+			to { opacity: 1; transform: translateY(0); }
+		}
+
+		@media (max-width: 1100px) {
+			.page-content {
+				padding: 24px;
+			}
+			.dashboard-grid {
+				grid-template-columns: 1fr 1fr;
+				gap: 20px;
+			}
+		}
+
+		@media (max-width: 850px) {
+			html, body {
+				height: auto;
+				min-height: 100dvh;
+				overflow-y: auto;
+				overflow-x: hidden;
+			}
+
+			.app-container {
+				height: auto;
+				min-height: 100dvh;
+				overflow: visible;
+				display: block;
+			}
+
+			.main-wrapper {
+				height: auto;
+				min-height: 100dvh;
+				overflow: visible;
+				display: block;
+			}
+
+			.page-content {
+				height: auto;
+				overflow: visible;
+				padding: 16px;
+				padding-bottom: max(16px, env(safe-area-inset-bottom));
+				gap: 20px;
+			}
+
+			.dashboard-grid {
+				grid-template-columns: 1fr;
+				display: flex;
+				flex-direction: column;
+				height: auto;
+				min-height: auto;
+			}
+
+			.panel {
+				height: auto;
+				overflow: visible;
+				min-height: auto;
+				padding: 20px;
+				border-radius: 16px;
+			}
+
+			.dynamic-settings-wrapper {
+				min-height: 280px;
+				display: block;
+				position: relative;
+			}
+
+			.dynamic-state {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+			}
+
+			.dynamic-state.active {
+				position: relative;
+				height: auto;
+			}
+
+			#server-checkboxes {
+				max-height: none;
+				grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+			}
+
+			.sidebar {
+				position: fixed;
+				left: 0;
+				top: 0;
+				height: 100dvh;
+				transform: translateX(-100%);
+				box-shadow: var(--shadow-lg);
+			}
+
+			.sidebar.open {
+				transform: translateX(0);
+			}
+
+			.close-sidebar-btn {
+				display: flex;
+			}
+
+			.mobile-topbar {
+				display: flex;
+			}
+
+			.pill-tabs {
+				width: 100%;
+				display: flex;
+			}
+
+			.pill-tab {
+				flex: 1;
+				justify-content: center;
+			}
+
+			.config-modal-content {
+				height: 85vh;
+				max-height: none;
+				padding: 24px;
+			}
+		}
+
+		.sidebar-overlay {
+			display: none;
+			position: fixed;
+			inset: 0;
+			background: var(--blur-overlay);
+			z-index: 900;
+			opacity: 0;
+			transition: opacity 0.3s ease;
+		}
+
+		.sidebar-overlay.active {
+			display: block;
+			opacity: 1;
+		}
+	</style>
+</head>
+<body>
+
+	<div class="app-container">
+		
+		<div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+		<aside class="sidebar" id="sidebar">
+			<button class="close-sidebar-btn" onclick="toggleSidebar()">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+			</button>
+
+			<nav class="sidebar-nav">
+				
+				<div class="sidebar-accordion">
+					<button class="nav-item accordion-header" onclick="toggleAccordion(this)">
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+						Get Started
+						<svg class="chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+					</button>
+					<div class="accordion-content">
+						<a href="https://t.me/CodeLeafy" target="_blank" class="nav-item child-item">
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+							How to Connect
+						</a>
+						<a href="https://t.me/CodeLeafy/7" target="_blank" class="nav-item child-item">
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+							Get Netlify Domain
+						</a>
+						<a href="https://t.me/CodeLeafy" target="_blank" class="nav-item child-item">
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+							Set Up Custom Server
+						</a>
+					</div>
+				</div>
+
+				<div class="nav-section-title">Tools</div>
+				
+				<a href="#" class="nav-item active-nav" id="nav-generator" onclick="switchView('generator')">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+					Generator
+				</a>
+				
+				<a href="#" class="nav-item" id="nav-xhttp-editor" onclick="switchView('xhttp-editor')">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+					XHTTP Editor
+				</a>
+
+				<div class="nav-section-title">External Links</div>
+				<a href="https://app.netlify.com" target="_blank" class="nav-item">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+					Netlify Console
+				</a>
+				<a href="https://github.com/Code-Leafy/NetLeafy" target="_blank" class="nav-item">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+					GitHub Repo
+				</a>
+				<a href="https://github.com/Code-Leafy/NetLeafyScanner" target="_blank" class="nav-item">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+					SNI/IP Scanner
+				</a>
+			</nav>
+
+			<div class="sidebar-footer">
+				<a href="https://t.me/CodeLeafy" target="_blank" class="join-btn">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+					Join Telegram
+				</a>
+				<a href="https://github.com/Code-Leafy" target="_blank" class="artin-btn">
+					<span>Made By</span>
+					<span class="artin-name">
+						<svg height="16" width="16" viewBox="0 0 16 16" fill="currentColor">
+							<path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
+						</svg>
+						CodeLeafy
+					</span>
+				</a>
+			</div>
+		</aside>
+
+		<main class="main-wrapper">
+			<div class="mobile-topbar">
+				<div class="logo">
+					<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:24px; height:24px;">
+						<circle cx="12" cy="12" r="10" stroke="var(--accent-primary)" stroke-width="2" />
+						<circle cx="12" cy="12" r="4" fill="var(--accent-primary)" />
+					</svg>
+					NetLeafy Generator
+				</div>
+				<button class="hamburger" onclick="toggleSidebar()">
+					<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+				</button>
+			</div>
+
+			<div class="page-content">
+				<header class="page-header">
+					<div class="header-title">
+						<h1>NetLeafy Generator <span class="version-badge">V1.0.0</span></h1>
+						<p>Generate netlify configs to bypass restrictions.</p>
+					</div>
+				</header>
+
+				<!-- MAIN GENERATOR VIEW -->
+				<div class="view-section active" id="view-generator">
+					<div class="dashboard-grid">
+						<div class="panel">
+							<div class="panel-header">
+								<h2>Settings</h2>
+								<p>Choose routing modes and providers.</p>
+							</div>
+
+							<div class="form-group">
+								<label>
+									Routing Mode
+									<span class="info-icon" onclick="showInfo(event, 'ip_sni')" title="Info">?</span>
+								</label>
+								<div class="pill-tabs" id="netlify-options" style="width: 100%;">
+									<button class="pill-tab active" id="btn-shecan" style="flex: 1;" onclick="setNetlifyMode('shecan')">IP + SNI</button>
+									<button class="pill-tab" id="btn-normal" style="flex: 1;" onclick="setNetlifyMode('normal')">Direct SNI</button>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label>
+									Server Provider
+									<span class="info-icon" onclick="showInfo(event, 'parsa')" title="Info">?</span>
+								</label>
+								<div class="pill-tabs" id="netlify-config-type" style="width: 100%;">
+									<button class="pill-tab active" id="btn-default" style="flex: 1;" onclick="setConfigMode('default')">Donated</button>
+									<button class="pill-tab" id="btn-custom" style="flex: 1;" onclick="setConfigMode('custom')">Custom</button>
+								</div>
+							</div>
+
+							<div class="dynamic-settings-wrapper">
+								<div id="state-donated-list" class="dynamic-state active">
+									<label style="margin-bottom: 10px;">Select Donated Servers</label>
+									<div id="server-checkboxes"></div>
+								</div>
+
+								<div id="state-custom" class="dynamic-state">
+									<div id="custom-settings-form">
+										<div class="form-group">
+											<label>Server Name</label>
+											<input id="custom-name" placeholder="e.g. My Private Server" type="text" />
+										</div>
+										<div class="form-group">
+											<label>Server Address</label>
+											<input id="custom-address" placeholder="sub.domain.com:444" type="text" />
+										</div>
+										<div class="form-group">
+											<label>User UUID</label>
+											<input id="custom-user" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" type="text" />
+										</div>
+										<div class="form-group">
+											<label>Path</label>
+											<input id="custom-path" placeholder="/your-path" type="text" />
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="panel">
+							<div class="panel-header">
+								<h2>Payload Data</h2>
+								<p>Enter the domains and IPs required for generation.</p>
+							</div>
+
+							<div class="form-group" id="host-form-group">
+								<label>
+									Netlify Domain
+								</label>
+								<div class="input-with-action">
+									<input id="main-host" oninput="handleDomainInput(this)" placeholder="example.netlify.app" type="text" />
+									<button id="check-domain-btn" class="action-btn-icon" onclick="checkSingleDomain()" title="Check Status">
+										<svg id="check-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+									</button>
+								</div>
+							</div>
+
+							<div class="flex-group" id="sni-group">
+								<div class="header-row">
+									<label for="domain-list">SNI List</label>
+									<div class="mini-toolbar">
+										<button type="button" class="mini-btn" onclick="loadDefaultDomains()">All</button>
+										<button type="button" class="mini-btn" onclick="loadBestDomains()">Best</button>
+										<button type="button" class="mini-btn btn-clear" onclick="document.getElementById('domain-list').value = ''; triggerLiveCount();">Clear</button>
+									</div>
+								</div>
+								<textarea id="domain-list" placeholder="Enter SNI domains, one per line..."></textarea>
+							</div>
+
+							<div class="ip-wrapper" id="ip-wrapper">
+								<div class="ip-inner">
+									<div class="header-row">
+										<label for="ip-list">IP List</label>
+										<div class="mini-toolbar">
+											<button type="button" class="mini-btn" onclick="loadDefaultIps()">All</button>
+											<button type="button" class="mini-btn" onclick="loadBestIps()">Best</button>
+											<button type="button" class="mini-btn btn-clear" onclick="document.getElementById('ip-list').value = ''; triggerLiveCount();">Clear</button>
+										</div>
+									</div>
+									<textarea id="ip-list" placeholder="Enter clean IPs, one per line..."></textarea>
+								</div>
+							</div>
+
+							<button class="gen-btn" onclick="generateConfigs()">
+								<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1-1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"></path></svg>
+								Generate <span id="generate-count-display" style="margin-left: 2px;">0</span> Configs
+							</button>
+						</div>
+					</div>
+				</div>
+				
+				<!-- XHTTP CUSTOM EDITOR VIEW -->
+				<div class="view-section" id="view-xhttp-editor">
+					<div class="dashboard-grid">
+						<div class="panel">
+							<div class="panel-header">
+								<h2>XHTTP Custom Settings</h2>
+								<p>Define global XHTTP parameters for your configs.</p>
+							</div>
+
+							<div class="form-group">
+								<label>xPaddingBytes</label>
+								<input id="xhttp-pad-bytes" type="text" placeholder="1-1" value="1-1" />
+							</div>
+							
+							<div class="form-group">
+								<label>scMaxEachPostBytes</label>
+								<input id="xhttp-post-bytes" type="text" placeholder="1000000" value="1000000" />
+							</div>
+							
+							<div class="form-group">
+								<label>xPaddingObfsMode</label>
+								<select id="xhttp-obfs-mode">
+									<option value="true" selected>true</option>
+									<option value="false">false</option>
+								</select>
+							</div>
+							
+							<div class="form-group">
+								<label>xPaddingKey</label>
+								<input id="xhttp-pad-key" type="text" placeholder="e.g. iran" value="iran" />
+							</div>
+							
+							<div class="form-group">
+								<label>xPaddingHeader</label>
+								<input id="xhttp-pad-header" type="text" placeholder="e.g. iran" value="iran" />
+							</div>
+							
+							<div class="form-group">
+								<label>Custom Headers (JSON)</label>
+								<textarea id="xhttp-headers" placeholder='{"x-host":"http://cdn.example.com:444"}' style="min-height: 100px;"></textarea>
+							</div>
+						</div>
+
+						<div class="panel">
+							<div class="panel-header">
+								<h2>VLESS Configs</h2>
+								<p>Paste multiple configs here to update them.</p>
+							</div>
+							
+							<div class="flex-group">
+								<div class="header-row">
+									<label>Config Input</label>
+									<div class="mini-toolbar">
+										<button type="button" class="mini-btn btn-clear" onclick="document.getElementById('xhttp-config-input').value = '';">Clear</button>
+									</div>
+								</div>
+								<textarea id="xhttp-config-input" placeholder="vless://..." style="flex: 1; min-height: 250px; white-space: pre; overflow-wrap: normal; overflow-x: auto;"></textarea>
+							</div>
+							
+							<button class="gen-btn" onclick="updateXhttpConfigs()">
+								<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2v6h-6"></path><path d="M21 13a9 9 0 1 1-3-7.7L21 8"></path></svg>
+								Update Configs
+							</button>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</main>
+	</div>
+
+	<div class="info-modal-overlay" id="infoModal" onclick="closeInfoModalOnOutside(event)">
+		<div class="info-modal-content">
+			<h3 id="infoModalTitle">Title</h3>
+			<div id="infoModalBody">Content</div>
+			<button class="modal-ok-btn" onclick="closeInfoModal()">Got it!</button>
+		</div>
+	</div>
+
+	<div class="info-modal-overlay" id="configModal" onclick="closeConfigModalOnOutside(event)">
+		<div class="info-modal-content config-modal-content">
+			<button class="info-modal-close" onclick="closeConfigModal()">
+				<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+			</button>
+			<h3 style="color: var(--accent-success); border-bottom: none; padding-bottom: 0; margin-bottom: 20px; flex-shrink: 0;">
+				✓ <span id="modal-config-count">0</span> Configs Generated
+			</h3>
+			
+			<div class="result-area-container">
+				<textarea id="modal-result-area" readonly></textarea>
+				<div class="result-blur-overlay" id="result-blur-overlay" onclick="revealConfigs()">
+					<svg class="bounce-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
+					<span>Click to see configs</span>
+				</div>
+			</div>
+			
+			<div class="modal-actions">
+				<button class="modal-secondary-btn" id="modal-import-btn" onclick="importToXhttpEditor()">
+					Import to XHTTP Editor
+				</button>
+				<button class="modal-ok-btn" id="modal-copy-btn" onclick="copyConfigs()">
+					Copy to Clipboard
+				</button>
+				<button class="modal-secondary-btn" id="modal-download-btn" onclick="downloadConfigs()">
+					Download .txt
+				</button>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		// ─── SERVER LIST ──────────────────────────────────────────────────────────────
+		// status: "working" = green dot, "down" = red.
+		const SERVER_LIST = [
+			{ name: "Parsa", address: "netlify.parsashonam.sbs:444", path: "/p4r34m", user: "Telegram-Parsashonam", flag: "de.svg", status: "working" },
+			{ name: "Xarheon", address: "https://xarheon.run.place", path: "/cdn2", user: "f9b57060-989a-4d6d-bc58-53d767242968", flag: "nl.svg", status: "working" },
+			{ name: "Behnam", address: "https://s1.onesrv98.eu.cc:444", path: "/mine", user: "a5c04120-8f0d-4d52-8cdd-9ffff79a777d", flag: "se.svg", status: "working" },
+			{ name: "Saman 1", address: "http://pa.sam4.lol:444", path: "/IR_NETLIFY", user: "%40CodeLeafy", flag: "fi.svg", status: "working" },
+			{ name: "Alwinbalot", address: "https://solar.latnashobivojod.shop:444", path: "/balot", user: "b9fd3eb8-65ba-4850-9b39-25c94bfc162e", flag: "nl.svg", status: "working" },
+			{ name: "Mostafa", address: "http://1.gymnation.ir:444", path: "/IR_NETLIFY", user: "%40CodeLeafy", flag: "fi.svg", status: "working" },
+			{ name: "Farshid", address: "http://aa.websooj.site:444", path: "/IR_NETLIFY", user: "%40CodeLeafy", flag: "de.svg", status: "working" },
+			{ name: "Mohsen", address: "http://150.241.91.212:444", path: "/IR_NETLIFY", user: "%40CodeLeafy", flag: "de.svg", status: "working" },
+			{ name: "Ali", address: "http://185.181.208.92:444", path: "/IR_NETLIFY", user: "%40CodeLeafy", flag: "tr.svg", status: "working" },
+			{ name: "Shabgard", address: "http://cdn.lindasannp.com:444", path: "/IR_NETLIFY", user: "%40CodeLeafy", flag: "de.svg", status: "working" },
+			{ name: "Saman 2", address: "https://ppp.sam4.lol:30903", path: "/asekhi", user: "132f0ba3-ebbe-4153-84ff-63161b841ed8", flag: "us.svg", status: "working" },
+			{ name: "Pouya", address: "http://76.13.14.51:444", path: "/IR_NETLIFY", user: "%40CodeLeafy", flag: "de.svg", status: "working" },
+			{ name: "Masoud", address: "http://104.234.135.93:444", path: "/IR_NETLIFY", user: "%40CodeLeafy", flag: "ca.svg", status: "working" },
+			{ name: "Navid", address: "https://irnetlify.navtechz.com:444", path: "/IR_NETLIFY", user: "%40CodeLeafy", flag: "de.svg", status: "working" },
+			{ name: "AbolUp", address: "http://sub.abolup.online:444", path: "/IR_NETLIFY", user: "%40CodeLeafy", flag: "us.svg", status: "working" },
+			{ name: "Hossein", address: "http://str.fiathusen.homes:444", path: "/IR_NETLIFY", user: "598cbaec-00f6-4d84-8644-b35fdcec6904", flag: "de.svg", status: "working" },
+			{ name: "DarkSoul", address: "89.22.236.213:444", path: "/IR_NETLIFY", user: "%40CodeLeafy", flag: "se.svg", status: "working" },
+			{ name: "Meshke", address: "https://meshke.imissher.shop:444", path: "/meshke", user: "6ff4e855-cb98-47aa-901c-b787c898b6bb", flag: "de.svg", status: "down" },
+			{ name: "Rahgozar", address: "https://s1.rahgozar.tr:444", path: "/xhttp444", user: "c18d7142-3adc-491a-a0af-518a67d21c19", flag: "fi.svg", status: "working" },
+			{ name: "Dante", address: "212.74.39.210:444", path: "/IR_NETLIFY", user: "%40CodeLeafy", flag: "gb.svg", status: "down" }
+		];
+
+		document.addEventListener('contextmenu', e => {
+			if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+				e.preventDefault();
+			}
+		});
+
+		document.addEventListener('keydown', e => {
+			if (e.key === "F12" || (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "C" || e.key === "J")) || (e.ctrlKey && e.key === "U")) {
+				e.preventDefault();
+			}
+		});
+
+		function toggleAccordion(btn) {
+			btn.classList.toggle('active');
+			const content = btn.nextElementSibling;
+			content.classList.toggle('open');
+		}
+
+		function toggleSidebar() {
+			document.getElementById('sidebar').classList.toggle('open');
+			const overlay = document.getElementById('sidebar-overlay');
+			
+			if (overlay.classList.contains('active')) {
+				overlay.style.opacity = '0';
+				setTimeout(() => {
+					overlay.classList.remove('active');
+				}, 300);
+			} else {
+				overlay.classList.add('active');
+				requestAnimationFrame(() => {
+					overlay.style.opacity = '1';
+				});
+			}
+		}
+		
+		function switchView(viewId) {
+			document.querySelectorAll('.view-section').forEach(el => {
+				el.style.display = 'none';
+				el.classList.remove('active');
+			});
+			
+			const target = document.getElementById('view-' + viewId);
+			target.style.display = 'flex';
+			void target.offsetWidth; 
+			target.classList.add('active');
+			
+			document.querySelectorAll('.sidebar-nav .nav-item').forEach(el => el.classList.remove('active-nav'));
+			document.getElementById('nav-' + viewId).classList.add('active-nav');
+			
+			if (window.innerWidth <= 850 && document.getElementById('sidebar').classList.contains('open')) {
+				toggleSidebar();
+			}
+		}
+
+		let netlifyMode = "shecan";
+		let configMode = "default";
+
+		const payloadData = {
+			netlify_normal: { 
+				defaults: ["helm.sh", "keda.sh", "rook.io", "istio.io", "cilium.io", "vuejs.org", "nuxt.com", "vitejs.dev", "pnpm.io", "kubernetes.io"] 
+			},
+			netlify_shecan: {
+				ips: ["50.7.5.83", "50.7.87.2", "75.2.60.5", "144.76.1.88", "104.21.33.34", "188.114.98.0", "3.162.247.34", "95.216.69.37", "172.67.150.14", "35.157.26.135", "65.109.34.234", "94.130.70.160", "138.201.54.122"],
+				defaults: ["helm.sh", "keda.sh", "rook.io", "istio.io", "cilium.io", "vuejs.org", "nuxt.com", "vitejs.dev", "kubernetes.io"]
+			},
+			Best_domains: ["jobset.sigs.k8s.io", "kind.sigs.k8s.io", "vuejs.org", "cluster-api.sigs.k8s.io", "kubernetes.io"],
+			Best_ips: ["65.109.34.234", "94.130.70.160", "63.141.252.203", "50.7.5.83", "142.54.178.211", "94.130.33.41", "144.76.1.88"],
+		};
+
+		const infoTexts = {
+			direct_sni: { 
+				title: "Direct SNI", 
+				content: "In this mode, the SNI is used directly as the config address.<br><br><span style='color:var(--accent-warning); font-weight: 500;'>⚠️ It's recommended to use the IP + SNI mode for better connectivity.</span>" 
+			},
+			ip_sni: { 
+				title: "IP + SNI", 
+				content: "This mode increases the connection probability by combining healthy IPs with SNIs.<br><br><span style='color:var(--accent-warning); font-weight: 500;'>⚠️ This generates a large number of configs, so test them on a desktop client first.</span>" 
+			},
+			parsa: { 
+				title: "Server Selection", 
+				content: "Switch between community-donated servers or define your own custom server connection details." 
+			}
+		};
+
+		function spawnParticles(element, color) {
+			const rect = element.getBoundingClientRect();
+			const centerX = rect.left + rect.width / 2;
+			const centerY = rect.top + rect.height / 2;
+
+			for (let i = 0; i < 14; i++) {
+				const particle = document.createElement('div');
+				particle.style.position = 'fixed';
+				particle.style.left = centerX + 'px';
+				particle.style.top = centerY + 'px';
+				particle.style.width = '7px';
+				particle.style.height = '7px';
+				particle.style.backgroundColor = color;
+				particle.style.borderRadius = '50%';
+				particle.style.pointerEvents = 'none';
+				particle.style.zIndex = '9999';
+				
+				document.body.appendChild(particle);
+
+				const angle = Math.random() * Math.PI * 2;
+				const velocity = 20 + Math.random() * 40;
+				const tx = Math.cos(angle) * velocity;
+				const ty = Math.sin(angle) * velocity;
+
+				const animation = particle.animate([
+					{ transform: 'translate(-50%, -50%) scale(1)', opacity: 1 },
+					{ transform: `translate(calc(-50% + ${tx}px), calc(-50% + ${ty}px)) scale(0)`, opacity: 0 }
+				], {
+					duration: 600 + Math.random() * 400,
+					easing: 'cubic-bezier(0.16, 1, 0.3, 1)'
+				});
+
+				animation.onfinish = () => {
+					particle.remove();
+				};
+			}
+		}
+
+		let checkTimeout = null;
+		
+		function resetCheckButton() {
+			const btn = document.getElementById("check-domain-btn");
+			const hostElement = document.getElementById("main-host");
+			
+			hostElement.classList.remove('status-success', 'status-error');
+			btn.classList.remove('status-success', 'status-error');
+			btn.innerHTML = `<svg id="check-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>`;
+		}
+
+		function handleDomainInput(el) {
+			el.value = el.value.replace(/[^a-zA-Z0-9./:-]/g, '');
+			triggerLiveCount();
+			resetCheckButton();
+			clearTimeout(checkTimeout);
+			
+			const domain = el.value.trim();
+			
+			if (domain) {
+				checkTimeout = setTimeout(() => {
+					checkSingleDomain(domain);
+				}, 1000); 
+			}
+		}
+
+		async function checkSingleDomain(manualDomain = null) {
+			const hostElement = document.getElementById("main-host");
+			const checkBtn = document.getElementById("check-domain-btn");
+			const domain = manualDomain || hostElement.value.trim();
+			const SERVER_URL = "https://ir-netlify-checker.ir-netlify.workers.dev/";
+			
+			if (!domain) {
+				showError(hostElement);
+				return;
+			}
+			
+			resetCheckButton();
+			checkBtn.disabled = true;
+			checkBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="animation: pulseIcon 1.5s infinite"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>`;
+			
+			try {
+				const response = await fetch(`${SERVER_URL}?domain=${domain}`);
+				const data = await response.json();
+				
+				if (data.status === "Healthy") {
+					hostElement.classList.add("status-success");
+					checkBtn.classList.add("status-success");
+					checkBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+					spawnParticles(checkBtn, '#10b981');
+				} else {
+					hostElement.classList.add("status-error");
+					checkBtn.classList.add("status-error");
+					checkBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>`;
+					spawnParticles(checkBtn, '#ef4444');
+				}
+			} catch (error) {
+				hostElement.classList.add("status-error");
+				checkBtn.classList.add("status-error");
+				checkBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>`;
+				spawnParticles(checkBtn, '#ef4444');
+			} finally {
+				checkBtn.disabled = false;
+			}
+		}
+
+		let currentCount = 0;
+		let countAnimFrame = null;
+
+		function animateCountTo(target) {
+			if (currentCount === target) {
+				return;
+			}
+			
+			const start = currentCount;
+			const change = target - start;
+			const duration = 800;
+			const startTime = performance.now();
+
+			if (countAnimFrame) {
+				cancelAnimationFrame(countAnimFrame);
+			}
+
+			function updateAnim(currentTime) {
+				let elapsed = currentTime - startTime;
+				
+				if (elapsed > duration) {
+					elapsed = duration;
+				}
+
+				const t = elapsed / duration;
+				const easeOut = 1 - Math.pow(1 - t, 4);
+
+				currentCount = Math.round(start + change * easeOut);
+				document.getElementById('generate-count-display').innerText = currentCount.toLocaleString();
+
+				if (elapsed < duration) {
+					countAnimFrame = requestAnimationFrame(updateAnim);
+				} else {
+					currentCount = target;
+					document.getElementById('generate-count-display').innerText = currentCount.toLocaleString();
+				}
+			}
+			countAnimFrame = requestAnimationFrame(updateAnim);
+		}
+
+		function getSilentCalculatedCount() {
+			const hostElement = document.getElementById("main-host");
+			
+			if (!hostElement || !hostElement.value.trim()) {
+				return 0;
+			}
+
+			const sniInput = document.getElementById("domain-list").value.trim();
+			const ipInput = document.getElementById("ip-list").value.trim();
+			const domains = sniInput.split("\n").map(d => d.trim()).filter(Boolean);
+			const ips = ipInput.split("\n").map(i => i.trim()).filter(Boolean);
+			
+			let serverCount = 0;
+			
+			if (configMode === "custom") {
+				const cName = document.getElementById("custom-name").value.trim();
+				const cAddr = document.getElementById("custom-address").value.trim();
+				const cUser = document.getElementById("custom-user").value.trim();
+				const cPath = document.getElementById("custom-path").value.trim();
+				
+				if (cName && cAddr && cUser && cPath) {
+					serverCount = 1;
+				}
+			} else {
+				const checked = document.querySelectorAll('input[name="server-choice"]:checked');
+				serverCount = checked.length;
+			}
+			
+			if (serverCount === 0 || domains.length === 0) {
+				return 0;
+			}
+			
+			if (netlifyMode === "shecan") {
+				if (ips.length === 0) {
+					return 0;
+				}
+				return serverCount * domains.length * ips.length;
+			} else {
+				return serverCount * domains.length;
+			}
+		}
+
+		function triggerLiveCount() {
+			const expectedConfigs = getSilentCalculatedCount();
+			animateCountTo(expectedConfigs);
+		}
+
+		function renderServerCheckboxes() {
+			const container = document.getElementById('server-checkboxes');
+			container.innerHTML = '';
+			
+			SERVER_LIST.forEach((srv, index) => {
+				const label = document.createElement('label');
+				const statusClass = srv.status === 'down' ? 'down' : 'working';
+				const statusTitle = srv.status === 'down' ? 'Server is Down' : 'Server is Working';
+
+				label.innerHTML = `
+					<input type="checkbox" name="server-choice" value="${index}" />
+					<img src="https://cdn.jsdelivr.net/gh/hatscripts/circle-flags@gh-pages/flags/${srv.flag}" onerror="this.style.display='none'" />
+					${srv.name}
+					<span class="status-dot ${statusClass}" title="${statusTitle}"></span>
+				`;
+				label.querySelector('input').addEventListener('change', triggerLiveCount);
+				container.appendChild(label);
+			});
+
+			const addServerBtn = document.createElement('div');
+			addServerBtn.className = 'add-server-btn';
+			addServerBtn.onclick = () => {
+				window.open('https://t.me/CodeLeafy', '_blank');
+			};
+			
+			addServerBtn.innerHTML = `
+				<div class="add-server-btn-icon">
+					<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+				</div>
+				Your Server Here
+			`;
+			container.appendChild(addServerBtn);
+		}
+
+		window.onload = () => {
+			renderServerCheckboxes();
+			
+			document.getElementById('domain-list').addEventListener('input', triggerLiveCount);
+			document.getElementById('ip-list').addEventListener('input', triggerLiveCount);
+			document.getElementById('custom-name').addEventListener('input', triggerLiveCount);
+			document.getElementById('custom-address').addEventListener('input', triggerLiveCount);
+			document.getElementById('custom-user').addEventListener('input', triggerLiveCount);
+			document.getElementById('custom-path').addEventListener('input', triggerLiveCount);
+
+			setNetlifyMode("shecan");
+			setConfigMode("default");
+		};
+
+		function updateLeftPanelState() {
+			document.querySelectorAll('.dynamic-state').forEach(el => {
+				el.classList.remove('active');
+			});
+
+			if (configMode === 'custom') {
+				document.getElementById('state-custom').classList.add('active');
+			} else {
+				document.getElementById('state-donated-list').classList.add('active');
+			}
+			triggerLiveCount();
+		}
+
+		function setConfigMode(mode) {
+			configMode = mode;
+			
+			document.querySelectorAll("#netlify-config-type .pill-tab").forEach(b => {
+				b.classList.remove("active");
+			});
+			
+			document.getElementById(`btn-${mode}`).classList.add("active");
+			updateLeftPanelState();
+		}
+
+		function setNetlifyMode(mode) {
+			netlifyMode = mode;
+			
+			document.querySelectorAll("#netlify-options .pill-tab").forEach(b => {
+				b.classList.remove("active");
+			});
+			
+			document.getElementById(`btn-${mode}`).classList.add("active");
+			
+			const ipWrapper = document.getElementById("ip-wrapper");
+			
+			if (mode === "shecan") {
+				ipWrapper.classList.remove('collapsed');
+			} else {
+				ipWrapper.classList.add('collapsed');
+			}
+			triggerLiveCount();
+		}
+
+		function loadDefaultDomains() { 
+			setInputValue("domain-list", netlifyMode === "shecan" ? payloadData.netlify_shecan.defaults : payloadData.netlify_normal.defaults); 
+			triggerLiveCount(); 
+		}
+		
+		function loadDefaultIps() { 
+			setInputValue("ip-list", payloadData.netlify_shecan.ips); 
+			triggerLiveCount(); 
+		}
+		
+		function loadBestDomains() { 
+			setInputValue("domain-list", payloadData.Best_domains); 
+			triggerLiveCount(); 
+		}
+		
+		function loadBestIps() { 
+			setInputValue("ip-list", payloadData.Best_ips); 
+			triggerLiveCount(); 
+		}
+		
+		function setInputValue(id, arr) {
+			const el = document.getElementById(id);
+			el.value = arr.join("\n");
+			el.classList.remove("error-border");
+		}
+
+		function showError(element) {
+			element.classList.add("error-border");
+			
+			const removeError = () => {
+				element.classList.remove("error-border");
+				element.removeEventListener("input", removeError);
+				element.removeEventListener("change", removeError);
+			};
+			
+			element.addEventListener("input", removeError);
+			element.addEventListener("change", removeError);
+		}
+
+		function getInputs() {
+			let hasError = false;
+			const hostElement = document.getElementById("main-host");
+			const sniElement = document.getElementById("domain-list");
+			const ipElement = document.getElementById("ip-list");
+			
+			let host = hostElement.value.trim().replace(/^(https?:\/\/)?(www\.)?/, "").split("/")[0].replace(/[^a-zA-Z0-9.-]/g, "");
+			const sniInput = sniElement.value.trim();
+			const ipInput = ipElement.value.trim();
+
+			if (!host) { 
+				showError(hostElement); 
+				hasError = true; 
+			}
+			
+			if (!sniInput) { 
+				showError(sniElement); 
+				hasError = true; 
+			}
+			
+			let ips = [];
+			
+			if (netlifyMode === "shecan") {
+				if (!ipInput) { 
+					showError(ipElement); 
+					hasError = true; 
+				} else { 
+					ips = ipInput.split("\n").map(i => i.trim().replace(/[^a-fA-F0-9.:]/g, "")).filter(Boolean); 
+				}
+			}
+			
+			const domains = sniInput.split("\n").map(d => d.trim().replace(/[^a-zA-Z0-9.-]/g, "")).filter(Boolean);
+			
+			let selectedServers = [];
+			
+			if (configMode === "custom") {
+				const customName = document.getElementById("custom-name").value.trim();
+				const customAddress = document.getElementById("custom-address").value.trim();
+				const customUser = document.getElementById("custom-user").value.trim();
+				let customPath = document.getElementById("custom-path").value.trim();
+
+				if (!customName) { 
+					showError(document.getElementById("custom-name")); 
+					hasError = true; 
+				}
+				
+				if (!customAddress) { 
+					showError(document.getElementById("custom-address")); 
+					hasError = true; 
+				}
+				
+				if (!customUser) { 
+					showError(document.getElementById("custom-user")); 
+					hasError = true; 
+				}
+				
+				if (!customPath) { 
+					showError(document.getElementById("custom-path")); 
+					hasError = true; 
+				}
+
+				if (hasError) {
+					return null;
+				}
+				
+				selectedServers.push({
+					name: customName, 
+					address: customAddress, 
+					user: customUser,
+					path: customPath.startsWith("/") ? customPath : "/" + customPath,
+				});
+			} else {
+				const checkedBoxes = document.querySelectorAll('input[name="server-choice"]:checked');
+				
+				if (checkedBoxes.length === 0) {
+					showError(document.getElementById("server-checkboxes"));
+					hasError = true;
+				} else {
+					checkedBoxes.forEach(cb => {
+						selectedServers.push(SERVER_LIST[cb.value]);
+					});
+				}
+			}
+			
+			if (hasError) {
+				return null;
+			}
+			
+			return { host, domains, ips, selectedServers };
+		}
+
+		function generateConfigs() {
+			const inputs = getInputs();
+			
+			if (!inputs) {
+				return;
+			}
+			
+			const { host, domains, ips, selectedServers } = inputs;
+			let results = [];
+			
+			selectedServers.forEach(srv => {
+				const { user, path, address: serverAddress, name: serverName } = srv;
+				let extraData = { 
+					xPaddingBytes: "1-1", 
+					scMaxEachPostBytes: "1000000",
+					headers: { "x-host": serverAddress }
+				};
+				
+				const encodedExtra = encodeURIComponent(JSON.stringify(extraData));
+				const encodedPath = encodeURIComponent(path);
+				
+				domains.forEach(sni => {
+					if (netlifyMode === "shecan") {
+						ips.forEach(ip => {
+							const remark = encodeURIComponent(`🌐 @CodeLeafy | ${sni} | ${ip} | ${serverName}`);
+							results.push(`vless://${user}@${ip}:443?encryption=none&security=tls&sni=${sni}&fp=chrome&alpn=h2%2Chttp%2F1.1&insecure=1&allowInsecure=1&type=xhttp&host=${host}&path=${encodedPath}&mode=auto&extra=${encodedExtra}#${remark}`);
+						});
+					} else {
+						const remark = encodeURIComponent(`🌐 @CodeLeafy | ${sni} | ${serverName}`);
+						results.push(`vless://${user}@${sni}:443?encryption=none&security=tls&sni=${sni}&fp=chrome&alpn=h2%2Chttp%2F1.1&insecure=1&allowInsecure=1&type=xhttp&host=${host}&path=${encodedPath}&mode=auto&extra=${encodedExtra}#${remark}`);
+					}
+				});
+			});
+			
+			document.getElementById("modal-result-area").value = results.join("\n");
+			document.getElementById("modal-config-count").innerText = results.length.toLocaleString();
+			document.getElementById("modal-result-area").classList.add("blurred");
+			document.getElementById("result-blur-overlay").classList.remove("hidden");
+			
+			document.getElementById("modal-import-btn").style.display = "block";
+			
+			const modal = document.getElementById("configModal");
+			modal.classList.add("active");
+		}
+		
+		function updateXhttpConfigs() {
+			const inputConfigsText = document.getElementById("xhttp-config-input").value.trim();
+			if (!inputConfigsText) return;
+			
+			const inputConfigs = inputConfigsText.split('\n').filter(Boolean);
+			
+			const paddingBytes = document.getElementById("xhttp-pad-bytes").value.trim();
+			const obfsMode = document.getElementById("xhttp-obfs-mode").value === "true";
+			const postBytes = document.getElementById("xhttp-post-bytes").value.trim();
+			const padKey = document.getElementById("xhttp-pad-key").value.trim();
+			const padHeader = document.getElementById("xhttp-pad-header").value.trim();
+			const headersJson = document.getElementById("xhttp-headers").value.trim();
+
+			let parsedHeaders = {};
+			if (headersJson) {
+				try {
+					parsedHeaders = JSON.parse(headersJson);
+				} catch (e) {
+					alert("Invalid JSON in Custom Headers field.");
+					return;
+				}
+			}
+
+			const results = [];
+
+			inputConfigs.forEach(config => {
+				if (!config.startsWith("vless://")) {
+					results.push(config);
+					return;
+				}
+
+				try {
+					let [main, hash] = config.split('#');
+					let [base, qs] = main.split('?');
+					
+					if (!qs) {
+						results.push(config);
+						return;
+					}
+
+					let params = new URLSearchParams(qs);
+					let extra = {};
+					
+					if (params.has("extra")) {
+						try {
+							extra = JSON.parse(decodeURIComponent(params.get("extra")));
+						} catch (e) {}
+					}
+
+					if (paddingBytes) extra.xPaddingBytes = paddingBytes;
+					extra.xPaddingObfsMode = obfsMode;
+					if (postBytes) extra.scMaxEachPostBytes = postBytes;
+					if (padKey) extra.xPaddingKey = padKey;
+					if (padHeader) extra.xPaddingHeader = padHeader;
+					
+					if (Object.keys(parsedHeaders).length > 0) {
+						extra.headers = { ...extra.headers, ...parsedHeaders };
+					}
+
+					params.set("extra", encodeURIComponent(JSON.stringify(extra)));
+					
+					let newConfig = `${base}?${params.toString().replace(/\+/g, '%20')}`;
+					if (hash) {
+						newConfig += `#${hash}`;
+					}
+					
+					results.push(newConfig);
+				} catch (err) {
+					results.push(config);
+				}
+			});
+
+			document.getElementById("modal-result-area").value = results.join("\n");
+			document.getElementById("modal-config-count").innerText = results.length.toLocaleString();
+			document.getElementById("modal-result-area").classList.add("blurred");
+			document.getElementById("result-blur-overlay").classList.remove("hidden");
+			
+			document.getElementById("modal-import-btn").style.display = "none";
+			
+			const modal = document.getElementById("configModal");
+			modal.classList.add("active");
+		}
+		
+		function importToXhttpEditor() {
+			const text = document.getElementById("modal-result-area").value;
+			if (!text) return;
+			
+			document.getElementById("xhttp-config-input").value = text;
+			closeConfigModal();
+			switchView('xhttp-editor');
+		}
+
+		function revealConfigs() {
+			document.getElementById("modal-result-area").classList.remove("blurred");
+			document.getElementById("result-blur-overlay").classList.add("hidden");
+		}
+
+		async function copyConfigs() {
+			const text = document.getElementById("modal-result-area").value;
+			const btn = document.getElementById("modal-copy-btn");
+			const originalHtml = btn.innerHTML;
+			
+			if (!text) {
+				return;
+			}
+
+			let copySuccess = false;
+			
+			try {
+				if (navigator.clipboard) {
+					await navigator.clipboard.writeText(text);
+					copySuccess = true;
+				} else {
+					const ta = document.createElement("textarea");
+					ta.value = text;
+					document.body.appendChild(ta);
+					ta.select();
+					copySuccess = document.execCommand("copy");
+					document.body.removeChild(ta);
+				}
+			} catch (err) {}
+			
+			if (copySuccess) {
+				spawnParticles(btn, '#10b981');
+			}
+			
+			btn.innerHTML = copySuccess ? "Copied ✓" : "Failed";
+			
+			setTimeout(() => {
+				btn.innerHTML = originalHtml;
+			}, 2000);
+		}
+
+		function downloadConfigs() {
+			const text = document.getElementById("modal-result-area").value;
+			
+			if (!text) {
+				return;
+			}
+
+			try {
+				const blob = new Blob([text], { type: "text/plain" });
+				const url = URL.createObjectURL(blob);
+				const a = document.createElement("a");
+				a.href = url;
+				const ds = new Date();
+				a.download = `Configs_${ds.getFullYear()}${ds.getMonth()+1}${ds.getDate()}_${ds.getHours()}${ds.getMinutes()}.txt`;
+				document.body.appendChild(a);
+				a.click();
+				document.body.removeChild(a);
+				URL.revokeObjectURL(url);
+			} catch(e) {}
+		}
+
+		function showInfo(event, key) {
+			event.stopPropagation();
+			const modal = document.getElementById("infoModal");
+			
+			if (infoTexts[key]) {
+				document.getElementById("infoModalTitle").innerHTML = infoTexts[key].title;
+				document.getElementById("infoModalBody").innerHTML = infoTexts[key].content;
+				modal.classList.add("active");
+			}
+		}
+
+		function closeInfoModal() { 
+			const modal = document.getElementById("infoModal");
+			modal.style.opacity = '0';
+			
+			setTimeout(() => {
+				modal.classList.remove("active");
+				modal.style.opacity = '';
+			}, 300);
+		}
+		
+		function closeInfoModalOnOutside(event) { 
+			if (event.target === document.getElementById("infoModal")) {
+				closeInfoModal();
+			}
+		}
+
+		function closeConfigModal() {
+			const modal = document.getElementById("configModal");
+			modal.style.opacity = '0';
+			
+			setTimeout(() => {
+				modal.classList.remove("active");
+				modal.style.opacity = '';
+			}, 300);
+		}
+
+		function closeConfigModalOnOutside(event) {
+			if (event.target === document.getElementById("configModal")) {
+				closeConfigModal();
+			}
+		}
+	</script>
+</body>
+</html>
