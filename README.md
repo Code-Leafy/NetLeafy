@@ -19,6 +19,10 @@
 > Built specifically for Netlify routing. No install. No setup. Open it and go.
 
 <br/>
+<img src="./assets/preview.png" alt="NetLeafy App Preview" width="800" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);" />
+
+<br/>
+<br/>
 
 </div>
 
