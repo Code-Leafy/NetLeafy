@@ -403,6 +403,26 @@
 		}
 		.dynamic-state.active { opacity: 1; visibility: visible; pointer-events: auto; transform: scale(1) translateY(0); }
 
+		/* ── Server checkbox list ── */
+		.server-list-header {
+			display: flex; justify-content: space-between; align-items: center;
+			padding: 0 4px 8px 4px; flex-shrink: 0;
+		}
+		.select-all-label {
+			display: flex; align-items: center; gap: 6px; font-size: 0.75rem; font-weight: 600;
+			color: var(--text-success-dark); cursor: pointer; padding: 6px 10px;
+			background: var(--bg-success-ultralight); border: 1px solid var(--border-success-light);
+			border-radius: 7px; transition: all 0.2s; user-select: none;
+		}
+		.select-all-label input[type="checkbox"] { display: none; }
+		.select-all-check {
+			width: 14px; height: 14px; border: 2px solid var(--text-success-dark); border-radius: 3px;
+			display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.2s;
+		}
+		.select-all-check.checked { background: var(--text-success-dark); }
+		.select-all-check.checked::after { content: "✓"; color: white; font-size: 9px; font-weight: 900; line-height: 1; }
+		@media (hover: hover) { .select-all-label:hover { background: var(--bg-success-light); } }
+
 		#server-checkboxes {
 			display: grid; grid-template-columns: repeat(auto-fill, minmax(135px, 1fr)); gap: 12px; overflow-y: auto;
 			padding: 12px; border-radius: 12px; border: 1px solid transparent; transition: border 0.3s, box-shadow 0.3s;
@@ -560,14 +580,14 @@
 		.sidebar-overlay.active { display: block; opacity: 1; }
 	</style>
 
-		<script>
-			(function() {
-				const savedTheme = localStorage.getItem('theme');
-				const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-				const theme = savedTheme ? savedTheme : (systemPrefersDark ? 'dark' : 'light');
-				document.documentElement.setAttribute('data-theme', theme);
-			})();
-		</script>
+	<script>
+		(function() {
+			const savedTheme = localStorage.getItem('theme');
+			const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+			const theme = savedTheme ? savedTheme : (systemPrefersDark ? 'dark' : 'light');
+			document.documentElement.setAttribute('data-theme', theme);
+		})();
+	</script>
 </head>
 <body>
 
@@ -694,7 +714,7 @@
 			<div class="page-content">
 				<header class="page-header">
 					<div class="header-title">
-						<h1>NetLeafy Generator <span class="version-badge">V1.1.0</span></h1>
+						<h1>NetLeafy Generator <span class="version-badge">V1.2.0</span></h1>
 						<p>Generate netlify configs to bypass restrictions.</p>
 					</div>
 				</header>
@@ -728,6 +748,14 @@
 
 							<div class="dynamic-settings-wrapper">
 								<div id="state-donated-list" class="dynamic-state active">
+									<!-- Select All header -->
+									<div class="server-list-header">
+										<span style="font-size:0.75rem; font-weight:700; color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.05em;">Servers</span>
+										<label class="select-all-label" id="select-all-label" onclick="toggleSelectAll()">
+											<div class="select-all-check" id="select-all-check"></div>
+											Select All
+										</label>
+									</div>
 									<div id="server-checkboxes"></div>
 								</div>
 
@@ -943,44 +971,47 @@
 		});
 
 		// ─── SERVER LIST ──────────────────────────────────────────────────────────────
+		// Synced with IR_NETLIFY V9.6.6 — updated addresses, new servers added
 		const SERVER_LIST = [
-			{ name: "Parsa",      address: "netlify.parsashonam.sbs:444",          path: "/p4r34m",    user: "Telegram-Parsashonam", flag: "de.svg", status: "working" },
-			{ name: "Xarheon",    address: "https://xarheon.run.place",             path: "/cdn2",      user: "f9b57060-989a-4d6d-bc58-53d767242968", flag: "nl.svg", status: "working" },
-			{ name: "Behnam",     address: "https://s1.onesrv98.eu.cc:444",         path: "/mine",      user: "a5c04120-8f0d-4d52-8cdd-9ffff79a777d", flag: "se.svg", status: "working" },
-			{ name: "Saman 1",   address: "http://pa.sam4.lol:444",                path: "/IR_NETLIFY", user: "%40IR_NETLIFY", flag: "fi.svg", status: "working" },
-			{ name: "Alwinbalot", address: "http://46.8.229.114:444",               path: "/balot",     user: "%40IR_NETLIFY", flag: "nl.svg", status: "working" },
-			{ name: "Mostafa",   address: "http://1.gymnation.ir:444",             path: "/IR_NETLIFY", user: "%40IR_NETLIFY", flag: "fi.svg", status: "working" },
-			{ name: "Farshid",   address: "http://aa.websooj.site:444",            path: "/IR_NETLIFY", user: "%40IR_NETLIFY", flag: "de.svg", status: "working" },
-			{ name: "Mohsen",    address: "http://cdn.lindasannp.com:444",          path: "/IR_NETLIFY", user: "%40IR_NETLIFY", flag: "de.svg", status: "working" },
-			{ name: "Ali",       address: "http://185.181.208.92:444",             path: "/IR_NETLIFY", user: "%40IR_NETLIFY", flag: "tr.svg", status: "working" },
-			{ name: "Shabgard",  address: "http://cdn.lindasannp.com:444",          path: "/IR_NETLIFY", user: "%40IR_NETLIFY", flag: "de.svg", status: "working" },
-			{ name: "Saman 2",   address: "https://ppp.sam4.lol:30903",            path: "/asekhi",    user: "132f0ba3-ebbe-4153-84ff-63161b841ed8", flag: "us.svg", status: "working" },
-			{ name: "Pouya",     address: "http://76.13.14.51:444",                path: "/IR_NETLIFY", user: "%40IR_NETLIFY", flag: "de.svg", status: "working" },
-			{ name: "Masoud",    address: "http://104.234.135.93:444",             path: "/IR_NETLIFY", user: "%40IR_NETLIFY", flag: "ca.svg", status: "working" },
-			{ name: "Navid",     address: "https://irnetlify.navtechz.com:444",    path: "/IR_NETLIFY", user: "%40IR_NETLIFY", flag: "de.svg", status: "working" },
-			{ name: "AbolUp",    address: "http://sub.abolup.online:444",          path: "/IR_NETLIFY", user: "%40IR_NETLIFY", flag: "us.svg", status: "working" },
-			{ name: "Hossein",   address: "http://str.fiathusen.homes:444",        path: "/IR_NETLIFY", user: "598cbaec-00f6-4d84-8644-b35fdcec6904", flag: "de.svg", status: "working" },
-			{ name: "DarkSoul",  address: "http://89.22.236.213:444",              path: "/IR_NETLIFY", user: "%40IR_NETLIFY", flag: "se.svg", status: "working" },
-			{ name: "Meshke",    address: "https://meshke.imissher.shop:444",      path: "/meshke",    user: "6ff4e855-cb98-47aa-901c-b787c898b6bb", flag: "de.svg", status: "working" },
-			{ name: "Rahgozar",  address: "https://s1.rahgozar.tr:444",            path: "/xhttp444",  user: "c18d7142-3adc-491a-a0af-518a67d21c19", flag: "fi.svg", status: "working" },
-			{ name: "Dante",     address: "http://212.74.39.210:444",              path: "/IR_NETLIFY", user: "%40IR_NETLIFY", flag: "gb.svg", status: "working" },
-			{ name: "Amir",      address: "65.109.221.153:444",                    path: "/IR_NETLIFY", user: "%40IR_NETLIFY", flag: "nl.svg", status: "working" },
-			{ name: "Manp 1",    address: "107.161.174.122:444",                   path: "/IR_NETLIFY", user: "%40IR_NETLIFY", flag: "tr.svg", status: "working" },
-			{ name: "Manp 2",    address: "107.161.174.122:444",                   path: "/IR_NETLIFY", user: "%40IR_NETLIFY", flag: "tr.svg", status: "working" },
-			{ name: "Phoenix",   address: "62.84.172.72:444",                      path: "/IR_NETLIFY", user: "%40IR_NETLIFY", flag: "de.svg", status: "working" },
-			{ name: "Cowboy",    address: "185.250.41.220:444",                    path: "/IR_NETLIFY", user: "%40IR_NETLIFY", flag: "de.svg", status: "working" },
-			{ name: "Hakan",     address: "109.120.187.145:444",                   path: "/IR_NETLIFY", user: "%40IR_NETLIFY", flag: "de.svg", status: "working" },
+			{ name: "Parsa",      address: "netlify.parsashonam.sbs:444",          path: "/p4r34m",      user: "Telegram-Parsashonam",                  flag: "de.svg", status: "working" },
+			{ name: "Xarheon",    address: "panel.xarheon.cn.mt",                  path: "/cdn2",        user: "f9b57060-989a-4d6d-bc58-53d767242968",  flag: "nl.svg", status: "working" },
+			{ name: "Behnam",     address: "https://s1.onesrv98.eu.cc:444",        path: "/mine",        user: "a5c04120-8f0d-4d52-8cdd-9ffff79a777d",  flag: "se.svg", status: "working" },
+			{ name: "Saman 1",   address: "65.109.216.19:444",                     path: "/IR-NETLIFY",  user: "%40IR_NETLIFY",                         flag: "fi.svg", status: "working" },
+			{ name: "Alwinbalot", address: "http://46.8.229.114:444",              path: "/IR-NETLIFY",  user: "%40IR_NETLIFY",                         flag: "nl.svg", status: "working" },
+			{ name: "Mostafa",   address: "http://1.gymnation.ir:444",             path: "/IR-NETLIFY",  user: "%40IR_NETLIFY",                         flag: "fi.svg", status: "working" },
+			{ name: "Farshid",   address: "http://aa.websooj.site:444",            path: "/IR-NETLIFY",  user: "%40IR_NETLIFY",                         flag: "de.svg", status: "working" },
+			{ name: "Mohsen",    address: "150.241.91.212:444",                    path: "/IR-NETLIFY",  user: "%40IR_NETLIFY",                         flag: "de.svg", status: "working" },
+			{ name: "Ali",       address: "http://185.181.208.92:444",             path: "/IR-NETLIFY",  user: "%40IR_NETLIFY",                         flag: "tr.svg", status: "working" },
+			{ name: "Shabgard",  address: "http://cdn.lindasannp.com:444",         path: "/IR-NETLIFY",  user: "%40IR_NETLIFY",                         flag: "de.svg", status: "working" },
+			{ name: "Saman 2",   address: "https://ppp.sam4.lol:30903",            path: "/asekhi",      user: "132f0ba3-ebbe-4153-84ff-63161b841ed8",  flag: "us.svg", status: "working" },
+			{ name: "Pouya",     address: "http://76.13.14.51:444",                path: "/IR-NETLIFY",  user: "%40IR_NETLIFY",                         flag: "de.svg", status: "working" },
+			{ name: "Masoud",    address: "http://104.234.135.93:444",             path: "/IR-NETLIFY",  user: "%40IR_NETLIFY",                         flag: "ca.svg", status: "working" },
+			{ name: "Navid",     address: "https://irnetlify.navtechz.com:444",    path: "/IR-NETLIFY",  user: "%40IR_NETLIFY",                         flag: "de.svg", status: "working" },
+			{ name: "AbolUp",    address: "http://sub.abolup.online:444",          path: "/IR-NETLIFY",  user: "%40IR_NETLIFY",                         flag: "us.svg", status: "working" },
+			{ name: "Hossein",   address: "http://str.fiathusen.homes:444",        path: "/IR-NETLIFY",  user: "598cbaec-00f6-4d84-8644-b35fdcec6904",  flag: "de.svg", status: "working" },
+			{ name: "DarkSoul",  address: "http://89.22.236.213:444",              path: "/IR-NETLIFY",  user: "%40IR_NETLIFY",                         flag: "se.svg", status: "working" },
+			{ name: "Meshke",    address: "https://meshke.imissher.shop:444",      path: "/meshke",      user: "6ff4e855-cb98-47aa-901c-b787c898b6bb",  flag: "de.svg", status: "working" },
+			{ name: "Rahgozar",  address: "https://sr1.rahgozar.tr:444",           path: "/xhttp444",    user: "c18d7142-3adc-491a-a0af-518a67d21c19",  flag: "fi.svg", status: "working" },
+			{ name: "Dante",     address: "http://212.74.39.210:444",              path: "/IR-NETLIFY",  user: "%40IR_NETLIFY",                         flag: "gb.svg", status: "working" },
+			{ name: "LetKnowIt", address: "65.109.221.153:444",                    path: "/IR-NETLIFY",  user: "%40IR_NETLIFY",                         flag: "nl.svg", status: "working" },
+			{ name: "Manp 1",    address: "107.161.174.122:444",                   path: "/IR-NETLIFY",  user: "%40IR_NETLIFY",                         flag: "tr.svg", status: "working" },
+			{ name: "Manp 2",    address: "217.179.5.74:444",                      path: "/IR-NETLIFY",  user: "%40IR_NETLIFY",                         flag: "tr.svg", status: "working" },
+			{ name: "Phoenix",   address: "62.84.172.72:444",                      path: "/IR-NETLIFY",  user: "%40IR_NETLIFY",                         flag: "de.svg", status: "working" },
+			{ name: "Cowboy",    address: "185.250.41.220:444",                    path: "/IR-NETLIFY",  user: "%40IR_NETLIFY",                         flag: "de.svg", status: "working" },
+			{ name: "Hakan",     address: "109.120.187.145:444",                   path: "/IR-NETLIFY",  user: "%40IR_NETLIFY",                         flag: "de.svg", status: "working" },
+			{ name: "nemidonam", address: "193.233.202.166:444",                   path: "/IR-NETLIFY",  user: "%40IR_NETLIFY",                         flag: "fi.svg", status: "working" },
+			{ name: "Soroush",   address: "194.59.183.234:444",                    path: "/IR-NETLIFY",  user: "%40IR_NETLIFY",                         flag: "de.svg", status: "working" },
 		];
 		
 		// ─── APP STATE ─────────────────────────────────────────────────────────────────
-		let appVersion = "1.1.0";
+		let appVersion = "1.2.0";
 		let currentPlatform = "netlify";
 		let netlifyMode = "shecan";
 		let configMode = "default";
 		let g2rayExtracted = null;
 		let g2rayOriginalRemark = null;
 
-		// ─── G2RAY FUNCTIONS ──────────────────────────────────────────────────────────
+		// ─── NOTIFICATION ─────────────────────────────────────────────────────────────
 		function showNotification(message) {
 			const toast = document.getElementById('notification-toast');
 			const text = document.getElementById('notification-text');
@@ -991,6 +1022,7 @@
 			}
 		}
 
+		// ─── G2RAY FUNCTIONS ──────────────────────────────────────────────────────────
 		function extractG2rayConfig() {
 			const input = document.getElementById('g2ray-config-input');
 			if (!input) return;
@@ -1015,7 +1047,7 @@
 						
 						const domainInput = document.getElementById('main-host');
 						if (domainInput) {
-							domainInput.value = hostParam; 
+							domainInput.value = hostParam;
 							domainInput.readOnly = true;
 							domainInput.classList.add('status-success');
 							document.getElementById('domain-label-text').textContent = 'Extracted Domain/SNI';
@@ -1028,25 +1060,22 @@
 				}
 			} catch(e) {}
 			
+			// Parse failed — reset state
 			g2rayExtracted = null;
 			g2rayOriginalRemark = null;
 			input.classList.remove('status-success');
 			
 			const domainInput = document.getElementById('main-host');
-			if (domainInput) {
+			if (domainInput && configMode === 'g2ray') {
 				domainInput.readOnly = false;
 				domainInput.classList.remove('status-success');
-				if (configMode === 'g2ray') domainInput.value = '';
-				document.getElementById('domain-label-text').textContent = 'Netlify Domain';
+				domainInput.value = '';
+				document.getElementById('domain-label-text').textContent = 'Extracted Domain/SNI';
 			}
 			triggerLiveCount();
 		}
 
-		// ─── APP VERSION & PLATFORM FUNCTIONS ─────────────────────────────────────────
-		function setAppVersion(v) {
-			appVersion = v;
-		}
-
+		// ─── PLATFORM / VERSION ───────────────────────────────────────────────────────
 		function setPlatform(platform) {
 			if (platform) currentPlatform = platform;
 			const ipWrapper = document.getElementById("ip-wrapper");
@@ -1091,48 +1120,63 @@
 		
 		function switchView(viewId) {
 			document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
-			
 			const target = document.getElementById('view-' + viewId);
 			if (!target) return;
-
 			void target.offsetWidth;
 			target.classList.add('active');
-			
 			document.querySelectorAll('.sidebar-nav .nav-item').forEach(el => el.classList.remove('active-nav'));
 			const navEl = document.getElementById('nav-' + viewId);
 			if (navEl) navEl.classList.add('active-nav');
-			
 			if (window.innerWidth <= 850 && document.getElementById('sidebar').classList.contains('open')) {
 				toggleSidebar();
 			}
 		}
 
+		// ─── SELECT ALL SERVERS ───────────────────────────────────────────────────────
+		function toggleSelectAll() {
+			const checkboxes = document.querySelectorAll('#server-checkboxes input[name="server-choice"]');
+			const checkEl = document.getElementById('select-all-check');
+			const allChecked = Array.from(checkboxes).every(c => c.checked);
+			const newState = !allChecked;
+			checkboxes.forEach(cb => { cb.checked = newState; });
+			checkEl.classList.toggle('checked', newState);
+			triggerLiveCount();
+		}
+
+		function syncSelectAllState() {
+			const checkboxes = document.querySelectorAll('#server-checkboxes input[name="server-choice"]');
+			const checkEl = document.getElementById('select-all-check');
+			if (!checkEl || checkboxes.length === 0) return;
+			const allChecked = Array.from(checkboxes).every(c => c.checked);
+			checkEl.classList.toggle('checked', allChecked);
+		}
+
 		// ─── PAYLOAD DATA ─────────────────────────────────────────────────────────────
 		const payloadData = {
-		    netlify_normal: { 
-		        defaults: ["helm.sh", "keda.sh", "rook.io", "istio.io", "cilium.io", "vuejs.org", "nuxt.com", "nuxr.com", "vitejs.dev", "smashingmagazine.com", "pnpm.io", "fluxcd.io", "harbor.io", "calico.org", "linkerd.io", "openebs.io", "tekton.dev", "longhorn.io", "blog.helm.sh", "docs.helm.sh", "crossplane.io", "kubernetes.io", "kubebuilder.io", "cert-manager.io", "letsencrypt.org", "kind.sigs.k8s.io", "kops.sigs.k8s.io", "krew.sigs.k8s.io", "kwok.sigs.k8s.io", "kueue.sigs.k8s.io", "jobset.sigs.k8s.io", "kaniko.sigs.k8s.io", "minikube.sigs.k8s.io", "operatorframework.io", "container.sigs.k8s.io", "kustomize.sigs.k8s.io", "argo-cd.readthedocs.io", "cluster-api.sigs.k8s.io", "descheduler.sigs.k8s.io", "gateway-api.sigs.k8s.io", "external-dns.sigs.k8s.io", "service-apis.sigs.k8s.io", "image-builder.sigs.k8s.io", "kubectl.docs.kubernetes.io", "metrics-server.sigs.k8s.io", "scheduler-plugins.sigs.k8s.io", "controller-runtime.sigs.k8s.io", "prometheus-operator.sigs.k8s.io", "node-feature-discovery.sigs.k8s.io", "hierarchical-namespaces.sigs.k8s.io", "secrets-store-csi-driver.sigs.k8s.io", "security-profiles-operator.sigs.k8s.io", "cluster-proportional-autoscaler.sigs.k8s.io"] 
-		    },
-		    netlify_shecan: {
-		        ips: ["50.7.5.83", "50.7.87.2", "50.7.87.3", "50.7.87.4", "50.7.87.5", "75.2.60.5", "144.76.1.88", "104.21.33.34", "188.114.98.0", "188.114.99.0", "3.162.247.34", "3.162.247.38", "3.162.247.45", "3.162.247.77", "3.33.186.135", "63.176.8.218", "85.10.207.48", "94.130.33.41", "95.216.69.37", "104.198.14.52", "104.21.63.202", "15.197.167.90", "172.67.150.14", "204.12.196.34", "35.157.26.135", "52.222.214.38", "52.222.214.99", "54.232.119.62", "65.109.34.234", "94.130.70.160", "138.201.54.122", "142.54.178.211", "172.67.158.128", "184.171.110.10", "52.222.214.108", "52.222.214.124", "63.141.252.203"],
-		        defaults: ["helm.sh", "keda.sh", "rook.io", "istio.io", "cilium.io", "vuejs.org", "nuxt.com", "nuxr.com", "vitejs.dev", "smashingmagazine.com", "pnpm.io", "fluxcd.io", "harbor.io", "calico.org", "linkerd.io", "openebs.io", "tekton.dev", "longhorn.io", "blog.helm.sh", "docs.helm.sh", "crossplane.io", "kubernetes.io", "kubebuilder.io", "cert-manager.io", "letsencrypt.org", "kind.sigs.k8s.io", "kops.sigs.k8s.io", "krew.sigs.k8s.io", "kwok.sigs.k8s.io", "kueue.sigs.k8s.io", "jobset.sigs.k8s.io", "kaniko.sigs.k8s.io", "minikube.sigs.k8s.io", "operatorframework.io", "container.sigs.k8s.io", "kustomize.sigs.k8s.io", "argo-cd.readthedocs.io", "cluster-api.sigs.k8s.io", "descheduler.sigs.k8s.io", "gateway-api.sigs.k8s.io", "external-dns.sigs.k8s.io", "service-apis.sigs.k8s.io", "image-builder.sigs.k8s.io", "kubectl.docs.kubernetes.io", "metrics-server.sigs.k8s.io", "scheduler-plugins.sigs.k8s.io", "controller-runtime.sigs.k8s.io", "prometheus-operator.sigs.k8s.io", "node-feature-discovery.sigs.k8s.io", "hierarchical-namespaces.sigs.k8s.io", "secrets-store-csi-driver.sigs.k8s.io", "security-profiles-operator.sigs.k8s.io", "cluster-proportional-autoscaler.sigs.k8s.io"]
-		    },
-		    Best_domains: ["jobset.sigs.k8s.io", "kind.sigs.k8s.io", "vuejs.org", "cluster-api.sigs.k8s.io", "kubernetes.io", "gateway-api.sigs.k8s.io", "letsencrypt.org"],
-		    Best_ips: ["65.109.34.234", "94.130.70.160", "63.141.252.203", "94.130.50.12", "50.7.5.83", "142.54.178.211", "94.130.33.41", "144.76.1.88", "138.201.54.122", "95.216.69.37", "94.130.13.19"],
+			netlify_normal: {
+				defaults: ["helm.sh","keda.sh","rook.io","istio.io","cilium.io","vuejs.org","nuxt.com","nuxr.com","vitejs.dev","smashingmagazine.com","pnpm.io","fluxcd.io","harbor.io","calico.org","linkerd.io","openebs.io","tekton.dev","longhorn.io","blog.helm.sh","docs.helm.sh","crossplane.io","kubernetes.io","kubebuilder.io","cert-manager.io","letsencrypt.org","kind.sigs.k8s.io","kops.sigs.k8s.io","krew.sigs.k8s.io","kwok.sigs.k8s.io","kueue.sigs.k8s.io","jobset.sigs.k8s.io","kaniko.sigs.k8s.io","minikube.sigs.k8s.io","operatorframework.io","container.sigs.k8s.io","kustomize.sigs.k8s.io","argo-cd.readthedocs.io","cluster-api.sigs.k8s.io","descheduler.sigs.k8s.io","gateway-api.sigs.k8s.io","external-dns.sigs.k8s.io","service-apis.sigs.k8s.io","image-builder.sigs.k8s.io","kubectl.docs.kubernetes.io","metrics-server.sigs.k8s.io","scheduler-plugins.sigs.k8s.io","controller-runtime.sigs.k8s.io","prometheus-operator.sigs.k8s.io","node-feature-discovery.sigs.k8s.io","hierarchical-namespaces.sigs.k8s.io","secrets-store-csi-driver.sigs.k8s.io","security-profiles-operator.sigs.k8s.io","cluster-proportional-autoscaler.sigs.k8s.io"]
+			},
+			netlify_shecan: {
+				ips: ["50.7.5.83","50.7.87.2","50.7.87.3","50.7.87.4","50.7.87.5","75.2.60.5","144.76.1.88","104.21.33.34","188.114.98.0","188.114.99.0","3.162.247.34","3.162.247.38","3.162.247.45","3.162.247.77","3.33.186.135","63.176.8.218","85.10.207.48","94.130.33.41","95.216.69.37","104.198.14.52","104.21.63.202","15.197.167.90","172.67.150.14","204.12.196.34","35.157.26.135","52.222.214.38","52.222.214.99","54.232.119.62","65.109.34.234","94.130.70.160","138.201.54.122","142.54.178.211","172.67.158.128","184.171.110.10","52.222.214.108","52.222.214.124","63.141.252.203"],
+				defaults: ["helm.sh","keda.sh","rook.io","istio.io","cilium.io","vuejs.org","nuxt.com","nuxr.com","vitejs.dev","smashingmagazine.com","pnpm.io","fluxcd.io","harbor.io","calico.org","linkerd.io","openebs.io","tekton.dev","longhorn.io","blog.helm.sh","docs.helm.sh","crossplane.io","kubernetes.io","kubebuilder.io","cert-manager.io","letsencrypt.org","kind.sigs.k8s.io","kops.sigs.k8s.io","krew.sigs.k8s.io","kwok.sigs.k8s.io","kueue.sigs.k8s.io","jobset.sigs.k8s.io","kaniko.sigs.k8s.io","minikube.sigs.k8s.io","operatorframework.io","container.sigs.k8s.io","kustomize.sigs.k8s.io","argo-cd.readthedocs.io","cluster-api.sigs.k8s.io","descheduler.sigs.k8s.io","gateway-api.sigs.k8s.io","external-dns.sigs.k8s.io","service-apis.sigs.k8s.io","image-builder.sigs.k8s.io","kubectl.docs.kubernetes.io","metrics-server.sigs.k8s.io","scheduler-plugins.sigs.k8s.io","controller-runtime.sigs.k8s.io","prometheus-operator.sigs.k8s.io","node-feature-discovery.sigs.k8s.io","hierarchical-namespaces.sigs.k8s.io","secrets-store-csi-driver.sigs.k8s.io","security-profiles-operator.sigs.k8s.io","cluster-proportional-autoscaler.sigs.k8s.io"]
+			},
+			Best_domains: ["jobset.sigs.k8s.io","kind.sigs.k8s.io","vuejs.org","cluster-api.sigs.k8s.io","kubernetes.io","gateway-api.sigs.k8s.io","letsencrypt.org"],
+			Best_ips: ["65.109.34.234","94.130.70.160","63.141.252.203","94.130.50.12","50.7.5.83","142.54.178.211","94.130.33.41","144.76.1.88","138.201.54.122","95.216.69.37","94.130.13.19"],
 		};
 
 		// ─── INFO MODAL TEXTS ─────────────────────────────────────────────────────────
 		const infoTexts = {
-			direct_sni: { 
-				title: "Direct SNI", 
-				content: "In this mode, the SNI is used directly as the config address.<br><br><span style='color:var(--accent-warning); font-weight: 500;'>⚠️ It's recommended to use the IP + SNI mode for better connectivity.</span>" 
+			direct_sni: {
+				title: "Direct SNI",
+				content: "In this mode, the SNI is used directly as the config address.<br><br><span style='color:var(--accent-warning); font-weight: 500;'>⚠️ It's recommended to use the IP + SNI mode for better connectivity.</span>"
 			},
-			ip_sni: { 
-				title: "IP + SNI", 
-				content: "This mode increases the connection probability by combining healthy IPs with SNIs.<br><br><span style='color:var(--accent-warning); font-weight: 500;'>⚠️ This generates a large number of configs, so test them on a desktop client first.</span>" 
+			ip_sni: {
+				title: "IP + SNI",
+				content: "This mode increases the connection probability by combining healthy IPs with SNIs.<br><br><span style='color:var(--accent-warning); font-weight: 500;'>⚠️ This generates a large number of configs, so test them on a desktop client first.</span>"
 			},
-			parsa: { 
-				title: "Server Selection", 
-				content: "Switch between community-donated servers, define your own custom server connection details, or use G2ray.<br><br><strong>G2ray:</strong> Paste your G2ray Config. The routing mode will be locked to IP + SNI for optimal performance." 
+			parsa: {
+				title: "Server Selection",
+				content: "Switch between community-donated servers, define your own custom server connection details, or use G2ray.<br><br><strong>G2ray:</strong> Paste your G2ray Config. The routing mode will be locked to IP + SNI for optimal performance."
 			}
 		};
 
@@ -1141,34 +1185,18 @@
 			const rect = element.getBoundingClientRect();
 			const centerX = rect.left + rect.width / 2;
 			const centerY = rect.top + rect.height / 2;
-
 			for (let i = 0; i < 14; i++) {
 				const particle = document.createElement('div');
-				particle.style.position = 'fixed';
-				particle.style.left = centerX + 'px';
-				particle.style.top = centerY + 'px';
-				particle.style.width = '7px';
-				particle.style.height = '7px';
-				particle.style.backgroundColor = color;
-				particle.style.borderRadius = '50%';
-				particle.style.pointerEvents = 'none';
-				particle.style.zIndex = '9999';
-				
+				particle.style.cssText = `position:fixed;left:${centerX}px;top:${centerY}px;width:7px;height:7px;background:${color};border-radius:50%;pointer-events:none;z-index:9999;`;
 				document.body.appendChild(particle);
-
 				const angle = Math.random() * Math.PI * 2;
 				const velocity = 20 + Math.random() * 40;
 				const tx = Math.cos(angle) * velocity;
 				const ty = Math.sin(angle) * velocity;
-
 				const animation = particle.animate([
-					{ transform: 'translate(-50%, -50%) scale(1)', opacity: 1 },
-					{ transform: `translate(calc(-50% + ${tx}px), calc(-50% + ${ty}px)) scale(0)`, opacity: 0 }
-				], {
-					duration: 600 + Math.random() * 400,
-					easing: 'cubic-bezier(0.16, 1, 0.3, 1)'
-				});
-
+					{ transform: 'translate(-50%,-50%) scale(1)', opacity: 1 },
+					{ transform: `translate(calc(-50% + ${tx}px),calc(-50% + ${ty}px)) scale(0)`, opacity: 0 }
+				], { duration: 600 + Math.random() * 400, easing: 'cubic-bezier(0.16,1,0.3,1)' });
 				animation.onfinish = () => particle.remove();
 			}
 		}
@@ -1179,10 +1207,9 @@
 		function resetCheckButton() {
 			const btn = document.getElementById("check-domain-btn");
 			const hostElement = document.getElementById("main-host");
-			
 			hostElement.classList.remove('status-success', 'status-error');
 			btn.classList.remove('status-success', 'status-error');
-			btn.innerHTML = `<svg id="check-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>`;
+			btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>`;
 		}
 
 		function handleDomainInput(el) {
@@ -1190,22 +1217,20 @@
 			triggerLiveCount();
 			resetCheckButton();
 			clearTimeout(checkTimeout);
-			
 			const domain = el.value.trim();
 			if (domain) {
-				checkTimeout = setTimeout(() => checkSingleDomain(domain), 1000); 
+				checkTimeout = setTimeout(() => checkSingleDomain(domain), 1000);
 			}
 		}
 
 		async function checkSingleDomain(manualDomain = null) {
 			const hostElement = document.getElementById("main-host");
 			const checkBtn = document.getElementById("check-domain-btn");
-			const domain = manualDomain || hostElement.value.trim();
+			const rawDomain = manualDomain || hostElement.value.trim();
+			// Strip protocol/path to get clean hostname
+			const domain = rawDomain.replace(/^(https?:\/\/)?(www\.)?/, '').split('/')[0];
 
-			if (!domain) {
-				showError(hostElement);
-				return;
-			}
+			if (!domain) { showError(hostElement); return; }
 
 			if (!domain.includes(".")) {
 				hostElement.classList.add("status-error");
@@ -1217,10 +1242,12 @@
 
 			resetCheckButton();
 			checkBtn.disabled = true;
-			checkBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="animation: pulseIcon 1.5s infinite"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>`;
+			checkBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="animation:pulseIcon 1.5s infinite"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>`;
 
 			let isUp = false;
 			try {
+				// BUG FIX: fetch with no-cors resolves for any reachable server (opaque response).
+				// We catch network errors (CORS block on unreachable domains) as "down".
 				await fetch(`https://${domain}`, { method: "HEAD", mode: "no-cors", signal: AbortSignal.timeout(6000) });
 				isUp = true;
 			} catch (err) {
@@ -1248,24 +1275,18 @@
 
 		function animateCountTo(target) {
 			if (currentCount === target) return;
-			
 			const start = currentCount;
 			const change = target - start;
 			const duration = 800;
 			const startTime = performance.now();
-
 			if (countAnimFrame) cancelAnimationFrame(countAnimFrame);
-
 			function updateAnim(currentTime) {
 				let elapsed = currentTime - startTime;
 				if (elapsed > duration) elapsed = duration;
-
 				const t = elapsed / duration;
 				const easeOut = 1 - Math.pow(1 - t, 4);
-
 				currentCount = Math.round(start + change * easeOut);
 				document.getElementById('generate-count-display').innerText = currentCount.toLocaleString();
-
 				if (elapsed < duration) {
 					countAnimFrame = requestAnimationFrame(updateAnim);
 				} else {
@@ -1283,31 +1304,28 @@
 			let serverCount = 0;
 			let domains = [];
 			let ips = [];
-			
+
 			if (configMode === "g2ray") {
 				if (!g2rayExtracted) return 0;
-				
 				const ipInput = document.getElementById("ip-list")?.value.trim() || "";
 				ips = ipInput.split("\n").map(i => i.trim()).filter(Boolean);
-				
-				return ips.length; // 1 server * 1 domain * N IPs
+				return ips.length;
 			} else if (configMode === "custom") {
-				const cName = document.getElementById("custom-name").value.trim();
-				const cAddr = document.getElementById("custom-address").value.trim();
-				const cUser = document.getElementById("custom-user").value.trim();
-				const cPath = document.getElementById("custom-path").value.trim();
+				const cName    = document.getElementById("custom-name").value.trim();
+				const cAddr    = document.getElementById("custom-address").value.trim();
+				const cUser    = document.getElementById("custom-user").value.trim();
+				const cPath    = document.getElementById("custom-path").value.trim();
 				if (cName && cAddr && cUser && cPath) serverCount = 1;
 			} else {
 				serverCount = document.querySelectorAll('input[name="server-choice"]:checked').length;
 			}
-			
+
 			const sniInput = document.getElementById("domain-list").value.trim();
-			const ipInput = document.getElementById("ip-list").value.trim();
+			const ipInput  = document.getElementById("ip-list").value.trim();
 			domains = sniInput.split("\n").map(d => d.trim()).filter(Boolean);
-			ips = ipInput.split("\n").map(i => i.trim()).filter(Boolean);
-			
+			ips     = ipInput.split("\n").map(i => i.trim()).filter(Boolean);
+
 			if (serverCount === 0 || domains.length === 0) return 0;
-			
 			if (netlifyMode === "shecan") {
 				if (ips.length === 0) return 0;
 				return serverCount * domains.length * ips.length;
@@ -1329,14 +1347,16 @@
 				const label = document.createElement('label');
 				const statusClass = srv.status === 'down' ? 'down' : 'working';
 				const statusTitle = srv.status === 'down' ? 'Server is Down' : 'Server is Working';
-
 				label.innerHTML = `
 					<input type="checkbox" name="server-choice" value="${index}" />
 					<img src="https://cdn.jsdelivr.net/gh/hatscripts/circle-flags@gh-pages/flags/${srv.flag}" onerror="this.style.display='none'" />
 					${srv.name}
 					<span class="status-dot ${statusClass}" title="${statusTitle}"></span>
 				`;
-				label.querySelector('input').addEventListener('change', triggerLiveCount);
+				label.querySelector('input').addEventListener('change', () => {
+					triggerLiveCount();
+					syncSelectAllState();
+				});
 				container.appendChild(label);
 			});
 
@@ -1355,7 +1375,6 @@
 		// ─── MODE SETTERS ─────────────────────────────────────────────────────────────
 		function updateLeftPanelState() {
 			document.querySelectorAll('.dynamic-state').forEach(el => el.classList.remove('active'));
-
 			if (configMode === 'custom') {
 				document.getElementById('state-custom').classList.add('active');
 			} else if (configMode === 'g2ray') {
@@ -1367,86 +1386,72 @@
 		}
 
 		function setConfigMode(mode) {
+			const prevMode = configMode;
 			configMode = mode;
-			
+
 			document.querySelectorAll("#netlify-config-type .pill-tab").forEach(b => b.classList.remove("active"));
-			
 			const btn = document.getElementById(`btn-${mode}`);
 			if (btn) btn.classList.add("active");
-			
-			const sniGroup = document.getElementById('sni-group');
-			
+
+			const sniGroup   = document.getElementById('sni-group');
+			const domainInput = document.getElementById('main-host');
+			const labelText  = document.getElementById('domain-label-text');
+			const shecanBtn  = document.getElementById('btn-shecan');
+			const normalBtn  = document.getElementById('btn-normal');
+
 			if (mode === 'g2ray') {
+				// Lock routing to shecan, hide SNI group
 				setNetlifyMode('shecan');
-				
-				const shecanBtn = document.getElementById('btn-shecan');
-				const normalBtn = document.getElementById('btn-normal');
-				if (shecanBtn) {
-					shecanBtn.disabled = true;
-					shecanBtn.style.opacity = '0.5';
-					shecanBtn.style.cursor = 'not-allowed';
-				}
-				if (normalBtn) {
-					normalBtn.disabled = true;
-					normalBtn.style.opacity = '0.5';
-					normalBtn.style.cursor = 'not-allowed';
-				}
-				
+				if (shecanBtn) { shecanBtn.disabled = true; shecanBtn.style.opacity = '0.5'; shecanBtn.style.cursor = 'not-allowed'; }
+				if (normalBtn) { normalBtn.disabled = true; normalBtn.style.opacity = '0.5'; normalBtn.style.cursor = 'not-allowed'; }
 				if (sniGroup) sniGroup.style.display = 'none';
-				
-				const labelText = document.getElementById('domain-label-text');
 				if (labelText) labelText.textContent = 'Extracted Domain/SNI';
+				// Reset domain input for g2ray — will be filled by extractor
+				if (domainInput) { domainInput.readOnly = false; domainInput.classList.remove('status-success'); domainInput.value = ''; }
+				// Re-run extractor in case there's already text in the textarea
+				extractG2rayConfig();
 			} else {
-				const shecanBtn = document.getElementById('btn-shecan');
-				const normalBtn = document.getElementById('btn-normal');
-				if (shecanBtn) {
-					shecanBtn.disabled = false;
-					shecanBtn.style.opacity = '1';
-					shecanBtn.style.cursor = 'pointer';
-				}
-				if (normalBtn) {
-					normalBtn.disabled = false;
-					normalBtn.style.opacity = '1';
-					normalBtn.style.cursor = 'pointer';
-				}
-				
+				// Unlock routing buttons and show SNI group
+				if (shecanBtn) { shecanBtn.disabled = false; shecanBtn.style.opacity = '1'; shecanBtn.style.cursor = 'pointer'; }
+				if (normalBtn) { normalBtn.disabled = false; normalBtn.style.opacity = '1'; normalBtn.style.cursor = 'pointer'; }
 				if (sniGroup) sniGroup.style.display = 'flex';
-				
-				const domainInput = document.getElementById('main-host');
-				if (domainInput) {
-					domainInput.readOnly = false;
-					domainInput.classList.remove('status-success');
-					if (mode !== 'g2ray') domainInput.value = '';
-				}
-				
-				const labelText = document.getElementById('domain-label-text');
 				if (labelText) labelText.textContent = 'Netlify Domain';
+
+				// BUG FIX: only clear domain input when transitioning FROM g2ray mode
+				if (prevMode === 'g2ray') {
+					if (domainInput) {
+						domainInput.readOnly = false;
+						domainInput.classList.remove('status-success');
+						domainInput.value = '';
+					}
+					// Reset g2ray state
+					g2rayExtracted = null;
+					g2rayOriginalRemark = null;
+					const g2rayInput = document.getElementById('g2ray-config-input');
+					if (g2rayInput) { g2rayInput.value = ''; g2rayInput.classList.remove('status-success'); }
+				}
 			}
-			
+
 			updateLeftPanelState();
 		}
 
 		function setNetlifyMode(mode) {
 			netlifyMode = mode;
-			
 			document.querySelectorAll("#netlify-options .pill-tab").forEach(b => b.classList.remove("active"));
-			
 			const btn = document.getElementById(`btn-${mode}`);
 			if (btn) btn.classList.add("active");
-			
 			const ipWrapper = document.getElementById("ip-wrapper");
 			if (mode === "shecan") ipWrapper.classList.remove('collapsed');
 			else ipWrapper.classList.add('collapsed');
-			
 			triggerLiveCount();
 		}
 
 		// ─── LOAD DEFAULTS ────────────────────────────────────────────────────────────
 		function loadDefaultDomains() { setInputValue("domain-list", netlifyMode === "shecan" ? payloadData.netlify_shecan.defaults : payloadData.netlify_normal.defaults); triggerLiveCount(); }
-		function loadDefaultIps() { setInputValue("ip-list", payloadData.netlify_shecan.ips); triggerLiveCount(); }
-		function loadBestDomains() { setInputValue("domain-list", payloadData.Best_domains); triggerLiveCount(); }
-		function loadBestIps() { setInputValue("ip-list", payloadData.Best_ips); triggerLiveCount(); }
-		
+		function loadDefaultIps()    { setInputValue("ip-list", payloadData.netlify_shecan.ips); triggerLiveCount(); }
+		function loadBestDomains()   { setInputValue("domain-list", payloadData.Best_domains); triggerLiveCount(); }
+		function loadBestIps()       { setInputValue("ip-list", payloadData.Best_ips); triggerLiveCount(); }
+
 		function setInputValue(id, arr) {
 			const el = document.getElementById(id);
 			if (!el) return;
@@ -1463,15 +1468,16 @@
 		}
 
 		// ─── ERROR DISPLAY ────────────────────────────────────────────────────────────
+		// BUG FIX: unified removal for both regular inputs and container divs (change bubbles from children)
 		function showError(element) {
 			if (!element) return;
 			element.classList.add("error-border");
 			const removeError = () => {
 				element.classList.remove("error-border");
-				element.removeEventListener("input", removeError);
+				element.removeEventListener("input",  removeError);
 				element.removeEventListener("change", removeError);
 			};
-			element.addEventListener("input", removeError);
+			element.addEventListener("input",  removeError);
 			element.addEventListener("change", removeError);
 		}
 
@@ -1481,7 +1487,7 @@
 			const hostElement = document.getElementById("main-host");
 			const sniElement  = document.getElementById("domain-list");
 			const ipElement   = document.getElementById("ip-list");
-			
+
 			const rawHost = hostElement.value.trim();
 			const host = rawHost.replace(/^(https?:\/\/)?(www\.)?/, "").split("/")[0].replace(/[^a-zA-Z0-9.-]/g, "");
 
@@ -1494,7 +1500,6 @@
 					showError(document.getElementById("g2ray-config-input"));
 					hasError = true;
 				}
-				
 				const ipInput = ipElement.value.trim();
 				if (!ipInput) {
 					showError(ipElement);
@@ -1502,15 +1507,9 @@
 				} else {
 					ips = ipInput.split("\n").map(i => i.trim().replace(/[^a-fA-F0-9.:]/g, "")).filter(Boolean);
 				}
-
 				if (!hasError) {
-					selectedServers.push({
-						name: "G2ray",
-						address: g2rayExtracted.host + ":443", // dummy mapping
-						user: g2rayExtracted.uuid,
-						path: "/"
-					});
-					domains = [g2rayExtracted.sni]; // Set up dummy domain for processing structure
+					selectedServers.push({ name: "G2ray", address: "", user: g2rayExtracted.uuid, path: "/" });
+					domains = [g2rayExtracted.sni];
 				}
 			} else {
 				const sniInput = sniElement.value.trim();
@@ -1518,18 +1517,14 @@
 
 				if (!host) { showError(hostElement); hasError = true; }
 				if (!sniInput) { showError(sniElement); hasError = true; }
-				
+
 				if (netlifyMode === "shecan") {
-					if (!ipInput) { 
-						showError(ipElement); 
-						hasError = true; 
-					} else {
-						ips = ipInput.split("\n").map(i => i.trim().replace(/[^a-fA-F0-9.:]/g, "")).filter(Boolean);
-					}
+					if (!ipInput) { showError(ipElement); hasError = true; }
+					else { ips = ipInput.split("\n").map(i => i.trim().replace(/[^a-fA-F0-9.:]/g, "")).filter(Boolean); }
 				}
-				
+
 				domains = sniInput.split("\n").map(d => d.trim().replace(/[^a-zA-Z0-9.-]/g, "")).filter(Boolean);
-				
+
 				if (configMode === "custom") {
 					const customName    = document.getElementById("custom-name").value.trim();
 					const customAddress = document.getElementById("custom-address").value.trim();
@@ -1543,10 +1538,10 @@
 
 					if (!hasError) {
 						selectedServers.push({
-							name:    customName, 
-							address: customAddress, 
-							user:    customUser,
-							path:    customPath.startsWith("/") ? customPath : "/" + customPath,
+							name: customName,
+							address: customAddress,
+							user: customUser,
+							path: customPath.startsWith("/") ? customPath : "/" + customPath,
 						});
 					}
 				} else {
@@ -1562,7 +1557,7 @@
 					}
 				}
 			}
-			
+
 			if (hasError) return null;
 			return { host, domains, ips, selectedServers };
 		}
@@ -1571,14 +1566,15 @@
 		function generateConfigs() {
 			const inputs = getInputs();
 			if (!inputs) return;
-			
+
 			const { host, domains, ips, selectedServers } = inputs;
 			let results = [];
 			let g2rayCounter = 1;
-			
+
 			selectedServers.forEach(srv => {
 				const { user, path, address: serverAddress, name: serverName } = srv;
-				
+
+				// ── G2ray mode ──
 				if (serverName === "G2ray") {
 					ips.forEach(ip => {
 						const { sni, host: g2rayHost } = g2rayExtracted;
@@ -1589,10 +1585,11 @@
 					});
 					return;
 				}
-				
+
+				// ── Donated / Custom servers ──
 				let extraData = {};
 				const isParsa = serverName.toLowerCase().includes("parsa");
-				
+
 				if (isParsa) {
 					extraData = {
 						xPaddingBytes: "10-50",
@@ -1608,27 +1605,29 @@
 						xPaddingObfsMode: true,
 						scMaxEachPostBytes: "1000000",
 						xPaddingKey: "iran",
-						xPaddingHeader: "iran"
+						xPaddingHeader: "iran",
+						headers: { "x-host": serverAddress }
 					};
-					if (appVersion === "1.1.0" || appVersion === "1.0.1") extraData.headers = { "x-host": serverAddress };
 				}
-				
+
 				const encodedExtra = encodeURIComponent(JSON.stringify(extraData));
 				const encodedPath  = encodeURIComponent(path);
-				
+
 				domains.forEach(sni => {
 					if (netlifyMode === "shecan") {
 						ips.forEach(ip => {
-							const remark = encodeURIComponent(`🌐 @IR_NETLIFY | ${sni} | ${ip} | ${serverName}`);
+							// CHANGED: @IR_NETLIFY → @CodeLeafy
+							const remark = encodeURIComponent(`🌐 @CodeLeafy | ${sni} | ${ip} | ${serverName}`);
 							results.push(`vless://${user}@${ip}:443?encryption=none&security=tls&sni=${sni}&fp=chrome&alpn=h2%2Chttp%2F1.1&insecure=1&allowInsecure=1&type=xhttp&host=${host}&path=${encodedPath}&mode=auto&extra=${encodedExtra}#${remark}`);
 						});
 					} else {
-						const remark = encodeURIComponent(`🌐 @IR_NETLIFY | ${sni} | ${serverName}`);
+						// CHANGED: @IR_NETLIFY → @CodeLeafy
+						const remark = encodeURIComponent(`🌐 @CodeLeafy | ${sni} | ${serverName}`);
 						results.push(`vless://${user}@${sni}:443?encryption=none&security=tls&sni=${sni}&fp=chrome&alpn=h2%2Chttp%2F1.1&insecure=1&allowInsecure=1&type=xhttp&host=${host}&path=${encodedPath}&mode=auto&extra=${encodedExtra}#${remark}`);
 					}
 				});
 			});
-			
+
 			if (results.length === 0) return;
 
 			document.getElementById("modal-result-area").value = results.join("\n");
@@ -1636,7 +1635,6 @@
 			document.getElementById("modal-result-area").classList.add("blurred");
 			document.getElementById("result-blur-overlay").classList.remove("hidden");
 			document.getElementById("modal-import-btn").style.display = "block";
-			
 			document.getElementById("configModal").classList.add("active");
 		}
 
@@ -1644,9 +1642,9 @@
 		function updateXhttpConfigs() {
 			const inputConfigsText = document.getElementById("xhttp-config-input").value.trim();
 			if (!inputConfigsText) return;
-			
+
 			const inputConfigs = inputConfigsText.split('\n').filter(Boolean);
-			
+
 			const paddingBytes = document.getElementById("xhttp-pad-bytes").value.trim();
 			const obfsMode     = document.getElementById("xhttp-obfs-mode").value === "true";
 			const postBytes    = document.getElementById("xhttp-post-bytes").value.trim();
@@ -1656,7 +1654,7 @@
 
 			let parsedHeaders = {};
 			if (headersJson) {
-				try { parsedHeaders = JSON.parse(headersJson); } 
+				try { parsedHeaders = JSON.parse(headersJson); }
 				catch (e) { alert("Invalid JSON in Custom Headers field."); return; }
 			}
 
@@ -1664,16 +1662,13 @@
 
 			inputConfigs.forEach(config => {
 				if (!config.startsWith("vless://")) { results.push(config); return; }
-
 				try {
 					const [main, hash] = config.split('#');
 					const [base, qs]   = main.split('?');
-					
 					if (!qs) { results.push(config); return; }
 
 					const params = new URLSearchParams(qs);
 					let extra = {};
-					
 					if (params.has("extra")) {
 						try { extra = JSON.parse(decodeURIComponent(params.get("extra"))); } catch (e) {}
 					}
@@ -1683,14 +1678,11 @@
 					if (postBytes)    extra.scMaxEachPostBytes = postBytes;
 					if (padKey)       extra.xPaddingKey        = padKey;
 					if (padHeader)    extra.xPaddingHeader     = padHeader;
-					
 					if (Object.keys(parsedHeaders).length > 0) extra.headers = { ...extra.headers, ...parsedHeaders };
 
 					params.set("extra", encodeURIComponent(JSON.stringify(extra)));
-					
 					let newConfig = `${base}?${params.toString().replace(/\+/g, '%20')}`;
 					if (hash) newConfig += `#${hash}`;
-					
 					results.push(newConfig);
 				} catch (err) {
 					results.push(config);
@@ -1702,14 +1694,12 @@
 			document.getElementById("modal-result-area").classList.add("blurred");
 			document.getElementById("result-blur-overlay").classList.remove("hidden");
 			document.getElementById("modal-import-btn").style.display = "none";
-			
 			document.getElementById("configModal").classList.add("active");
 		}
-		
+
 		function importToXhttpEditor() {
 			const text = document.getElementById("modal-result-area").value;
 			if (!text) return;
-			
 			document.getElementById("xhttp-config-input").value = text;
 			closeConfigModal();
 			switchView('xhttp-editor');
@@ -1724,11 +1714,9 @@
 			const text = document.getElementById("modal-result-area").value;
 			const btn  = document.getElementById("modal-copy-btn");
 			const originalHtml = btn.innerHTML;
-			
 			if (!text) return;
 
 			let copySuccess = false;
-			
 			try {
 				if (navigator.clipboard && window.isSecureContext) {
 					await navigator.clipboard.writeText(text);
@@ -1736,19 +1724,15 @@
 				} else {
 					const ta = document.createElement("textarea");
 					ta.value = text;
-					ta.style.position = "fixed";
-					ta.style.left = "-9999px";
+					ta.style.cssText = "position:fixed;left:-9999px;";
 					document.body.appendChild(ta);
 					ta.select();
 					copySuccess = document.execCommand("copy");
 					document.body.removeChild(ta);
 				}
-			} catch (err) {
-				copySuccess = false;
-			}
-			
+			} catch (err) { copySuccess = false; }
+
 			if (copySuccess) spawnParticles(btn, '#10b981');
-			
 			btn.innerHTML = copySuccess ? "Copied ✓" : "Failed";
 			setTimeout(() => btn.innerHTML = originalHtml, 2000);
 		}
@@ -1756,7 +1740,6 @@
 		function downloadConfigs() {
 			const text = document.getElementById("modal-result-area").value;
 			if (!text) return;
-
 			try {
 				const blob = new Blob([text], { type: "text/plain" });
 				const url  = URL.createObjectURL(blob);
@@ -1767,7 +1750,7 @@
 				const dd = String(ds.getDate()).padStart(2, '0');
 				const hh = String(ds.getHours()).padStart(2, '0');
 				const mi = String(ds.getMinutes()).padStart(2, '0');
-				a.download = `Configs_${ds.getFullYear()}${mm}${dd}_${hh}${mi}.txt`;
+				a.download = `NetLeafy_Configs_${ds.getFullYear()}${mm}${dd}_${hh}${mi}.txt`;
 				document.body.appendChild(a);
 				a.click();
 				document.body.removeChild(a);
@@ -1779,7 +1762,6 @@
 		function showInfo(event, key) {
 			event.stopPropagation();
 			const modal = document.getElementById("infoModal");
-			
 			if (infoTexts[key]) {
 				document.getElementById("infoModalTitle").innerHTML = infoTexts[key].title;
 				document.getElementById("infoModalBody").innerHTML  = infoTexts[key].content;
@@ -1787,7 +1769,7 @@
 			}
 		}
 
-		function closeInfoModal() { 
+		function closeInfoModal() {
 			const modal = document.getElementById("infoModal");
 			modal.style.opacity = '0';
 			setTimeout(() => { modal.classList.remove("active"); modal.style.opacity = ''; }, 300);
@@ -1804,14 +1786,13 @@
 		// ─── INIT ─────────────────────────────────────────────────────────────────────
 		window.onload = () => {
 			renderServerCheckboxes();
-			
+
 			['domain-list', 'ip-list', 'custom-name', 'custom-address', 'custom-user', 'custom-path'].forEach(id => {
 				const el = document.getElementById(id);
 				if (el) el.addEventListener('input', triggerLiveCount);
 			});
 
 			setPlatform('netlify');
-			setAppVersion('1.1.0');
 			setNetlifyMode("shecan");
 			setConfigMode("default");
 		};
