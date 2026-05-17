@@ -232,10 +232,10 @@
 		@media (hover: hover) { .credit-link:hover { color: var(--text-primary); } }
 
 		.theme-switch {
-			position: fixed; top: 32px; right: 48px; z-index: 9999;
+			position: absolute; top: 32px; right: 48px; z-index: 1000;
 			display: flex; justify-content: center; direction: rtl;
 		}
-		@media (max-width: 850px) { .theme-switch { top: calc(24px + env(safe-area-inset-top)); right: 80px; } }
+		@media (max-width: 850px) { .theme-switch { top: calc(24px + env(safe-area-inset-top)); right: 80px; z-index: 999; } }
 
 		#theme-checkbox { display: none; }
 		#theme-checkbox + label {
