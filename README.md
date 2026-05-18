@@ -61,18 +61,6 @@ Access the generator immediately at: **[Code-Leafy.github.io/NetLeafy](https://C
 2. Locate the `index.html` file.
 3. Open it in any modern web browser.
 
----
-
-## Architecture
-
-```mermaid
-graph LR
-    A[User Client] -- "xHTTP (TLS)" --> B[Netlify Edge Node]
-    B -- "Proxy Pass" --> C[V2ray/Xray Backend]
-    C -- "Unrestricted" --> D[Global Web]
-    style B fill:#10B981,stroke:#0f766e,color:#fff
-```
-
 <details>
 <summary><kbd>📁</kbd> Project Structure</summary>
 
