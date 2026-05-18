@@ -1797,5 +1797,157 @@
 			setConfigMode("default");
 		};
 	</script>
+
+	<!-- GitHub Star Notification -->
+	<style>
+		#gh-star-toast {
+			position: fixed;
+			top: -130px;
+			left: 50%;
+			transform: translateX(-50%);
+			z-index: 99999;
+			background: var(--bg-card);
+			border: 1px solid var(--border-main);
+			color: var(--text-primary);
+			padding: 14px 18px;
+			border-radius: 16px;
+			box-shadow: var(--shadow-lg);
+			display: flex;
+			align-items: center;
+			gap: 14px;
+			font-family: 'Inter', -apple-system, sans-serif;
+			font-size: 0.9rem;
+			font-weight: 500;
+			white-space: nowrap;
+			transition: top 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+			cursor: pointer;
+			text-decoration: none;
+			max-width: calc(100vw - 32px);
+		}
+		#gh-star-toast:hover {
+			background: var(--bg-hover);
+			border-color: var(--accent-primary);
+			box-shadow: 0 12px 40px rgba(0,0,0,0.15), 0 0 0 3px rgba(20,184,166,0.15);
+		}
+		#gh-star-toast .gh-toast-icon {
+			width: 36px;
+			height: 36px;
+			border-radius: 10px;
+			background: var(--bg-success-ultralight);
+			border: 1px solid var(--border-success-light);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-shrink: 0;
+		}
+		#gh-star-toast .gh-toast-icon svg {
+			width: 18px;
+			height: 18px;
+			color: var(--accent-success);
+			fill: var(--accent-success);
+		}
+		#gh-star-toast .gh-toast-text {
+			display: flex;
+			flex-direction: column;
+			gap: 2px;
+			min-width: 0;
+		}
+		#gh-star-toast .gh-toast-title {
+			font-weight: 700;
+			font-size: 0.9rem;
+			color: var(--text-primary);
+		}
+		#gh-star-toast .gh-toast-sub {
+			font-size: 0.75rem;
+			color: var(--text-secondary);
+		}
+		#gh-star-toast .gh-star-badge {
+			display: flex;
+			align-items: center;
+			gap: 5px;
+			background: var(--bg-input);
+			border: 1px solid var(--border-main);
+			border-radius: 8px;
+			padding: 5px 10px;
+			font-size: 0.8rem;
+			font-weight: 700;
+			color: var(--text-secondary);
+			flex-shrink: 0;
+			transition: all 0.2s;
+		}
+		#gh-star-toast .gh-star-badge svg {
+			width: 13px;
+			height: 13px;
+			color: var(--accent-success);
+			fill: var(--accent-success);
+		}
+		#gh-star-toast .gh-star-badge.loaded {
+			color: var(--text-success-dark);
+			background: var(--bg-success-ultralight);
+			border-color: var(--border-success-light);
+		}
+		#gh-star-toast .gh-toast-arrow {
+			width: 16px;
+			height: 16px;
+			color: var(--text-secondary);
+			flex-shrink: 0;
+			margin-left: 2px;
+		}
+		@media (max-width: 480px) {
+			#gh-star-toast { padding: 12px 14px; gap: 10px; }
+			#gh-star-toast .gh-toast-sub { display: none; }
+		}
+	</style>
+
+	<div id="gh-star-toast" onclick="window.open('https://github.com/Code-Leafy/NetLeafy/tree/main','_blank')">
+		<div class="gh-toast-icon">
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="none">
+				<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+			</svg>
+		</div>
+		<div class="gh-toast-text">
+			<span class="gh-toast-title">Star NetLeafy on GitHub</span>
+			<span class="gh-toast-sub">github.com/Code-Leafy/NetLeafy</span>
+		</div>
+		<div class="gh-star-badge" id="gh-star-count">
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="none">
+				<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+			</svg>
+			<span id="gh-star-num">—</span>
+		</div>
+		<svg class="gh-toast-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+			<polyline points="9 18 15 12 9 6"/>
+		</svg>
+	</div>
+
+	<script>
+		(function() {
+			var toast = document.getElementById('gh-star-toast');
+			var starNum = document.getElementById('gh-star-num');
+			var starBadge = document.getElementById('gh-star-count');
+
+			fetch('https://api.github.com/repos/Code-Leafy/NetLeafy')
+				.then(function(r) { return r.json(); })
+				.then(function(data) {
+					if (data && typeof data.stargazers_count === 'number') {
+						var count = data.stargazers_count;
+						starNum.textContent = count >= 1000
+							? (count / 1000).toFixed(1).replace(/\.0$/, '') + 'k'
+							: count;
+						starBadge.classList.add('loaded');
+					}
+				})
+				.catch(function() {});
+
+			function showToast() {
+				toast.style.top = '20px';
+				setTimeout(function() {
+					toast.style.top = '-130px';
+				}, 30000);
+			}
+			setTimeout(showToast, 1500);
+			setInterval(showToast, 120000);
+		})();
+	</script>
 </body>
 </html>
