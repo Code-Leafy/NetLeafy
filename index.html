@@ -235,7 +235,7 @@
 			position: absolute; top: 32px; right: 48px; z-index: 1000;
 			display: flex; justify-content: center; direction: rtl;
 		}
-		@media (max-width: 850px) { .theme-switch { top: calc(24px + env(safe-area-inset-top)); right: 80px; z-index: 999; } }
+		@media (max-width: 850px) { .theme-switch { position: fixed; top: calc(24px + env(safe-area-inset-top)); right: 80px; z-index: 1005; } }
 
 		#theme-checkbox { display: none; }
 		#theme-checkbox + label {
