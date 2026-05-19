@@ -257,16 +257,6 @@
 		#theme-checkbox + label span:first-of-type { color: #3a3a3a; }
 		#theme-checkbox + label span:last-of-type { color: #cecece; }
 
-		.notification-toast {
-			position: fixed; top: -100px; left: 50%; transform: translateX(-50%);
-			background: var(--accent-success); color: white; padding: 16px 24px;
-			border-radius: 12px; box-shadow: var(--shadow-lg); font-weight: 600;
-			font-size: 0.95rem; z-index: 10000; display: flex; align-items: center;
-			gap: 12px; transition: top 0.5s var(--ease-out-expo);
-		}
-		.notification-toast.show { top: 24px; }
-		.notification-toast svg { width: 20px; height: 20px; flex-shrink: 0; }
-
 		.main-wrapper {
 			flex: 1; display: flex; flex-direction: column; position: relative; overflow: hidden;
 			background-image: repeating-linear-gradient(var(--border-main) 0 1px, transparent 1px 100%), repeating-linear-gradient(90deg, var(--border-main) 0 1px, transparent 1px 100%);
@@ -606,11 +596,6 @@
 				</svg>
 			</span>
 		</label>
-	</div>
-
-	<div class="notification-toast" id="notification-toast">
-		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-		<span id="notification-text">Data extracted!</span>
 	</div>
 
 	<div class="app-container">
@@ -1011,17 +996,6 @@
 		let g2rayExtracted = null;
 		let g2rayOriginalRemark = null;
 
-		// ─── NOTIFICATION ─────────────────────────────────────────────────────────────
-		function showNotification(message) {
-			const toast = document.getElementById('notification-toast');
-			const text = document.getElementById('notification-text');
-			if (toast && text) {
-				text.textContent = message;
-				toast.classList.add('show');
-				setTimeout(() => toast.classList.remove('show'), 3000);
-			}
-		}
-
 		// ─── G2RAY FUNCTIONS ──────────────────────────────────────────────────────────
 		function extractG2rayConfig() {
 			const input = document.getElementById('g2ray-config-input');
@@ -1053,7 +1027,6 @@
 							document.getElementById('domain-label-text').textContent = 'Extracted Domain/SNI';
 						}
 						
-						showNotification('G2ray Config parsed successfully!');
 						triggerLiveCount();
 						return;
 					}
@@ -1803,8 +1776,9 @@
 		#gh-star-toast {
 			position: fixed;
 			top: -130px;
-			left: 50%;
-			transform: translateX(-50%);
+			right: 140px;
+			left: auto;
+			transform: none;
 			z-index: 99999;
 			background: var(--bg-card);
 			border: 1px solid var(--border-main);
@@ -1894,7 +1868,7 @@
 			margin-left: 2px;
 		}
 		@media (max-width: 480px) {
-			#gh-star-toast { padding: 12px 14px; gap: 10px; }
+			#gh-star-toast { padding: 12px 14px; gap: 10px; right: 70px; }
 			#gh-star-toast .gh-toast-sub { display: none; }
 		}
 	</style>
