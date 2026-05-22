@@ -699,7 +699,7 @@
 			<div class="page-content">
 				<header class="page-header">
 					<div class="header-title">
-						<h1>NetLeafy Generator <span class="version-badge">V1.2.0</span></h1>
+						<h1>NetLeafy Generator <span class="version-badge">V1.2.2</span></h1>
 						<p>Generate netlify configs to bypass restrictions.</p>
 					</div>
 				</header>
@@ -858,6 +858,70 @@
 								<label>xPaddingHeader</label>
 								<input id="xhttp-pad-header" type="text" placeholder="e.g. iran" value="iran" />
 							</div>
+
+							<div class="form-group">
+								<label>mode</label>
+								<select id="xhttp-mode">
+									<option value="auto" selected>auto</option>
+									<option value="stream-up">stream-up</option>
+									<option value="stream-one">stream-one</option>
+									<option value="packet-up">packet-up</option>
+								</select>
+							</div>
+
+							<div class="form-group">
+								<label>security</label>
+								<select id="xhttp-security">
+									<option value="">(keep original)</option>
+									<option value="tls" selected>tls</option>
+									<option value="reality">reality</option>
+									<option value="none">none</option>
+								</select>
+							</div>
+
+							<div class="form-group">
+								<label>fingerprint (fp)</label>
+								<select id="xhttp-fp">
+									<option value="">(keep original)</option>
+									<option value="chrome" selected>chrome</option>
+									<option value="firefox">firefox</option>
+									<option value="safari">safari</option>
+									<option value="ios">ios</option>
+									<option value="android">android</option>
+									<option value="edge">edge</option>
+									<option value="360">360</option>
+									<option value="qq">qq</option>
+									<option value="random">random</option>
+									<option value="randomized">randomized</option>
+								</select>
+							</div>
+
+							<div class="form-group">
+								<label>alpn</label>
+								<select id="xhttp-alpn">
+									<option value="">(keep original)</option>
+									<option value="h2,http/1.1" selected>h2, http/1.1</option>
+									<option value="h2">h2 only</option>
+									<option value="http/1.1">http/1.1 only</option>
+								</select>
+							</div>
+
+							<div class="form-group">
+								<label>encryption</label>
+								<select id="xhttp-encryption">
+									<option value="">(keep original)</option>
+									<option value="none" selected>none</option>
+								</select>
+							</div>
+
+							<div class="form-group">
+								<label>allowInsecure / insecure</label>
+								<select id="xhttp-allow-insecure">
+									<option value="">(keep original)</option>
+									<option value="allow" selected>Allow</option>
+									<option value="disallow">Disallow</option>
+								</select>
+							</div>
 							
 							<div class="form-group">
 								<label>Custom Headers (JSON)</label>
@@ -956,40 +1020,40 @@
 		});
 
 		// ─── SERVER LIST ──────────────────────────────────────────────────────────────
-		// Synced with IR_NETLIFY V9.6.6 — updated addresses, new servers added
 		const SERVER_LIST = [
 			{ name: "Parsa",      address: "netlify.parsashonam.sbs:444",          path: "/p4r34m",      user: "Telegram-Parsashonam",                  flag: "de.svg", status: "working" },
-			{ name: "Xarheon",    address: "panel.xarheon.cn.mt",                  path: "/cdn2",        user: "f9b57060-989a-4d6d-bc58-53d767242968",  flag: "nl.svg", status: "working" },
-			{ name: "Behnam",     address: "https://s1.onesrv98.eu.cc:444",        path: "/mine",        user: "a5c04120-8f0d-4d52-8cdd-9ffff79a777d",  flag: "se.svg", status: "working" },
-			{ name: "Saman 1",   address: "65.109.216.19:444",                     path: "/IR-NETLIFY",  user: "%40IR_NETLIFY",                         flag: "fi.svg", status: "working" },
+			{ name: "Xarheon",    address: "panel.xarheon.cn.mt",                  path: "/cdn2",        user: "f9b57060-989a-4d6d-bc58-53d767242968",  flag: "nl.svg", status: "down" },
+			{ name: "Behnam",     address: "https://s1.onesrv98.eu.cc:444",        path: "/mine",        user: "a5c04120-8f0d-4d52-8cdd-9ffff79a777d",  flag: "se.svg", status: "down" },
+			{ name: "Saman 1",   address: "65.109.216.19:444",                     path: "/IR-NETLIFY",  user: "%40IR_NETLIFY",                         flag: "fi.svg", status: "down" },
 			{ name: "Alwinbalot", address: "http://46.8.229.114:444",              path: "/IR-NETLIFY",  user: "%40IR_NETLIFY",                         flag: "nl.svg", status: "working" },
-			{ name: "Mostafa",   address: "http://1.gymnation.ir:444",             path: "/IR-NETLIFY",  user: "%40IR_NETLIFY",                         flag: "fi.svg", status: "working" },
+			{ name: "Mostafa",   address: "http://1.gymnation.ir:444",             path: "/IR-NETLIFY",  user: "%40IR_NETLIFY",                         flag: "fi.svg", status: "down" },
 			{ name: "Farshid",   address: "http://aa.websooj.site:444",            path: "/IR-NETLIFY",  user: "%40IR_NETLIFY",                         flag: "de.svg", status: "working" },
 			{ name: "Mohsen",    address: "150.241.91.212:444",                    path: "/IR-NETLIFY",  user: "%40IR_NETLIFY",                         flag: "de.svg", status: "working" },
 			{ name: "Ali",       address: "http://185.181.208.92:444",             path: "/IR-NETLIFY",  user: "%40IR_NETLIFY",                         flag: "tr.svg", status: "working" },
 			{ name: "Shabgard",  address: "http://cdn.lindasannp.com:444",         path: "/IR-NETLIFY",  user: "%40IR_NETLIFY",                         flag: "de.svg", status: "working" },
-			{ name: "Saman 2",   address: "https://ppp.sam4.lol:30903",            path: "/asekhi",      user: "132f0ba3-ebbe-4153-84ff-63161b841ed8",  flag: "us.svg", status: "working" },
+			{ name: "Saman 2",   address: "https://ppp.sam4.lol:30903",            path: "/asekhi",      user: "132f0ba3-ebbe-4153-84ff-63161b841ed8",  flag: "us.svg", status: "down" },
 			{ name: "Pouya",     address: "http://76.13.14.51:444",                path: "/IR-NETLIFY",  user: "%40IR_NETLIFY",                         flag: "de.svg", status: "working" },
-			{ name: "Masoud",    address: "http://104.234.135.93:444",             path: "/IR-NETLIFY",  user: "%40IR_NETLIFY",                         flag: "ca.svg", status: "working" },
+			{ name: "Masoud",    address: "http://104.234.135.93:444",             path: "/IR-NETLIFY",  user: "%40IR_NETLIFY",                         flag: "ca.svg", status: "down" },
 			{ name: "Navid",     address: "https://irnetlify.navtechz.com:444",    path: "/IR-NETLIFY",  user: "%40IR_NETLIFY",                         flag: "de.svg", status: "working" },
-			{ name: "AbolUp",    address: "http://sub.abolup.online:444",          path: "/IR-NETLIFY",  user: "%40IR_NETLIFY",                         flag: "us.svg", status: "working" },
-			{ name: "Hossein",   address: "http://str.fiathusen.homes:444",        path: "/IR-NETLIFY",  user: "598cbaec-00f6-4d84-8644-b35fdcec6904",  flag: "de.svg", status: "working" },
+			{ name: "AbolUp",    address: "http://sub.abolup.online:444",          path: "/IR-NETLIFY",  user: "%40IR_NETLIFY",                         flag: "us.svg", status: "down" },
+			{ name: "Hossein",   address: "http://str.fiathusen.homes:444",        path: "/IR-NETLIFY",  user: "598cbaec-00f6-4d84-8644-b35fdcec6904",  flag: "de.svg", status: "down" },
 			{ name: "DarkSoul",  address: "http://89.22.236.213:444",              path: "/IR-NETLIFY",  user: "%40IR_NETLIFY",                         flag: "se.svg", status: "working" },
-			{ name: "Meshke",    address: "https://meshke.imissher.shop:444",      path: "/meshke",      user: "6ff4e855-cb98-47aa-901c-b787c898b6bb",  flag: "de.svg", status: "working" },
-			{ name: "Rahgozar",  address: "https://sr1.rahgozar.tr:444",           path: "/xhttp444",    user: "c18d7142-3adc-491a-a0af-518a67d21c19",  flag: "fi.svg", status: "working" },
-			{ name: "Dante",     address: "http://212.74.39.210:444",              path: "/IR-NETLIFY",  user: "%40IR_NETLIFY",                         flag: "gb.svg", status: "working" },
-			{ name: "LetKnowIt", address: "65.109.221.153:444",                    path: "/IR-NETLIFY",  user: "%40IR_NETLIFY",                         flag: "nl.svg", status: "working" },
+			{ name: "Meshke",    address: "https://meshke.imissher.shop:444",      path: "/meshke",      user: "6ff4e855-cb98-47aa-901c-b787c898b6bb",  flag: "de.svg", status: "down" },
+			{ name: "Rahgozar",  address: "https://sr1.rahgozar.tr:444",           path: "/xhttp444",    user: "c18d7142-3adc-491a-a0af-518a67d21c19",  flag: "fi.svg", status: "down" },
+			{ name: "Dante",     address: "http://212.74.39.210:444",              path: "/IR-NETLIFY",  user: "%40IR_NETLIFY",                         flag: "gb.svg", status: "down" },
+			{ name: "LetKnowIt", address: "65.109.221.153:444",                    path: "/IR-NETLIFY",  user: "%40IR_NETLIFY",                         flag: "nl.svg", status: "down" },
 			{ name: "Manp 1",    address: "107.161.174.122:444",                   path: "/IR-NETLIFY",  user: "%40IR_NETLIFY",                         flag: "tr.svg", status: "working" },
 			{ name: "Manp 2",    address: "217.179.5.74:444",                      path: "/IR-NETLIFY",  user: "%40IR_NETLIFY",                         flag: "tr.svg", status: "working" },
 			{ name: "Phoenix",   address: "62.84.172.72:444",                      path: "/IR-NETLIFY",  user: "%40IR_NETLIFY",                         flag: "de.svg", status: "working" },
-			{ name: "Cowboy",    address: "185.250.41.220:444",                    path: "/IR-NETLIFY",  user: "%40IR_NETLIFY",                         flag: "de.svg", status: "working" },
+			{ name: "Cowboy",    address: "185.250.41.220:444",                    path: "/IR-NETLIFY",  user: "%40IR_NETLIFY",                         flag: "de.svg", status: "down" },
 			{ name: "Hakan",     address: "109.120.187.145:444",                   path: "/IR-NETLIFY",  user: "%40IR_NETLIFY",                         flag: "de.svg", status: "working" },
 			{ name: "nemidonam", address: "193.233.202.166:444",                   path: "/IR-NETLIFY",  user: "%40IR_NETLIFY",                         flag: "fi.svg", status: "working" },
 			{ name: "Soroush",   address: "194.59.183.234:444",                    path: "/IR-NETLIFY",  user: "%40IR_NETLIFY",                         flag: "de.svg", status: "working" },
+			{ name: "nemidonam 2", address: "89.208.97.163:444",                   path: "/IR-NETLIFY",  user: "%40IR_NETLIFY",                         flag: "fi.svg", status: "working" },
 		];
 		
 		// ─── APP STATE ─────────────────────────────────────────────────────────────────
-		let appVersion = "1.2.0";
+		let appVersion = "1.2.2";
 		let currentPlatform = "netlify";
 		let netlifyMode = "shecan";
 		let configMode = "default";
@@ -1033,7 +1097,6 @@
 				}
 			} catch(e) {}
 			
-			// Parse failed — reset state
 			g2rayExtracted = null;
 			g2rayOriginalRemark = null;
 			input.classList.remove('status-success');
@@ -1200,7 +1263,6 @@
 			const hostElement = document.getElementById("main-host");
 			const checkBtn = document.getElementById("check-domain-btn");
 			const rawDomain = manualDomain || hostElement.value.trim();
-			// Strip protocol/path to get clean hostname
 			const domain = rawDomain.replace(/^(https?:\/\/)?(www\.)?/, '').split('/')[0];
 
 			if (!domain) { showError(hostElement); return; }
@@ -1219,8 +1281,6 @@
 
 			let isUp = false;
 			try {
-				// BUG FIX: fetch with no-cors resolves for any reachable server (opaque response).
-				// We catch network errors (CORS block on unreachable domains) as "down".
 				await fetch(`https://${domain}`, { method: "HEAD", mode: "no-cors", signal: AbortSignal.timeout(6000) });
 				isUp = true;
 			} catch (err) {
@@ -1373,31 +1433,25 @@
 			const normalBtn  = document.getElementById('btn-normal');
 
 			if (mode === 'g2ray') {
-				// Lock routing to shecan, hide SNI group
 				setNetlifyMode('shecan');
 				if (shecanBtn) { shecanBtn.disabled = true; shecanBtn.style.opacity = '0.5'; shecanBtn.style.cursor = 'not-allowed'; }
 				if (normalBtn) { normalBtn.disabled = true; normalBtn.style.opacity = '0.5'; normalBtn.style.cursor = 'not-allowed'; }
 				if (sniGroup) sniGroup.style.display = 'none';
 				if (labelText) labelText.textContent = 'Extracted Domain/SNI';
-				// Reset domain input for g2ray — will be filled by extractor
 				if (domainInput) { domainInput.readOnly = false; domainInput.classList.remove('status-success'); domainInput.value = ''; }
-				// Re-run extractor in case there's already text in the textarea
 				extractG2rayConfig();
 			} else {
-				// Unlock routing buttons and show SNI group
 				if (shecanBtn) { shecanBtn.disabled = false; shecanBtn.style.opacity = '1'; shecanBtn.style.cursor = 'pointer'; }
 				if (normalBtn) { normalBtn.disabled = false; normalBtn.style.opacity = '1'; normalBtn.style.cursor = 'pointer'; }
 				if (sniGroup) sniGroup.style.display = 'flex';
 				if (labelText) labelText.textContent = 'Netlify Domain';
 
-				// BUG FIX: only clear domain input when transitioning FROM g2ray mode
 				if (prevMode === 'g2ray') {
 					if (domainInput) {
 						domainInput.readOnly = false;
 						domainInput.classList.remove('status-success');
 						domainInput.value = '';
 					}
-					// Reset g2ray state
 					g2rayExtracted = null;
 					g2rayOriginalRemark = null;
 					const g2rayInput = document.getElementById('g2ray-config-input');
@@ -1441,7 +1495,6 @@
 		}
 
 		// ─── ERROR DISPLAY ────────────────────────────────────────────────────────────
-		// BUG FIX: unified removal for both regular inputs and container divs (change bubbles from children)
 		function showError(element) {
 			if (!element) return;
 			element.classList.add("error-border");
@@ -1547,7 +1600,6 @@
 			selectedServers.forEach(srv => {
 				const { user, path, address: serverAddress, name: serverName } = srv;
 
-				// ── G2ray mode ──
 				if (serverName === "G2ray") {
 					ips.forEach(ip => {
 						const { sni, host: g2rayHost } = g2rayExtracted;
@@ -1589,12 +1641,10 @@
 				domains.forEach(sni => {
 					if (netlifyMode === "shecan") {
 						ips.forEach(ip => {
-							// CHANGED: @IR_NETLIFY → @CodeLeafy
 							const remark = encodeURIComponent(`🌐 @CodeLeafy | ${sni} | ${ip} | ${serverName}`);
 							results.push(`vless://${user}@${ip}:443?encryption=none&security=tls&sni=${sni}&fp=chrome&alpn=h2%2Chttp%2F1.1&insecure=1&allowInsecure=1&type=xhttp&host=${host}&path=${encodedPath}&mode=auto&extra=${encodedExtra}#${remark}`);
 						});
 					} else {
-						// CHANGED: @IR_NETLIFY → @CodeLeafy
 						const remark = encodeURIComponent(`🌐 @CodeLeafy | ${sni} | ${serverName}`);
 						results.push(`vless://${user}@${sni}:443?encryption=none&security=tls&sni=${sni}&fp=chrome&alpn=h2%2Chttp%2F1.1&insecure=1&allowInsecure=1&type=xhttp&host=${host}&path=${encodedPath}&mode=auto&extra=${encodedExtra}#${remark}`);
 					}
@@ -1618,12 +1668,18 @@
 
 			const inputConfigs = inputConfigsText.split('\n').filter(Boolean);
 
-			const paddingBytes = document.getElementById("xhttp-pad-bytes").value.trim();
-			const obfsMode     = document.getElementById("xhttp-obfs-mode").value === "true";
-			const postBytes    = document.getElementById("xhttp-post-bytes").value.trim();
-			const padKey       = document.getElementById("xhttp-pad-key").value.trim();
-			const padHeader    = document.getElementById("xhttp-pad-header").value.trim();
-			const headersJson  = document.getElementById("xhttp-headers").value.trim();
+			const paddingBytes  = document.getElementById("xhttp-pad-bytes").value.trim();
+			const obfsMode      = document.getElementById("xhttp-obfs-mode").value === "true";
+			const postBytes     = document.getElementById("xhttp-post-bytes").value.trim();
+			const padKey        = document.getElementById("xhttp-pad-key").value.trim();
+			const padHeader     = document.getElementById("xhttp-pad-header").value.trim();
+			const headersJson   = document.getElementById("xhttp-headers").value.trim();
+			const mode          = document.getElementById("xhttp-mode").value;
+			const security      = document.getElementById("xhttp-security").value;
+			const fp            = document.getElementById("xhttp-fp").value;
+			const alpn          = document.getElementById("xhttp-alpn").value;
+			const encryption    = document.getElementById("xhttp-encryption").value;
+			const allowInsecure = document.getElementById("xhttp-allow-insecure").value;
 
 			let parsedHeaders = {};
 			if (headersJson) {
@@ -1645,7 +1701,6 @@
 					if (params.has("extra")) {
 						try { extra = JSON.parse(decodeURIComponent(params.get("extra"))); } catch (e) {}
 					}
-
 					if (paddingBytes) extra.xPaddingBytes      = paddingBytes;
 					extra.xPaddingObfsMode = obfsMode;
 					if (postBytes)    extra.scMaxEachPostBytes = postBytes;
@@ -1654,6 +1709,17 @@
 					if (Object.keys(parsedHeaders).length > 0) extra.headers = { ...extra.headers, ...parsedHeaders };
 
 					params.set("extra", encodeURIComponent(JSON.stringify(extra)));
+					if (mode)       params.set("mode", mode);
+					if (security)   params.set("security", security);
+					if (fp)         params.set("fp", fp);
+					if (alpn)       params.set("alpn", encodeURIComponent(alpn));
+					if (encryption) params.set("encryption", encryption);
+					if (allowInsecure) {
+						const val = allowInsecure === "allow" ? "1" : "0";
+						params.set("allowInsecure", val);
+						params.set("insecure", val);
+					}
+
 					let newConfig = `${base}?${params.toString().replace(/\+/g, '%20')}`;
 					if (hash) newConfig += `#${hash}`;
 					results.push(newConfig);
@@ -1800,8 +1866,7 @@
 		}
 		#gh-star-toast:hover {
 			background: var(--bg-hover);
-			border-color: var(--accent-primary);
-			box-shadow: 0 12px 40px rgba(0,0,0,0.15), 0 0 0 3px rgba(20,184,166,0.15);
+			border-color: var(--border-main);
 		}
 		#gh-star-toast .gh-toast-icon {
 			width: 36px;
@@ -1867,31 +1932,72 @@
 			flex-shrink: 0;
 			margin-left: 2px;
 		}
+		#gh-star-toast .gh-toast-close {
+			width: 26px;
+			height: 26px;
+			border-radius: 50%;
+			background: var(--bg-input);
+			border: 1px solid var(--border-main);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-shrink: 0;
+			cursor: pointer;
+			color: var(--text-secondary);
+			transition: all 0.2s;
+			margin-left: 2px;
+		}
+		#gh-star-toast .gh-toast-close:hover {
+			background: var(--bg-error-light);
+			border-color: var(--border-error-light);
+			color: var(--accent-error);
+		}
+		#gh-star-toast .gh-toast-close svg {
+			width: 12px;
+			height: 12px;
+			fill: none;
+		}
+		#gh-star-toast.blurred-by-modal {
+			filter: blur(4px);
+			pointer-events: none;
+			opacity: 0.5;
+		}
 		@media (max-width: 480px) {
-			#gh-star-toast { padding: 12px 14px; gap: 10px; right: 70px; }
+			#gh-star-toast {
+				padding: 12px 14px;
+				gap: 10px;
+				right: 50%;
+				transform: translateX(50%);
+				left: auto;
+			}
 			#gh-star-toast .gh-toast-sub { display: none; }
 		}
 	</style>
 
-	<div id="gh-star-toast" onclick="window.open('https://github.com/Code-Leafy/NetLeafy/tree/main','_blank')">
-		<div class="gh-toast-icon">
+	<div id="gh-star-toast">
+		<div class="gh-toast-icon" onclick="window.open('https://github.com/Code-Leafy/NetLeafy/tree/main','_blank')" style="cursor:pointer;">
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="none">
 				<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
 			</svg>
 		</div>
-		<div class="gh-toast-text">
+		<div class="gh-toast-text" onclick="window.open('https://github.com/Code-Leafy/NetLeafy/tree/main','_blank')" style="cursor:pointer;">
 			<span class="gh-toast-title">Star NetLeafy on GitHub</span>
 			<span class="gh-toast-sub">github.com/Code-Leafy/NetLeafy</span>
 		</div>
-		<div class="gh-star-badge" id="gh-star-count">
+		<div class="gh-star-badge" id="gh-star-count" onclick="window.open('https://github.com/Code-Leafy/NetLeafy/tree/main','_blank')" style="cursor:pointer;">
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="none">
 				<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
 			</svg>
 			<span id="gh-star-num">—</span>
 		</div>
-		<svg class="gh-toast-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+		<svg class="gh-toast-arrow" onclick="window.open('https://github.com/Code-Leafy/NetLeafy/tree/main','_blank')" style="cursor:pointer;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
 			<polyline points="9 18 15 12 9 6"/>
 		</svg>
+		<button class="gh-toast-close" id="gh-toast-close-btn" title="Dismiss" onclick="dismissStarToast(event)">
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+				<line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+			</svg>
+		</button>
 	</div>
 
 	<script>
@@ -1899,6 +2005,7 @@
 			var toast = document.getElementById('gh-star-toast');
 			var starNum = document.getElementById('gh-star-num');
 			var starBadge = document.getElementById('gh-star-count');
+			var dismissed = false;
 
 			fetch('https://api.github.com/repos/Code-Leafy/NetLeafy')
 				.then(function(r) { return r.json(); })
@@ -1914,13 +2021,32 @@
 				.catch(function() {});
 
 			function showToast() {
+				if (dismissed) return;
 				toast.style.top = '20px';
 				setTimeout(function() {
-					toast.style.top = '-130px';
+					if (!dismissed) toast.style.top = '-130px';
 				}, 30000);
 			}
 			setTimeout(showToast, 1500);
 			setInterval(showToast, 120000);
+
+			window.dismissStarToast = function(e) {
+				e.stopPropagation();
+				dismissed = true;
+				toast.style.top = '-130px';
+			};
+
+			var configModal = document.getElementById('configModal');
+			if (configModal) {
+				var observer = new MutationObserver(function() {
+					if (configModal.classList.contains('active')) {
+						toast.classList.add('blurred-by-modal');
+					} else {
+						toast.classList.remove('blurred-by-modal');
+					}
+				});
+				observer.observe(configModal, { attributes: true, attributeFilter: ['class'] });
+			}
 		})();
 	</script>
 </body>
