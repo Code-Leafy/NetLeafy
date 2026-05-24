@@ -8,7 +8,7 @@
 Advanced VLESS-over-xHTTP configuration engine for Netlify infrastructure.
 
 <p align="center">
-  <img src="https://img.shields.io/badge/version-1.2.2-10B981?style=flat-square" />
+  <img src="https://img.shields.io/badge/version-1.3-10B981?style=flat-square" />
   <img src="https://img.shields.io/badge/license-MIT-10B981?style=flat-square" />
   <img src="https://img.shields.io/badge/platform-Web-10B981?style=flat-square" />
 </p>
