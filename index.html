@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -406,6 +407,9 @@
 				<a href="#" class="nav-item" id="nav-config-editor" onclick="switchView('config-editor'); return false;">
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg> Config Editor
 				</a>
+				<a href="#" class="nav-item" id="nav-loadbalancer" onclick="switchView('loadbalancer'); return false;">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg> Load Balancer
+				</a>
 				<div class="nav-section-title">External Links</div>
 				<a href="https://app.netlify.com" target="_blank" class="nav-item"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg> Netlify Console</a>
 				<a href="https://github.com/Code-Leafy/G2rayXCodeLeafy" target="_blank" class="nav-item"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg> G2ray Generator</a>
@@ -439,7 +443,7 @@
 			<div class="page-content">
 				<header class="page-header">
 					<div class="header-title">
-						<h1>NetLeafy Generator <span class="version-badge">V1.3</span> <span id="netlify-status-badge" class="netlify-status-badge working"></span></h1>
+						<h1>NetLeafy Generator <span class="version-badge">V1.3.1</span> <span id="netlify-status-badge" class="netlify-status-badge working"></span></h1>
 						<p>Generate optimized configs & relays to bypass restrictions.</p>
 					</div>
 				</header>
@@ -690,6 +694,77 @@
 					</div>
 				</div>
 
+				<div class="view-section" id="view-loadbalancer">
+					<div class="dashboard-grid">
+						<div class="panel">
+							<div class="panel-header">
+								<h2>Load Balancer</h2>
+								<p>Paste VLESS configs and generate a load balancer config.json.</p>
+							</div>
+							<div class="panel-body" style="padding-top:0; display:flex; flex-direction:column; gap:16px; overflow-y:auto;">
+								<div class="form-group" style="flex-shrink:0;">
+									<label>Strategy</label>
+									<div class="pill-tabs" style="width:100%;">
+										<button class="pill-tab active" id="lb-btn-roundrobin" style="flex:1;" onclick="setLbStrategy('roundRobin')">Round Robin</button>
+										<button class="pill-tab" id="lb-btn-random" style="flex:1;" onclick="setLbStrategy('random')">Random</button>
+										<button class="pill-tab" id="lb-btn-leastping" style="flex:1;" onclick="setLbStrategy('leastPing')">Least Ping</button>
+									</div>
+								</div>
+								<div class="form-group" style="flex-shrink:0;">
+									<label>Fallback Behavior</label>
+									<div class="pill-tabs" style="width:100%;">
+										<button class="pill-tab active" id="lb-btn-fallback-block" style="flex:1;" onclick="setLbFallback('block')">Block</button>
+										<button class="pill-tab" id="lb-btn-fallback-direct" style="flex:1;" onclick="setLbFallback('direct')">Direct</button>
+									</div>
+								</div>
+								<div class="form-group" style="flex-shrink:0; display:flex; gap:16px;">
+									<div style="flex:1;">
+										<label style="margin-bottom:6px; display:block;">Health Check Interval (s)</label>
+										<input type="text" id="lb-health-interval" value="60" placeholder="60" style="height:44px;" />
+										<span id="lb-interval-error" style="display:none; font-size:0.75rem; color:var(--accent-error); font-weight:600; margin-top:4px; display:none;">Minimum is 5 seconds</span>
+									</div>
+									<div style="flex:1;">
+										<label style="margin-bottom:6px; display:block;">Health Check URL</label>
+										<input type="text" id="lb-health-url" value="https://www.gstatic.com/generate_204" placeholder="https://..." style="height:44px;" />
+									</div>
+								</div>
+								<div class="form-group" style="flex-shrink:0;">
+									<div class="header-row">
+										<label>VLESS Configs</label>
+										<div class="mini-toolbar">
+											<button type="button" class="mini-btn" onclick="document.getElementById('lb-configs-input').value='';">Clear</button>
+										</div>
+									</div>
+									<textarea id="lb-configs-input" placeholder="Paste vless:// configs here, one per line..." style="min-height:220px; resize:none;"></textarea>
+								</div>
+							</div>
+							<div class="panel-footer">
+								<button class="gen-btn" onclick="generateLoadBalancer()">
+									<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg> Generate config.json
+								</button>
+							</div>
+						</div>
+						<div class="panel">
+							<div class="panel-header">
+								<h2>Output</h2>
+								<p>Generated Xray config.json with load balancing.</p>
+							</div>
+							<div class="panel-body" style="padding-top:0; display:flex; flex-direction:column;">
+								<div class="animated-group" style="flex:1; min-height:0;">
+									<div class="header-row" style="margin-bottom:8px;">
+										<label id="lb-output-label">config.json</label>
+										<div class="mini-toolbar">
+											<button type="button" class="mini-btn" id="lb-copy-btn" onclick="lbCopy()">Copy</button>
+											<button type="button" class="mini-btn" id="lb-download-btn" onclick="lbDownload()">Download</button>
+										</div>
+									</div>
+									<textarea id="lb-output" readonly placeholder="Output will appear here..." style="flex:1; min-height:0; white-space:pre; overflow-wrap:normal; overflow-x:auto; font-size:12px;"></textarea>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
 			</div>
 		</main>
 	</div>
@@ -717,6 +792,7 @@
 			</div>
 			<div class="modal-actions">
 				<button class="modal-secondary-btn" id="modal-import-btn" onclick="importToConfigEditor()">Import to Config Editor</button>
+				<button class="modal-secondary-btn" id="modal-import-lb-btn" onclick="importToLoadBalancer()">Import to Load Balancer</button>
 				<button class="modal-ok-btn" id="modal-copy-btn" onclick="copyConfigs()">Copy to Clipboard</button>
 				<button class="modal-secondary-btn" id="modal-download-btn" onclick="downloadConfigs()">Download .txt</button>
 			</div>
@@ -797,7 +873,7 @@
 
 		window.onload = () => {
 			renderServerCheckboxes();
-			['domain-list', 'ip-list', 'custom-name', 'custom-address', 'custom-user', 'custom-path'].forEach(id => { const el = document.getElementById(id); if (el) el.addEventListener('input', triggerLiveCount); });
+			['domain-list', 'ip-list', 'custom-name', 'custom-address', 'custom-user', 'custom-path', 'lb-configs-input'].forEach(id => { const el = document.getElementById(id); if (el) el.addEventListener('input', () => { el.classList.remove('status-error'); triggerLiveCount && triggerLiveCount(); }); });
 			setPlatform('netlify'); setNetlifyMode("shecan"); setConfigMode("default"); setEditorMode('xhttp');
 		};
 
@@ -1092,7 +1168,188 @@
 			document.getElementById("modal-import-btn").style.display = "none";
 			document.getElementById("configModal").classList.add("active");
 		}
-		function importToConfigEditor() { const text = document.getElementById("modal-result-area").value; if (!text) return; document.getElementById("xhttp-config-input").value = text; closeConfigModal(); switchView('config-editor'); }
+		function importToLoadBalancer() {
+			const text = document.getElementById("modal-result-area").value;
+			if (!text) return;
+			document.getElementById("lb-configs-input").value = text;
+			closeConfigModal();
+			switchView('loadbalancer');
+		}
+
+		let lbStrategy = 'roundRobin';
+		let lbFallback = 'block';
+
+		function setLbStrategy(s) {
+			lbStrategy = s;
+			['roundrobin','random','leastping'].forEach(k => document.getElementById('lb-btn-'+k)?.classList.remove('active'));
+			const map = { roundRobin:'roundrobin', random:'random', leastPing:'leastping' };
+			document.getElementById('lb-btn-'+map[s])?.classList.add('active');
+		}
+		function setLbFallback(f) {
+			lbFallback = f;
+			['block','direct'].forEach(k => document.getElementById('lb-btn-fallback-'+k)?.classList.remove('active'));
+			document.getElementById('lb-btn-fallback-'+f)?.classList.add('active');
+		}
+
+		function generateLoadBalancer() {
+			const raw = document.getElementById('lb-configs-input').value.trim();
+			const lbInput = document.getElementById('lb-configs-input');
+			const intervalInput = document.getElementById('lb-health-interval');
+			const intervalError = document.getElementById('lb-interval-error');
+			const interval = parseInt(intervalInput.value);
+			if (isNaN(interval) || interval < 5) {
+				showError(intervalInput);
+				intervalError.style.display = 'block';
+				intervalInput.addEventListener('input', () => { intervalError.style.display = 'none'; }, { once: true });
+				return;
+			}
+			intervalError.style.display = 'none';
+			const healthUrl = document.getElementById('lb-health-url').value.trim() || 'https://www.gstatic.com/generate_204';
+			if (!raw) { showError(lbInput); return; }
+
+			const lines = raw.split('\n').map(l => l.trim()).filter(l => l.startsWith('vless://'));
+			if (lines.length === 0) { showError(lbInput); return; }
+
+			const outbounds = lines.map((line, i) => {
+				try {
+					// Strip remark
+					const hashIdx = line.indexOf('#');
+					const urlPart = hashIdx !== -1 ? line.slice(0, hashIdx) : line;
+
+					// Manual parse: vless://UUID@HOST:PORT?params
+					const withoutScheme = urlPart.slice('vless://'.length);
+					const atIdx = withoutScheme.lastIndexOf('@');
+					const uuid = withoutScheme.slice(0, atIdx);
+					const rest = withoutScheme.slice(atIdx + 1);
+					const qIdx = rest.indexOf('?');
+					const hostPort = qIdx !== -1 ? rest.slice(0, qIdx) : rest;
+					const queryStr = qIdx !== -1 ? rest.slice(qIdx + 1) : '';
+
+					// Parse host:port (handle IPv6)
+					let host, port;
+					if (hostPort.startsWith('[')) {
+						const closeBracket = hostPort.indexOf(']');
+						host = hostPort.slice(1, closeBracket);
+						port = parseInt(hostPort.slice(closeBracket + 2)) || 443;
+					} else {
+						const colonIdx = hostPort.lastIndexOf(':');
+						host = colonIdx !== -1 ? hostPort.slice(0, colonIdx) : hostPort;
+						port = colonIdx !== -1 ? parseInt(hostPort.slice(colonIdx + 1)) || 443 : 443;
+					}
+
+					// Parse query params manually
+					const params = {};
+					queryStr.split('&').forEach(pair => {
+						const eqIdx = pair.indexOf('=');
+						if (eqIdx === -1) return;
+						const k = decodeURIComponent(pair.slice(0, eqIdx));
+						const v = decodeURIComponent(pair.slice(eqIdx + 1));
+						params[k] = v;
+					});
+
+					const tag = 'proxy-' + i;
+					const remark = hashIdx !== -1 ? decodeURIComponent(line.slice(hashIdx + 1)) : ('🍃 @CodeLeafy ' + (i + 1));
+					const network = params['type'] || 'tcp';					const sni = params['sni'] || host;
+
+					let extra = {};
+					try { if (params['extra']) extra = JSON.parse(params['extra']); } catch(e) {}
+
+					const streamSettings = {
+						network,
+						security: params['security'] || 'tls',
+						tlsSettings: { serverName: sni, allowInsecure: true, fingerprint: params['fp'] || 'chrome' }
+					};
+					if (network === 'xhttp' || network === 'splithttp') {
+						streamSettings.xhttpSettings = {
+							host: params['host'] || host,
+							path: params['path'] || '/',
+							mode: params['mode'] || 'auto',
+							extra
+						};
+					} else if (network === 'ws') {
+						streamSettings.wsSettings = { host: params['host'] || host, path: params['path'] || '/' };
+					} else if (network === 'grpc') {
+						streamSettings.grpcSettings = { serviceName: params['serviceName'] || '' };
+					}
+
+					return {
+						tag: remark,
+						protocol: 'vless',
+						settings: { vnext: [{ address: host, port, users: [{ id: uuid, encryption: 'none', flow: params['flow'] || '' }] }] },
+						streamSettings,
+						mux: { enabled: false }
+					};
+				} catch(e) { return null; }
+			}).filter(Boolean);
+
+			if (outbounds.length === 0) { showError(lbInput); return; }
+
+			// Clear any previous error
+			lbInput.classList.remove('status-error');
+
+			const proxyTags = outbounds.map(o => o.tag);
+
+			const config = {
+				remarks: '🍃 @CodeLeafy Load Balancer',
+				log: { loglevel: 'warning' },
+				dns: { servers: ['8.8.8.8', '1.1.1.1'] },
+				inbounds: [
+					{ tag: 'socks', port: 10808, listen: '127.0.0.1', protocol: 'socks', settings: { auth: 'noauth', udp: true } },
+					{ tag: 'http', port: 10809, listen: '127.0.0.1', protocol: 'http' }
+				],
+				outbounds: [
+					...outbounds,
+					{ tag: 'direct', protocol: 'freedom', settings: {} },
+					{ tag: 'block', protocol: 'blackhole', settings: {} }
+				],
+				observatory: {
+					subjectSelector: proxyTags,
+					probeUrl: healthUrl,
+					probeInterval: interval + 's',
+					enableConcurrency: true
+				},
+				routing: {
+					domainStrategy: 'IPIfNonMatch',
+					balancers: [{
+						tag: 'load-balancer',
+						selector: proxyTags,
+						strategy: { type: lbStrategy },
+						fallbackTag: lbFallback
+					}],
+					rules: [
+						{ type: 'field', inboundTag: ['socks', 'http'], balancerTag: 'load-balancer' }
+					]
+				}
+			};
+
+			const json = JSON.stringify(config, null, 2);
+			const out = document.getElementById('lb-output');
+			out.value = json;
+			document.getElementById('lb-output-label').textContent = `config.json — ${outbounds.length} outbound${outbounds.length > 1 ? 's' : ''}`;
+		}
+
+		function lbCopy() {
+			const text = document.getElementById('lb-output').value;
+			const btn = document.getElementById('lb-copy-btn');
+			if (!text) return;
+			navigator.clipboard?.writeText(text).then(() => {
+				btn.textContent = 'Copied ✓'; setTimeout(() => btn.textContent = 'Copy', 2000);
+			}).catch(() => {
+				const ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+				btn.textContent = 'Copied ✓'; setTimeout(() => btn.textContent = 'Copy', 2000);
+			});
+		}
+
+		function lbDownload() {
+			const text = document.getElementById('lb-output').value;
+			const btn = document.getElementById('lb-download-btn');
+			if (!text) return;
+			const blob = new Blob([text], { type: 'application/json' });
+			const url = URL.createObjectURL(blob);
+			const a = document.createElement('a'); a.href = url; a.download = 'config.json';
+			document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
+			btn.textContent = 'Downloaded ✓'; setTimeout(() => btn.textContent = 'Download', 2000);
+		}
 
 		function selectRelayProfile(profile) {
 			selectedRelayProfile = profile;
