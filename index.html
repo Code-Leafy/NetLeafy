@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>NetLeafy Workspace</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2250%22 fill=%22%23058c42%22/></svg>">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22><circle cx=%2212%22 cy=%2212%22 r=%2210%22 stroke=%22%23058c42%22 stroke-width=%222%22 fill=%22none%22/><circle cx=%2212%22 cy=%2212%22 r=%224%22 fill=%22%23058c42%22/></svg>">
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -159,7 +159,7 @@
             visibility: hidden;
             pointer-events: none;
             transition: opacity 0.6s ease;
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             z-index: 1;
@@ -168,7 +168,7 @@
             opacity: 1;
             visibility: visible;
             pointer-events: auto;
-            z-index: 10;
+            z-index: 9999;
         }
         .splash-screen {
             background-color: var(--bg-main);
@@ -636,6 +636,29 @@
         .profile-back-btn:hover {
             background: var(--bg-hover);
             border-color: var(--border-focus);
+        }
+        .workspace-header {
+            display: none;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            padding: 16px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-main);
+            text-transform: capitalize;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .workspace-header svg {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+        @media (min-width: 851px) {
+            .workspace-header {
+                display: flex;
+            }
         }
         .view-section {
             display: none;
@@ -1430,7 +1453,7 @@
             position: fixed;
             inset: 0;
             background: var(--blur-overlay);
-            z-index: 2000;
+            z-index: 99999;
             justify-content: center;
             align-items: center;
             padding: 20px;
@@ -1447,7 +1470,7 @@
             position: fixed;
             inset: 0;
             background: var(--blur-overlay);
-            z-index: 2001;
+            z-index: 99999;
             justify-content: center;
             align-items: center;
             padding: 20px;
@@ -1771,11 +1794,14 @@
             .app-container, .main-wrapper {
                 display: flex !important;
                 flex-direction: column !important;
-                height: auto !important;
+                height: 100dvh !important;
                 min-height: 100dvh;
                 overflow: visible !important;
-                width: 100%;
+                width: 100vw;
                 max-width: 100vw;
+                position: fixed !important;
+                top: 0;
+                left: 0;
             }
             .page-content {
                 height: auto !important;
@@ -1786,7 +1812,7 @@
                 overflow-y: auto !important;
                 display: flex !important;
                 flex-direction: column !important;
-                gap: 20px !important;
+                gap: 12px !important;
                 justify-content: flex-start;
                 max-width: 100vw;
                 box-sizing: border-box;
@@ -1807,29 +1833,50 @@
                 display: flex !important;
                 flex-direction: column !important;
                 height: auto !important;
-                gap: 20px !important;
+                gap: 12px !important;
                 width: 100%;
                 max-width: 100%;
             }
             .panel {
                 height: auto !important;
-                min-height: 400px;
-                margin-bottom: 10px !important;
+                min-height: auto;
+                margin-bottom: 0 !important;
                 width: 100%;
                 max-width: 100%;
                 box-sizing: border-box;
+                display: flex;
+                flex-direction: column;
             }
             .panel-body {
                 overflow: visible !important;
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+                min-height: 0;
+            }
+            .form-group {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                gap: 6px;
+            }
+            .animated-group {
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+                flex: 1;
+                min-height: 0;
             }
             textarea, input {
                 max-width: 100% !important;
                 box-sizing: border-box;
+                width: 100%;
             }
             textarea {
-                min-height: 120px !important;
+                min-height: 80px !important;
                 height: auto !important;
-                flex: none;
+                flex: 1;
+                resize: vertical;
             }
             .sidebar {
                 position: fixed !important;
@@ -1841,6 +1888,15 @@
             }
             .sidebar.open {
                 transform: translateX(0) !important;
+            }
+            .panel-footer {
+                padding: 12px 16px !important;
+                margin-top: auto;
+                gap: 8px !important;
+            }
+            .gen-btn, .modal-secondary-btn {
+                width: 100% !important;
+                min-height: 44px;
             }
             .close-sidebar-btn {
                 display: flex !important;
@@ -1951,6 +2007,10 @@
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
         </button>
         <nav class="sidebar-nav">
+            <div class="workspace-header" id="workspace-header">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" stroke="var(--accent-primary)" stroke-width="2" /><circle cx="12" cy="12" r="4" fill="var(--accent-primary)" /></svg>
+                <span>NetLeafy</span>
+            </div>
             <button class="profile-back-btn" onclick="showSplashScreen()" title="Change Workspace">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg> Switch Workspace
             </button>
