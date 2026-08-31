@@ -3714,13 +3714,12 @@ function v2leafyBuildWorkerJs(targetHost) {
         "      const resp = await fetch(url.toString(), init);",
         "      const out = new Headers(resp.headers);",
         "      out.delete(\"cf-cache-status\");",
-        "      return new Response(resp.body, { status: resp.status, statusText: resp.statusText, headers: out });", (feat: robust relay worker, single vless input, updated API proxy)
+        "      return new Response(resp.body, { status: resp.status, statusText: resp.statusText, headers: out });",
         "    } catch (err) {",
         "      return new Response(\"V2Leafy Relay is online, but the backend is unreachable.\", { status: 502, headers: { \"content-type\": \"text/plain; charset=utf-8\" } });",
         "    }",
         "  },",
         "};",
- (feat: robust relay worker, single vless input, updated API proxy)
     ].join("\n");
 }
 
