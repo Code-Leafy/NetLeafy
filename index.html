@@ -1724,7 +1724,7 @@
             bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
-            z-index: 9999;
+            z-index: 100000;
             display: flex;
             flex-direction: column;
             gap: 10px;
@@ -1948,6 +1948,157 @@
             flex: 1;
             resize: vertical;
         }
+        .v2leafy-token-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: var(--bg-input);
+            color: var(--text-primary);
+            text-decoration: none;
+            padding: 14px 16px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border: 1px solid var(--border-main);
+            transition: all 0.2s;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        @media (hover: hover) {
+            .v2leafy-token-btn:hover {
+                border-color: var(--border-focus);
+                background: var(--bg-hover);
+                color: var(--text-primary);
+                transform: translateY(-1px);
+            }
+        }
+        .v2leafy-terminal {
+            background: #0d1117;
+            border: 1px solid var(--border-main);
+            border-radius: 12px;
+            padding: 14px 16px;
+            font-family: "Menlo", "Consolas", monospace;
+            font-size: 12.5px;
+            line-height: 1.7;
+            color: #7ee787;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            word-break: break-word;
+            flex: 1;
+            min-height: 0;
+            user-select: text;
+            -webkit-user-select: text;
+            box-sizing: border-box;
+            scrollbar-width: thin;
+        }
+        .v2leafy-terminal .t-line {
+            margin: 0;
+            padding: 0;
+        }
+        .v2leafy-terminal .t-line.t-ok {
+            color: #7ee787;
+        }
+        .v2leafy-terminal .t-line.t-err {
+            color: #ff7b72;
+        }
+        .v2leafy-terminal .t-line.t-warn {
+            color: #d29922;
+        }
+        .v2leafy-terminal .t-line.t-info {
+            color: #79c0ff;
+        }
+        .v2leafy-terminal .t-line.t-dim {
+            color: #8b949e;
+        }
+        .v2leafy-terminal .t-line .t-time {
+            color: #8b949e;
+            margin-right: 8px;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        .v2leafy-output-box {
+            border-top: 1px solid var(--border-main);
+            padding: 12px 24px 16px 24px;
+            background: var(--bg-success-ultralight);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+        .v2leafy-output-title {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+        }
+        .v2leafy-output-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.85rem;
+            flex-wrap: wrap;
+            min-height: 20px;
+        }
+        .v2leafy-output-row .o-label {
+            font-weight: 700;
+            color: var(--text-secondary);
+            min-width: 92px;
+            text-transform: uppercase;
+            font-size: 0.68rem;
+            letter-spacing: 0.05em;
+        }
+        .v2leafy-output-link {
+            color: var(--accent-success);
+            font-weight: 600;
+            text-decoration: none;
+            font-family: "Menlo", "Consolas", monospace;
+            font-size: 0.82rem;
+            word-break: break-all;
+        }
+        @media (hover: hover) {
+            .v2leafy-output-link:hover {
+                text-decoration: underline;
+            }
+        }
+        .v2leafy-output-link.placeholder {
+            color: var(--text-secondary);
+        }
+        .v2leafy-elapsed {
+            font-weight: 700;
+            color: var(--text-primary);
+            font-family: "Menlo", "Consolas", monospace;
+            font-size: 0.85rem;
+        }
+        .no-servers-note {
+            grid-column: 1 / -1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 36px 20px;
+            text-align: center;
+            color: var(--text-secondary);
+            background: var(--bg-card);
+            border: 1px dashed var(--border-main);
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            flex: 1;
+        }
+        .no-servers-note svg {
+            opacity: 0.6;
+        }
+        .no-servers-note small {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            opacity: 0.85;
+            max-width: 280px;
+            line-height: 1.5;
+        }
     </style>
     <script>
         const SCANNER_PROFILES = {
@@ -1980,10 +2131,10 @@
                 <h2>Netlify Relay</h2>
                 <p>Generate optimized configs & deploy relays for Netlify.</p>
             </div>
-            <div class="splash-card" onclick="selectAppProfile('g2leafy')">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
-                <h2>G2Leafy</h2>
-                <p>Quickly generate multiplexed G2ray configs for bypassing.</p>
+            <div class="splash-card" onclick="selectAppProfile('v2leafy')">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="16" rx="2"></rect><path d="M4 11h16"></path><path d="M12 3v8"></path><path d="m8 19-2 3"></path><path d="m18 19 2 3"></path></svg>
+                <h2>V2Leafy</h2>
+                <p>Deploy V2Leafy panels & relays on Railway and Cloudflare.</p>
             </div>
             <div class="splash-card" onclick="selectAppProfile('tools')">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line><path d="M13 8h4"></path><path d="M13 12h4"></path><path d="M13 16h4"></path></svg>
@@ -2023,15 +2174,15 @@
             </a>
             <div class="nav-section-title" data-profile="netlify">External Links</div>
             <a href="https://app.netlify.com" target="_blank" class="nav-item" data-profile="netlify"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg> Netlify Console</a>
-            <div class="nav-section-title" data-profile="g2leafy">G2Leafy Tools</div>
-            <a href="#" class="nav-item" data-profile="g2leafy" id="nav-g2leafy-gen" onclick="switchView('g2leafy-gen'); return false;">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg> G2Leafy Generator
+            <div class="nav-section-title" data-profile="v2leafy">V2Leafy Tools</div>
+            <a href="#" class="nav-item" data-profile="v2leafy" id="nav-v2leafy-install" onclick="switchView('v2leafy-install'); return false;">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg> Installation
             </a>
-            <a href="#" class="nav-item" data-profile="g2leafy" id="nav-g2leafy-subs" onclick="switchView('g2leafy-subs'); return false;">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg> Donated Subs
+            <a href="#" class="nav-item" data-profile="v2leafy" id="nav-v2leafy-relay" onclick="switchView('v2leafy-relay'); return false;">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"></path></svg> CloudFlare Relay
             </a>
-            <div class="nav-section-title" data-profile="g2leafy">External Links</div>
-            <a href="https://github.com/Code-Leafy/G2rayXCodeLeafy" target="_blank" class="nav-item" data-profile="g2leafy"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg> G2ray Repo</a>
+            <div class="nav-section-title" data-profile="v2leafy">External Links</div>
+            <a href="https://github.com/Code-Leafy/V2Leafy" target="_blank" class="nav-item" data-profile="v2leafy"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg> V2Leafy Repo</a>
             <div class="nav-section-title" data-profile="tools">ToolBox</div>
             <a href="#" class="nav-item" data-profile="tools" id="nav-loadbalancer" onclick="switchView('loadbalancer'); return false;">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg> Load Balancer
@@ -2165,58 +2316,102 @@
                 </div>
             </div>
 
-            <div class="view-section" id="view-g2leafy-gen">
+            <div class="view-section" id="view-v2leafy-install">
                 <div class="dashboard-grid">
-                    <div class="panel">
-                        <div class="panel-body">
-                            <div class="form-group" style="flex: 1;">
-                                <div class="header-row"><label>G2ray Base Config</label></div>
-                                <textarea id="g2leafy-base-input" placeholder="Paste your vless:// G2ray base config here..." oninput="handleG2leafyBase()"></textarea>
+                    <div style="display: flex; flex-direction: column; gap: 20px; height: 100%; min-height: 0;">
+                        <div class="panel" style="flex: 0 0 auto; display: flex; flex-direction: column;">
+                            <div class="panel-body" style="padding: 16px 20px; gap: 14px;">
+                                <div class="form-group">
+                                    <label>Railway Token</label>
+                                    <a class="v2leafy-token-btn" href="https://railway.com/account/tokens" target="_blank" rel="noopener">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg>
+                                        Get Railway Token
+                                    </a>
+                                </div>
+                                <div class="form-group">
+                                    <label>API Token</label>
+                                    <input id="v2leafy-token" type="text" placeholder="Paste your Railway API token here..." autocomplete="off" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Deployment Region</label>
+                                    <select class="styled-select" id="v2leafy-region">
+                                        <option value="us-east-1">US East (Virginia, USA)</option>
+                                        <option value="ap-southeast-1">Southeast Asia (Singapore, Singapore)</option>
+                                        <option value="eu-west-1">EU West (Amsterdam, Netherlands)</option>
+                                        <option value="us-west-1">US West (California, USA)</option>
+                                    </select>
+                                </div>
                             </div>
-                            <div class="form-group" style="margin-top: 10px;">
-                                <label>Extracted SNI / Host</label>
-                                <input id="g2leafy-extracted-host" type="text" readonly placeholder="Waiting for config..." style="opacity:0.7;" />
+                            <div class="panel-footer" style="padding: 12px 20px 16px 20px;">
+                                <button class="gen-btn" onclick="createV2LeafyPanel()">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path></svg>
+                                    Create Panel
+                                </button>
+                            </div>
+                        </div>
+                        <div class="panel" style="flex: 1; min-height: 0; display: flex; flex-direction: column;">
+                            <div class="v2leafy-output-box" style="border-top: none; padding: 16px 20px; flex: 1; min-height: 0;">
+                                <div class="v2leafy-output-title">Output</div>
+                                <div class="v2leafy-output-row"><span class="o-label">Web Panel</span><a id="v2leafy-domain-link" class="v2leafy-output-link placeholder" href="#" target="_blank" rel="noopener">---</a></div>
+                                <div class="v2leafy-output-row"><span class="o-label">Time Taken</span><span id="v2leafy-elapsed" class="v2leafy-elapsed">0m 0s</span></div>
+                                <div class="v2leafy-output-row"><span class="o-label">Region</span><span id="v2leafy-region-out" class="v2leafy-elapsed">—</span></div>
                             </div>
                         </div>
                     </div>
-                    <div class="panel">
-                        <div class="panel-body">
-                            <div class="animated-group">
-                                <div class="header-row">
-                                    <label>IP List</label>
-                                    <div class="mini-toolbar">
-                                        <button type="button" class="mini-btn" onclick="loadBestIpsG2()">Best</button>
-                                        <button type="button" class="mini-btn btn-clear" onclick="clearTextarea('g2leafy-ip-list')">Clear</button>
-                                    </div>
-                                </div>
-                                <textarea id="g2leafy-ip-list" placeholder="Enter clean IPs to generate configs..."></textarea>
-                            </div>
-                        </div>
-                        <div class="panel-footer">
-                            <button class="gen-btn" onclick="generateG2LeafyConfigs()">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1-1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"></path></svg>
-                                Generate <span id="generate-count-display-g2" style="margin-left: 2px;">0</span> Configs
-                            </button>
+                    <div class="panel" style="display: flex; flex-direction: column; min-height: 0;">
+                        <div class="panel-body" style="padding: 12px 16px; display: flex; flex-direction: column; min-height: 0; flex: 1; gap: 0;">
+                            <div class="v2leafy-terminal" id="v2leafy-install-terminal"></div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="view-section" id="view-g2leafy-subs">
-                <div style="display: flex; align-items: center; justify-content: center; width: 100%; height: 100%;">
-                    <div class="panel" style="width: 100%; max-width: 1000px; padding: 60px; text-align: center; border: 2px solid var(--border-main); height: auto; display: block;">
-                        <div class="panel-body" style="text-align: center; display: block;">
-                            <div style="background: var(--bg-input); width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px auto;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--accent-success)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            <div class="view-section" id="view-v2leafy-relay">
+                <div class="dashboard-grid">
+                    <div style="display: flex; flex-direction: column; gap: 20px; height: 100%; min-height: 0;">
+                        <div class="panel" style="flex: 0 0 auto; display: flex; flex-direction: column;">
+                            <div class="panel-body" style="padding: 16px 20px; gap: 14px;">
+                                <div class="form-group">
+                                    <label>Cloudflare Token</label>
+                                    <a class="v2leafy-token-btn" href="https://dash.cloudflare.com/profile/api-tokens?permissionGroupKeys=%5B%7B%22key%22%3A%22workers_scripts%22%2C%22type%22%3A%22edit%22%7D%5D&accountId=*&zoneId=all&name=V2Leafy%20Relay" target="_blank" rel="noopener">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg>
+                                        Get Cloudflare Token
+                                    </a>
+                                </div>
+                                <div class="form-group">
+                                    <label>API Token</label>
+                                    <input id="v2leafy-cf-token" type="text" placeholder="Paste your Cloudflare API token here..." autocomplete="off" />
+                                </div>
                             </div>
-                            <h2 style="margin: 0 0 12px 0; font-size: 1.75rem;">Donated Subscriptions</h2>
-                            <p style="color: var(--text-secondary); margin-bottom: 40px; font-size: 1rem;">Use the link below to access the latest donated configs.</p>
-                            <div class="input-with-action" style="max-width: 100%; width: 100%; margin: 0 auto;">
-                                <input id="donated-sub-link" type="text" value="https://raw.githubusercontent.com/Code-Leafy/G2rayXCodeLeafy/main/configs.txt" readonly style="text-align: center; font-weight: bold; color: var(--accent-secondary); width: 100%; padding: 0 16px;" />
-                                <button class="action-btn-icon" onclick="copyDonatedSub()" title="Copy Link">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                            <div class="panel-footer" style="padding: 12px 20px 16px 20px;">
+                                <button class="gen-btn" onclick="createV2LeafyRelay()">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"></path></svg>
+                                    Create Relay
                                 </button>
                             </div>
+                        </div>
+                        <div class="panel" style="flex: 1; min-height: 0; display: flex; flex-direction: column;">
+                            <div class="panel-body" style="padding: 16px 20px; gap: 14px;">
+                                <div class="animated-group">
+                                    <div class="header-row">
+                                        <label>Relay Config</label>
+                                        <div class="mini-toolbar">
+                                            <button type="button" class="mini-btn" onclick="copyV2LeafyRelayConfigs()">Copy</button>
+                                            <button type="button" class="mini-btn btn-clear" onclick="document.getElementById('v2leafy-relay-configs').value = '';">Clear</button>
+                                        </div>
+                                    </div>
+                                    <textarea id="v2leafy-relay-configs" readonly placeholder="Deploy the relay first — your vless:// config will appear here..." style="white-space: pre; overflow-wrap: normal; overflow-x: auto;"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel" style="display: flex; flex-direction: column; min-height: 0;">
+                        <div class="panel-body" style="padding: 12px 16px; display: flex; flex-direction: column; min-height: 0; flex: 1; gap: 0;">
+                            <div class="v2leafy-terminal" id="v2leafy-relay-terminal"></div>
+                        </div>
+                        <div class="v2leafy-output-box">
+                            <div class="v2leafy-output-title">Output</div>
+                            <div class="v2leafy-output-row"><span class="o-label">Relay Link</span><a id="v2leafy-relay-link" class="v2leafy-output-link placeholder" href="#" target="_blank" rel="noopener">---</a></div>
                         </div>
                     </div>
                 </div>
@@ -2528,6 +2723,14 @@
     </div>
 </div>
 
+<div class="info-modal-overlay" id="v2leafy-result-modal" onclick="if(event.target===this) v2leafyCloseResult()">
+    <div class="info-modal-content" style="max-width:440px;">
+        <h3 id="v2leafy-result-title">Deployment</h3>
+        <div id="v2leafy-result-body" style="display:flex; flex-direction:column; gap:6px; word-break:break-word;"></div>
+        <button class="modal-ok-btn" onclick="v2leafyCloseResult()">Got it!</button>
+    </div>
+</div>
+
 <div class="modal-overlay" id="universal-modal">
     <div class="modal-content output-modal-content">
         <div class="modal-header">
@@ -2598,13 +2801,11 @@ let netlifyMode = "shecan";
 let configMode = "default";
 let editorMode = "xhttp";
 let scannerMode = "ping";
-let g2rayExtracted = null;
 let selectedRelayProfile = "Safe";
 let lbStrategy = 'roundRobin';
 let fakeHtmlHasRolled = false;
 let countAnimFrame = null;
 let currentCountNet = 0;
-let currentCountG2 = 0;
 let scanAbortCtrl = null;
 let universalDownloadPrefix = "Configs";
 let globalScanResults = [];
@@ -2612,35 +2813,9 @@ let geoCache = {};
 let flaggerResultsGrouped = {};
 
 const SERVER_LIST = [
-    { name: "Parsa", address: "netlify.parsashonam.sbs:444", path: "/p4r34m", user: "Telegram-Parsashonam", flag: "de.svg", status: "working" },
-    { name: "Xarheon", address: "panel.xarheon.cn.mt", path: "/cdn2", user: "f9b57060-989a-4d6d-bc58-53d767242968", flag: "nl.svg", status: "working" },
-    { name: "Behnam", address: "https://s1.onesrv98.eu.cc:444", path: "/mine", user: "a5c04120-8f0d-4d52-8cdd-9ffff79a777d", flag: "se.svg", status: "down" },
-    { name: "Saman 1", address: "65.109.216.19:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY", flag: "fi.svg", status: "down" },
-    { name: "Alwinbalot", address: "http://46.8.229.114:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY", flag: "nl.svg", status: "down" },
-    { name: "Mostafa", address: "http://1.gymnation.ir:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY", flag: "fi.svg", status: "down" },
-    { name: "Farshid", address: "http://aa.websooj.site:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY", flag: "de.svg", status: "working" },
-    { name: "Mohsen", address: "150.241.91.212:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY", flag: "de.svg", status: "working" },
-    { name: "Ali", address: "http://185.181.208.92:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY", flag: "tr.svg", status: "working" },
-    { name: "Shabgard", address: "http://cdn.lindasannp.com:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY", flag: "de.svg", status: "working" },
-    { name: "Saman 2", address: "https://ppp.sam4.lol:30903", path: "/asekhi", user: "132f0ba3-ebbe-4153-84ff-63161b841ed8", flag: "us.svg", status: "down" },
-    { name: "Pouya", address: "http://76.13.14.51:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY", flag: "de.svg", status: "working" },
-    { name: "Masoud", address: "http://104.234.135.93:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY", flag: "ca.svg", status: "down" },
-    { name: "Navid", address: "https://irnetlify.navtechz.com:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY", flag: "de.svg", status: "working" },
-    { name: "AbolUp", address: "45.39.33.63:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY", flag: "us.svg", status: "working" },
-    { name: "Hossein", address: "http://str.fiathusen.homes:444", path: "/IR-NETLIFY", user: "598cbaec-00f6-4d84-8644-b35fdcec6904", flag: "de.svg", status: "down" },
-    { name: "DarkSoul", address: "http://89.22.236.213:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY", flag: "se.svg", status: "working" },
-    { name: "Meshke", address: "91.107.243.126:443", path: "/imissher", user: "5ded7058-f8f4-48fc-936f-3f900ce3fcbf", flag: "de.svg", status: "working" },
-    { name: "Rahgozar", address: "https://sr1.rahgozar.tr:444", path: "/xhttp444", user: "c18d7142-3adc-491a-a0af-518a67d21c19", flag: "fi.svg", status: "down" },
-    { name: "Dante", address: "http://212.74.39.210:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY", flag: "gb.svg", status: "down" },
-    { name: "LetKnowIt", address: "65.109.221.153:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY", flag: "nl.svg", status: "working" },
-    { name: "Manp 1", address: "107.161.174.122:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY", flag: "tr.svg", status: "working" },
-    { name: "Manp 2", address: "217.179.5.74:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY", flag: "de.svg", status: "working" },
-    { name: "Phoenix", address: "62.84.172.72:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY", flag: "de.svg", status: "working" },
-    { name: "Cowboy", address: "185.250.41.220:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY", flag: "de.svg", status: "down" },
-    { name: "Hakan", address: "109.120.187.145:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY", flag: "de.svg", status: "working" },
-    { name: "Server 1", address: "193.233.202.166:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY", flag: "fi.svg", status: "working" },
-    { name: "Soroush", address: "194.59.183.234:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY", flag: "de.svg", status: "working" },
-    { name: "Server 2", address: "89.208.97.163:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY", flag: "fr.svg", status: "working" }
+    // ── Donated servers placeholder ──────────────────────────────────
+    // Donated NetLeafy servers were removed. Add them back here later, e.g.:
+    // { name: "Example", address: "example.com:444", path: "/your-path", user: "uuid-or-user", flag: "de.svg", status: "working" },
 ];
 
 const payloadData = { 
@@ -2722,7 +2897,7 @@ function showToast(msg, isError = false) {
 window.onload = () => {
     renderServerCheckboxes();
     pingDonatedServers();
-    ['domain-list', 'ip-list', 'custom-name', 'custom-address', 'custom-user', 'custom-path', 'g2leafy-ip-list'].forEach(id => { const el = document.getElementById(id); if (el) el.addEventListener('input', () => { el.classList.remove('status-error'); triggerLiveCountNet(); triggerLiveCountG2(); }); });
+    ['domain-list', 'ip-list', 'custom-name', 'custom-address', 'custom-user', 'custom-path'].forEach(id => { const el = document.getElementById(id); if (el) el.addEventListener('input', () => { el.classList.remove('status-error'); triggerLiveCountNet(); }); });
     setNetlifyMode("shecan"); setConfigMode("default"); setEditorMode('xhttp'); setScannerMode('ping');
 };
 
@@ -2812,6 +2987,19 @@ function switchView(viewId) {
 
 function renderServerCheckboxes() {
     const container = document.getElementById('server-checkboxes'); container.innerHTML = '';
+    const selectAll = document.getElementById('select-all-label');
+    const overlay = document.getElementById('server-loading-overlay');
+    if (!SERVER_LIST || SERVER_LIST.length === 0) {
+        container.style.display = 'flex';
+        container.style.flexDirection = 'column';
+        container.innerHTML = '<div class="no-servers-note"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg><span>No donated servers available</span><small>Donated servers were removed and will appear here once they are added back.</small></div>';
+        if (selectAll) selectAll.style.display = 'none';
+        if (overlay) { overlay.style.opacity = '0'; setTimeout(() => overlay.style.display = 'none', 400); }
+        return;
+    }
+    container.style.display = '';
+    container.style.flexDirection = '';
+    if (selectAll) selectAll.style.display = '';
     SERVER_LIST.forEach((srv, index) => {
         const label = document.createElement('label'); const statusClass = srv.status === 'down' ? 'down' : srv.status === 'working' ? 'working' : '';
         label.innerHTML = `<input type="checkbox" name="server-choice" value="${index}" /><img src="https://cdn.jsdelivr.net/gh/hatscripts/circle-flags@gh-pages/flags/${srv.flag}" onerror="this.style.display='none'" /> ${srv.name} <span id="status-dot-${index}" class="status-dot ${statusClass}"></span>`;
@@ -2860,26 +3048,21 @@ function loadDefaultDomains() { setInputValue("domain-list", netlifyMode === "sh
 function loadDefaultIps() { setInputValue("ip-list", payloadData.netlify_shecan.ips); triggerLiveCountNet(); }
 function loadBestDomains() { setInputValue("domain-list", payloadData.Best_domains); triggerLiveCountNet(); }
 function loadBestIps() { setInputValue("ip-list", payloadData.Best_ips); triggerLiveCountNet(); }
-function loadBestIpsG2() { setInputValue("g2leafy-ip-list", payloadData.Best_ips); triggerLiveCountG2(); }
 function setInputValue(id, arr) { const el = document.getElementById(id); if (el) { el.value = arr.join("\n"); el.classList.remove("error-border"); } }
-function clearTextarea(id) { const el = document.getElementById(id); if (el) { el.value = ''; el.classList.remove("error-border"); triggerLiveCountNet(); triggerLiveCountG2(); } }
+function clearTextarea(id) { const el = document.getElementById(id); if (el) { el.value = ''; el.classList.remove("error-border"); triggerLiveCountNet(); } }
 function showError(element) { if (!element) return; element.classList.add("error-border"); const removeError = () => { element.classList.remove("error-border"); element.removeEventListener("input", removeError); element.removeEventListener("change", removeError); }; element.addEventListener("input", removeError); element.addEventListener("change", removeError); }
 
-function animateCountTo(target, isNet = true) {
-    let current = isNet ? currentCountNet : currentCountG2;
+function animateCountTo(target) {
+    let current = currentCountNet;
     if (current === target) return; const start = current; const change = target - start; const duration = 600; const startTime = performance.now();
     if (countAnimFrame) cancelAnimationFrame(countAnimFrame);
     function updateAnim(currentTime) {
         let elapsed = currentTime - startTime; if (elapsed > duration) elapsed = duration;
         const t = elapsed / duration; const easeOut = 1 - Math.pow(1 - t, 4); 
         let val = Math.round(start + change * easeOut);
-        if(isNet) { currentCountNet = val; document.getElementById('generate-count-display-net').innerText = val.toLocaleString(); }
-        else { currentCountG2 = val; document.getElementById('generate-count-display-g2').innerText = val.toLocaleString(); }
+        currentCountNet = val; document.getElementById('generate-count-display-net').innerText = val.toLocaleString();
         if (elapsed < duration) countAnimFrame = requestAnimationFrame(updateAnim); 
-        else { 
-            if(isNet) { currentCountNet = target; document.getElementById('generate-count-display-net').innerText = target.toLocaleString(); }
-            else { currentCountG2 = target; document.getElementById('generate-count-display-g2').innerText = target.toLocaleString(); }
-        }
+        else { currentCountNet = target; document.getElementById('generate-count-display-net').innerText = target.toLocaleString(); }
     } countAnimFrame = requestAnimationFrame(updateAnim);
 }
 
@@ -2893,12 +3076,6 @@ function triggerLiveCountNet() {
     if (serverCount === 0 || domains.length === 0) { animateCountTo(0, true); return; }
     if (netlifyMode === "shecan") { if (ips.length === 0) animateCountTo(0, true); else animateCountTo(serverCount * domains.length * ips.length, true); } 
     else animateCountTo(serverCount * domains.length, true);
-}
-
-function triggerLiveCountG2() {
-    if (!g2rayExtracted) { animateCountTo(0, false); return; }
-    const ips = document.getElementById("g2leafy-ip-list").value.trim().split("\n").filter(Boolean).length;
-    animateCountTo(ips, false);
 }
 
 let checkTimeout = null;
@@ -3001,47 +3178,425 @@ function generateNetlifyConfigs() {
     if(results.length > 0) openUniversalModal("Netlify Configs", results.length, results.join('\n'), "Netlify");
 }
 
-function handleG2leafyBase() {
-    const input = document.getElementById('g2leafy-base-input'); const text = input.value.trim(); const hostBox = document.getElementById('g2leafy-extracted-host');
+// ══ V2Leafy: Railway deployment + Cloudflare relay ══════════════════
+const V2LEAFY_RAILWAY_REPO = "Code-Leafy/V2Leafy";
+const V2LEAFY_RAILWAY_TOKEN_URL = "https://railway.com/account/tokens";
+const V2LEAFY_CF_TOKEN_URL = "https://dash.cloudflare.com/profile/api-tokens?permissionGroupKeys=%5B%7B%22key%22%3A%22workers_scripts%22%2C%22type%22%3A%22edit%22%7D%5D&accountId=*&zoneId=all&name=V2Leafy%20Relay";
+const V2LEAFY_REGIONS = {
+    "us-east-1": "US East (Virginia, USA)",
+    "ap-southeast-1": "Southeast Asia (Singapore, Singapore)",
+    "eu-west-1": "EU West (Amsterdam, Netherlands)",
+    "us-west-1": "US West (California, USA)"
+};
+let v2leafyTimerInterval = null;
+let v2leafyTimerStart = 0;
+let v2leafyElapsedSeconds = 0;
+let v2leafyLastRailwayDomain = (localStorage.getItem("v2leafy_railway_domain") || "").trim();
+
+function v2leafyLog(termId, message, cls = "") {
+    const term = document.getElementById(termId);
+    if (!term) return;
+    const line = document.createElement("div");
+    line.className = "t-line" + (cls ? " t-" + cls : "");
+    const time = new Date().toLocaleTimeString("en-GB", { hour12: false });
+    line.innerHTML = '<span class="t-time">' + time + '</span>' + String(message).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    term.appendChild(line);
+    term.scrollTop = term.scrollHeight;
+}
+
+function v2leafyFormatElapsed(s) {
+    const m = Math.floor(s / 60), sec = s % 60;
+    return m + "m " + sec + "s";
+}
+
+function v2leafyStartTimer(elId) {
+    v2leafyElapsedSeconds = 0;
+    v2leafyTimerStart = Date.now();
+    const el = document.getElementById(elId);
+    if (v2leafyTimerInterval) clearInterval(v2leafyTimerInterval);
+    v2leafyTimerInterval = setInterval(() => {
+        v2leafyElapsedSeconds = Math.floor((Date.now() - v2leafyTimerStart) / 1000);
+        if (el) el.textContent = v2leafyFormatElapsed(v2leafyElapsedSeconds);
+    }, 1000);
+}
+
+function v2leafyStopTimer(elId) {
+    if (v2leafyTimerInterval) { clearInterval(v2leafyTimerInterval); v2leafyTimerInterval = null; }
+    v2leafyElapsedSeconds = Math.floor((Date.now() - v2leafyTimerStart) / 1000);
+    const el = document.getElementById(elId);
+    if (el) el.textContent = v2leafyFormatElapsed(v2leafyElapsedSeconds);
+}
+
+function v2leafySetDomainLink(linkId, url) {
+    const el = document.getElementById(linkId);
+    if (!el) return;
+    if (url) {
+        el.href = url;
+        el.textContent = url.replace(/^https?:\/\//, "");
+        el.classList.remove("placeholder");
+        el.setAttribute("title", "Open " + url);
+    } else {
+        el.href = "#";
+        el.textContent = "---";
+        el.classList.add("placeholder");
+        el.removeAttribute("title");
+    }
+}
+
+function v2leafyUuid() {
+    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, c => {
+        const r = Math.random() * 16 | 0;
+        return (c === "x" ? r : (r & 0x3 | 0x8)).toString(16);
+    });
+}
+
+// Railway & Cloudflare both block browser CORS: Railway's API only allows the railway.com
+// origin, and Cloudflare returns no CORS headers. So a direct browser fetch is refused, and
+// we fall back through a couple of public CORS proxies. If every attempt fails we raise a
+// clear, actionable error instead of the bare "Failed to fetch".
+const V2LEAFY_CORS_PROXIES = [
+    "https://corsproxy.io/?url=",
+    "https://api.allorigins.win/raw?url="
+];
+
+async function v2leafyFetchSmart(url, init) {
+    const attempts = [url].concat(V2LEAFY_CORS_PROXIES.map(p => p + encodeURIComponent(url)));
+    let lastReason = "blocked by the browser";
+    for (const endpoint of attempts) {
+        const ctrl = new AbortController();
+        const timer = setTimeout(() => ctrl.abort(), 20000);
+        try {
+            const res = await fetch(endpoint, Object.assign({ signal: ctrl.signal }, init));
+            clearTimeout(timer);
+            return res;
+        } catch (e) {
+            clearTimeout(timer);
+            lastReason = (e && e.name === "AbortError") ? "timed out" : "blocked by the browser (CORS)";
+        }
+    }
+    throw new Error("Railway/Cloudflare refused the request (" + lastReason + ") — their APIs only allow calls from trusted origins, not a browser page. Deploy from a server-side backend, or retry when a CORS proxy is reachable.");
+}
+
+// Railway GraphQL
+async function v2leafyRailwayGql(token, query, variables) {
+    const url = "https://backboard.railway.com/graphql/v2";
+    const res = await v2leafyFetchSmart(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Authorization": "Bearer " + token },
+        body: JSON.stringify({ query, variables })
+    });
+    const data = await res.json().catch(() => null);
+    if (!data) throw new Error("The Railway API returned an unreadable response (likely intercepted by a CORS proxy).");
+    if (data.errors && data.errors.length) throw new Error(data.errors[0].message);
+    if (data.data === undefined) throw new Error("The Railway API returned an unexpected response shape.");
+    return data.data;
+}
+
+// Cloudflare API
+async function v2leafyCfApi(token, path, options = {}) {
+    const base = "https://api.cloudflare.com/client/v4";
+    const headers = Object.assign({ Authorization: "Bearer " + token }, options.headers || {});
+    const res = await v2leafyFetchSmart(base + path, Object.assign({}, options, { headers }));
+    const data = await res.json().catch(() => null);
+    if (!data) throw new Error("The Cloudflare API returned an unreadable response (likely intercepted by a CORS proxy).");
+    if (!res.ok || data.success === false) {
+        const err = (data.errors && data.errors[0]) || {};
+        throw new Error(err.message || ("HTTP " + res.status));
+    }
+    return data;
+}
+
+function v2leafyEscapeHtml(s) {
+    return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+
+function v2leafyShowResult(ok, title, messageHtml) {
+    const modal = document.getElementById("v2leafy-result-modal");
+    if (!modal) return;
+    const markerColor = ok ? "var(--accent-success)" : "var(--accent-error)";
+    const icon = ok
+        ? '<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="var(--accent-success)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg>'
+        : '<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="var(--accent-error)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>';
+    document.getElementById("v2leafy-result-title").textContent = title;
+    document.getElementById("v2leafy-result-body").innerHTML =
+        '<div style="display:flex; align-items:center; gap:12px; margin-bottom:14px; color:' + markerColor + ';">' + icon +
+        '<strong style="color:var(--text-primary); font-size:1.05rem;">' + (ok ? "Success!" : "Deployment failed") + '</strong></div>' +
+        messageHtml;
+    modal.classList.add("active");
+}
+
+function v2leafyCloseResult() {
+    const modal = document.getElementById("v2leafy-result-modal");
+    if (modal) modal.classList.remove("active");
+}
+
+async function createV2LeafyPanel() {
+    const tokenInput = document.getElementById("v2leafy-token");
+    const token = (tokenInput.value || "").trim();
+    const regionEl = document.getElementById("v2leafy-region");
+    const region = regionEl.value;
+    const regionLabel = V2LEAFY_REGIONS[region] || region;
+    const termId = "v2leafy-install-terminal";
+    if (!token) { showError(tokenInput); v2leafyLog(termId, "Error: Railway API token is required.", "err"); return; }
+
+    v2leafyLog(termId, "── Starting V2Leafy deployment on Railway ──", "info");
+    v2leafyLog(termId, "Region: " + regionLabel + " (" + region + ")", "info");
+    v2leafySetDomainLink("v2leafy-domain-link", null);
+    const regionOut = document.getElementById("v2leafy-region-out");
+    if (regionOut) regionOut.textContent = regionLabel;
+    v2leafyStartTimer("v2leafy-elapsed");
+
     try {
-        if (text.startsWith('vless://')) {
-            const hashIndex = text.indexOf('#');
-            const urlPart = hashIndex !== -1 ? text.slice(0, hashIndex) : text; const url = new URL(urlPart);
-            const uuid = url.username; const hostParam = url.searchParams.get('host') || url.hostname; const sniParam = url.searchParams.get('sni') || url.hostname;
-            if (uuid && uuid.includes('-')) {
-                g2rayExtracted = { uuid, host: hostParam, sni: sniParam };
-                input.classList.add('status-success');
-                hostBox.value = `SNI: ${sniParam} | Host: ${hostParam}`; hostBox.classList.add('status-success');
-                triggerLiveCountG2(); return;
+        v2leafyLog(termId, "Creating Railway project...", "dim");
+        const project = await v2leafyRailwayGql(token,
+            "mutation($input: ProjectCreateInput!) { projectCreate(input: $input) { id name } }",
+            { input: { name: "v2leafy-" + Date.now().toString(36) } });
+        const projectId = project.projectCreate.id;
+        v2leafyLog(termId, "Project created: " + project.projectCreate.name, "ok");
+
+        v2leafyLog(termId, "Locating default environment...", "dim");
+        const envRes = await v2leafyRailwayGql(token,
+            "query($id: String!) { project(id: $id) { environments { edges { node { id name } } } } }",
+            { id: projectId });
+        const envEdge = envRes.project.environments.edges[0];
+        if (!envEdge) throw new Error("No environment found for the new project.");
+        const environmentId = envEdge.node.id;
+        v2leafyLog(termId, "Environment: " + envEdge.node.name, "ok");
+
+        v2leafyLog(termId, "Connecting GitHub repo " + V2LEAFY_RAILWAY_REPO + "...", "dim");
+        const service = await v2leafyRailwayGql(token,
+            "mutation($input: ServiceCreateInput!) { serviceCreate(input: $input) { id name } }",
+            { input: { projectId, name: "v2leafy", source: { repo: V2LEAFY_RAILWAY_REPO }, branch: "main" } });
+        const serviceId = service.serviceCreate.id;
+        v2leafyLog(termId, "Service created: " + service.serviceCreate.name, "ok");
+
+        v2leafyLog(termId, "Setting region to " + regionLabel + "...", "dim");
+        await v2leafyRailwayGql(token,
+            "mutation($serviceId: String!, $environmentId: String!, $input: ServiceInstanceUpdateInput!) { serviceInstanceUpdate(serviceId: $serviceId, environmentId: $environmentId, input: $input) }",
+            { serviceId, environmentId, input: { region } });
+        v2leafyLog(termId, "Region updated.", "ok");
+
+        v2leafyLog(termId, "Generating public domain...", "dim");
+        const dom = await v2leafyRailwayGql(token,
+            "mutation($serviceId: String!, $environmentId: String!) { serviceDomainCreate(serviceId: $serviceId, environmentId: $environmentId) { id domain } }",
+            { serviceId, environmentId });
+        const domain = dom.serviceDomainCreate.domain;
+        v2leafyLog(termId, "Domain: " + domain, "ok");
+
+        v2leafyLog(termId, "Triggering deployment...", "dim");
+        const dep = await v2leafyRailwayGql(token,
+            "mutation($serviceId: String!, $environmentId: String!) { serviceInstanceDeployV2(serviceId: $serviceId, environmentId: $environmentId) }",
+            { serviceId, environmentId });
+        const deploymentId = dep.serviceInstanceDeployV2;
+        v2leafyLog(termId, "Deployment started: " + deploymentId, "ok");
+
+        const statusQ = "query($id: String!) { deployment(id: $id) { id status } }";
+        const logsQ = "query($id: String!) { buildLogs(deploymentId: $id, limit: 30) { message severity } }";
+        const seenLogs = new Set();
+        let lastStatus = "";
+        let done = false;
+        for (let i = 0; i < 150 && !done; i++) {
+            await new Promise(r => setTimeout(r, 4000));
+            let status;
+            try {
+                status = (await v2leafyRailwayGql(token, statusQ, { id: deploymentId })).deployment.status;
+            } catch (e) {
+                v2leafyLog(termId, "Status poll error: " + e.message, "warn");
+                continue;
+            }
+            if (status !== lastStatus) {
+                lastStatus = status;
+                v2leafyLog(termId, "Deployment status: " + status, status === "FAILED" || status === "CRASHED" ? "err" : "info");
+            }
+            try {
+                const lr = await v2leafyRailwayGql(token, logsQ, { id: deploymentId });
+                (lr.buildLogs || []).forEach(l => {
+                    if (!l.message || seenLogs.has(l.message)) return;
+                    seenLogs.add(l.message);
+                    v2leafyLog(termId, l.message, l.severity === "ERROR" ? "err" : l.severity === "WARN" ? "warn" : "dim");
+                });
+            } catch (e) {}
+            if (status === "SUCCESS") done = true;
+            if (status === "FAILED" || status === "CRASHED") throw new Error("Deployment " + status.toLowerCase() + ".");
+        }
+        if (!done) throw new Error("Deployment timed out while waiting for it to finish.");
+
+        v2leafyLog(termId, "✓ Deployment succeeded!", "ok");
+        v2leafySetDomainLink("v2leafy-domain-link", "https://" + domain);
+        v2leafyLastRailwayDomain = domain;
+        try { localStorage.setItem("v2leafy_railway_domain", domain); } catch (e) {}
+        v2leafyLog(termId, "Web panel: https://" + domain, "ok");
+        v2leafyShowResult(true, "V2Leafy Deployed", '<a href="https://' + domain + '" target="_blank" rel="noopener" style="color:var(--accent-success); font-family:Menlo,Consolas,monospace; font-weight:600; word-break:break-all;">https://' + domain + '</a>');
+    } catch (e) {
+        v2leafyLog(termId, "✗ " + e.message, "err");
+        v2leafyShowResult(false, "Deployment Failed", '<p style="margin:0;">' + v2leafyEscapeHtml(e.message) + '</p>');
+    } finally {
+        v2leafyStopTimer("v2leafy-elapsed");
+    }
+}
+
+function v2leafyBuildWorkerJs(targetHost) {
+    const host = (targetHost || "YOUR-RAILWAY-APP.up.railway.app").replace(/^https?:\/\//, "").replace(/\/+$/, "");
+    return [
+        "// V2Leafy Relay Worker — relays the V2Leafy dashboard and its WebSocket VLESS gateway.",
+        "// Target backend (edit this to point at your Railway panel if needed):",
+        "const TARGET_HOST = \"" + host + "\";",
+        "const TARGET_BASE = \"https://\" + TARGET_HOST;",
+        "",
+        "const LANDING = '<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title>V2Leafy Relay</title><style>body{font-family:system-ui,sans-serif;background:#121212;color:#e2e8f0;display:flex;align-items:center;justify-content:center;height:100vh;margin:0}div{text-align:center}h1{color:#a855f7}p{color:#94a3b8}</style></head><body><div><h1>V2Leafy Relay</h1><p>Relay is online — V2Leafy panel is proxied through this worker.</p></div></body></html>';",
+        "",
+        "export default {",
+        "  async fetch(request) {",
+        "    const url = new URL(request.url);",
+        "    const upstreamUrl = TARGET_BASE + url.pathname + url.search;",
+        "",
+        "    // WebSocket upgrade: VLESS gateway (/ws/*) + dashboard live analytics",
+        "    const upgrade = (request.headers.get(\"Upgrade\") || \"\").toLowerCase();",
+        "    if (upgrade === \"websocket\") {",
+        "      const [client, server] = Object.values(new WebSocketPair());",
+        "      server.accept();",
+        "      const wsUrl = upstreamUrl.replace(\"http:\", \"ws:\").replace(\"https:\", \"wss:\");",
+        "      const backend = new WebSocket(wsUrl);",
+        "      backend.accept();",
+        "      backend.addEventListener(\"message\", (e) => { try { server.send(e.data); } catch (_) {} });",
+        "      server.addEventListener(\"message\", (e) => { try { backend.send(e.data); } catch (_) {} });",
+        "      backend.addEventListener(\"close\", (e) => { try { server.close(e.code || 1000, e.reason || \"\"); } catch (_) {} });",
+        "      backend.addEventListener(\"error\", () => { try { server.close(1011, \"backend error\"); } catch (_) {} });",
+        "      server.addEventListener(\"close\", (e) => { try { backend.close(e.code || 1000, e.reason || \"\"); } catch (_) {} });",
+        "      server.addEventListener(\"error\", () => { try { backend.close(1011, \"client error\"); } catch (_) {} });",
+        "      return new Response(null, { status: 101, webSocket: client });",
+        "    }",
+        "",
+        "    // Landing page when the backend is unreachable at the root",
+        "    if (url.pathname === \"/\" || url.pathname === \"/index.html\") {",
+        "      try {",
+        "        const probe = await fetch(TARGET_BASE + \"/\", { method: \"HEAD\" });",
+        "        if (!probe.ok) return new Response(LANDING, { status: 200, headers: { \"content-type\": \"text/html; charset=utf-8\" } });",
+        "      } catch (_) { return new Response(LANDING, { status: 200, headers: { \"content-type\": \"text/html; charset=utf-8\" } }); }",
+        "    }",
+        "",
+        "    // Regular HTTP: reverse-proxy the V2Leafy dashboard",
+        "    const headers = new Headers(request.headers);",
+        "    headers.delete(\"host\");",
+        "    headers.set(\"x-forwarded-host\", url.host);",
+        "    headers.set(\"x-forwarded-proto\", \"https\");",
+        "    const cfIp = request.headers.get(\"cf-connecting-ip\");",
+        "    if (cfIp) headers.set(\"x-real-ip\", cfIp); else headers.delete(\"x-real-ip\");",
+        "",
+        "    const init = {",
+        "      method: request.method,",
+        "      headers,",
+        "      redirect: \"manual\",",
+        "      body: (request.method === \"GET\" || request.method === \"HEAD\") ? undefined : request.body,",
+        "    };",
+        "",
+        "    try {",
+        "      const resp = await fetch(upstreamUrl, init);",
+        "      const respHeaders = new Headers(resp.headers);",
+        "      respHeaders.delete(\"content-security-policy\");",
+        "      return new Response(resp.body, { status: resp.status, statusText: resp.statusText, headers: respHeaders });",
+        "    } catch (err) {",
+        "      return new Response(\"V2Leafy Relay is online, but the backend is unreachable.\", { status: 502, headers: { \"content-type\": \"text/plain; charset=utf-8\" } });",
+        "    }",
+        "  },",
+        "};",
+        ""
+    ].join("\n");
+}
+
+async function createV2LeafyRelay() {
+    const tokenInput = document.getElementById("v2leafy-cf-token");
+    const token = (tokenInput.value || "").trim();
+    const termId = "v2leafy-relay-terminal";
+    if (!token) { showError(tokenInput); v2leafyLog(termId, "Error: Cloudflare API token is required.", "err"); return; }
+
+    v2leafyLog(termId, "── Starting Cloudflare relay deployment ──", "info");
+
+    try {
+        v2leafyLog(termId, "Looking up your Cloudflare account...", "dim");
+        const accs = await v2leafyCfApi(token, "/accounts");
+        const account = accs.result && accs.result[0];
+        if (!account) throw new Error("No Cloudflare account found for this token.");
+        const accountId = account.id;
+        v2leafyLog(termId, "Account: " + account.name, "ok");
+
+        v2leafyLog(termId, "Checking workers.dev subdomain...", "dim");
+        let subdomain = "";
+        try {
+            const subRes = await v2leafyCfApi(token, "/accounts/" + accountId + "/workers/subdomain");
+            subdomain = subRes.result && subRes.result.subdomain;
+        } catch (e) {
+            v2leafyLog(termId, "Subdomain check: " + e.message, "warn");
+        }
+        if (!subdomain) {
+            v2leafyLog(termId, "No workers.dev subdomain found — attempting to configure one...", "warn");
+            try {
+                const setRes = await v2leafyCfApi(token, "/accounts/" + accountId + "/workers/subdomain", {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ subdomain: "v2leafy" })
+                });
+                subdomain = setRes.result && setRes.result.subdomain;
+                if (!subdomain) throw new Error("empty response");
+            } catch (e) {
+                throw new Error("workers.dev subdomain is not configured and could not be created with this token. Enable it in the Cloudflare dashboard (Workers & Pages → Subdomain), then retry.");
             }
         }
-    } catch(e) {}
-    g2rayExtracted = null; input.classList.remove('status-success'); hostBox.value = ''; hostBox.classList.remove('status-success'); triggerLiveCountG2();
+        v2leafyLog(termId, "workers.dev subdomain: " + subdomain, "ok");
+
+        const scriptName = "v2leafyrelay";
+        const relayUrl = "https://" + scriptName + "." + subdomain + ".workers.dev";
+
+        v2leafyLog(termId, "Generating worker.js relay script...", "dim");
+        const workerJs = v2leafyBuildWorkerJs(v2leafyLastRailwayDomain);
+        if (v2leafyLastRailwayDomain) v2leafyLog(termId, "Relay target: " + v2leafyLastRailwayDomain, "ok");
+        else v2leafyLog(termId, "Relay target: YOUR-RAILWAY-APP.up.railway.app — edit worker.js in the Cloudflare dashboard to set your panel domain", "warn");
+
+        v2leafyLog(termId, "Uploading worker \"" + scriptName + "\"...", "dim");
+        const boundary = "----v2leafy" + Date.now().toString(36);
+        const metadata = JSON.stringify({ main_module: "worker.js", compatibility_date: "2026-08-31" });
+        const enc = new TextEncoder();
+        const parts = [];
+        parts.push(enc.encode("--" + boundary + "\r\nContent-Disposition: form-data; name=\"metadata\"\r\nContent-Type: application/json\r\n\r\n" + metadata + "\r\n"));
+        parts.push(enc.encode("--" + boundary + "\r\nContent-Disposition: form-data; name=\"worker.js\"; filename=\"worker.js\"\r\nContent-Type: application/javascript+module\r\n\r\n"));
+        parts.push(enc.encode(workerJs));
+        parts.push(enc.encode("\r\n--" + boundary + "--\r\n"));
+        const formBody = new Blob(parts, { type: "multipart/form-data; boundary=" + boundary });
+
+        await v2leafyCfApi(token, "/accounts/" + accountId + "/workers/scripts/" + scriptName, {
+            method: "PUT",
+            headers: { "Content-Type": "multipart/form-data; boundary=" + boundary },
+            body: formBody
+        });
+        v2leafyLog(termId, "Worker script uploaded & deployed.", "ok");
+
+        v2leafySetDomainLink("v2leafy-relay-link", relayUrl);
+        v2leafyLog(termId, "Relay live at " + relayUrl, "ok");
+        v2leafyGenerateRelayConfig(relayUrl);
+        v2leafyShowResult(true, "Relay Deployed", '<a href="' + relayUrl + '" target="_blank" rel="noopener" style="color:var(--accent-success); font-family:Menlo,Consolas,monospace; font-weight:600; word-break:break-all;">' + relayUrl + '</a>');
+    } catch (e) {
+        v2leafyLog(termId, "✗ " + e.message, "err");
+        v2leafyShowResult(false, "Relay Deployment Failed", '<p style="margin:0;">' + v2leafyEscapeHtml(e.message) + '</p>');
+    }
 }
 
-function generateG2LeafyConfigs() {
-    if(!g2rayExtracted) { showError(document.getElementById('g2leafy-base-input')); return; }
-    const ipElement = document.getElementById('g2leafy-ip-list');
-    const ipInput = ipElement.value.trim();
-    let hasError = false;
-    if(!ipInput) { showError(ipElement); hasError=true; }
-    if(hasError) return;
-    const ips = ipInput.split("\n").map(i => i.trim().replace(/[^a-fA-F0-9.:]/g, "")).filter(Boolean);
-    let results = [];
-    const { uuid, host, sni } = g2rayExtracted;
+function v2leafyGenerateRelayConfig(relayUrl) {
+    const host = relayUrl.replace(/^https?:\/\//, "").replace(/\/+$/, "");
+    const uuid = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : v2leafyUuid();
+    const remark = encodeURIComponent("🍃 V2Leafy Relay | " + host);
+    const config = "vless://" + uuid + "@" + host + ":443?encryption=none&security=tls&sni=" + host + "&fp=chrome&alpn=http%2F1.1&type=ws&host=" + host + "&path=%2Fws%2F" + uuid + "#" + remark;
+    const ta = document.getElementById("v2leafy-relay-configs");
+    if (ta) ta.value = config;
+}
 
-    ips.forEach(ip => {
-        const remark = encodeURIComponent(`🍃 G2Leafy | ${sni} | ${ip}`);
-        results.push(`vless://${uuid}@${ip}:443?encryption=none&security=tls&sni=${sni}&fp=chrome&alpn=h2&insecure=1&allowInsecure=1&type=xhttp&host=${host}&path=%2F&mode=packet-up#${remark}`);
+function copyV2LeafyRelayConfigs() {
+    const ta = document.getElementById("v2leafy-relay-configs");
+    if (!ta || !ta.value) { showToast("No config generated yet.", true); return; }
+    navigator.clipboard?.writeText(ta.value).then(() => showToast("Config copied!")).catch(() => {
+        ta.select();
+        document.execCommand("copy");
+        showToast("Config copied!");
     });
-    if(results.length > 0) openUniversalModal("G2Leafy Configs", results.length, results.join('\n'), "G2Leafy");
-}
-
-function copyDonatedSub() {
-    const input = document.getElementById('donated-sub-link');
-    input.select();
-    document.execCommand('copy');
-    showToast("Subscription link copied!");
 }
 
 function setEditorMode(mode) {
