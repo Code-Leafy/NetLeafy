@@ -1991,6 +1991,24 @@
             -webkit-user-select: text;
             box-sizing: border-box;
             scrollbar-width: thin;
+            scrollbar-color: var(--scrollbar-thumb) transparent;
+        }
+        .v2leafy-terminal::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .v2leafy-terminal::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .v2leafy-terminal::-webkit-scrollbar-thumb {
+            background-color: var(--scrollbar-thumb);
+            border-radius: 10px;
+            border: 2px solid transparent;
+            background-clip: padding-box;
+            transition: background-color 0.2s;
+        }
+        .v2leafy-terminal::-webkit-scrollbar-thumb:hover {
+            background-color: var(--scrollbar-thumb-hover);
         }
         .v2leafy-terminal .t-line {
             margin: 0;
@@ -2333,17 +2351,17 @@
                                     <input id="v2leafy-token" type="text" placeholder="Paste your Railway API token here..." autocomplete="off" />
                                 </div>
                                 <div class="form-group">
-                                    <label>Deployment Region</label>
-                                    <select class="styled-select" id="v2leafy-region">
-                                        <option value="us-east-1">US East (Virginia, USA)</option>
-                                        <option value="ap-southeast-1">Southeast Asia (Singapore, Singapore)</option>
-                                        <option value="eu-west-1">EU West (Amsterdam, Netherlands)</option>
-                                        <option value="us-west-1">US West (California, USA)</option>
-                                    </select>
-                                </div>
+                                    <label>Deployment Region</label>                                <select class="styled-select" id="v2leafy-region">
+                                    <option value="pdx" selected>US West (Portland, Oregon)</option>
+                                    <option value="sfo">US West (San Francisco, California)</option>
+                                    <option value="iad">US East (Washington DC, USA)</option>
+                                    <option value="sin">Asia (Singapore)</option>
+                                    <option value="ams">Europe (Amsterdam, Netherlands)</option>
+                                </select>
                             </div>
-                            <div class="panel-footer" style="padding: 12px 20px 16px 20px;">
-                                <button class="gen-btn" onclick="createV2LeafyPanel()">
+                        </div>
+                        <div class="panel-footer" style="padding: 12px 20px 16px 20px;">
+                            <button class="gen-btn" onclick="createV2LeafyPanel()">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path></svg>
                                     Create Panel
                                 </button>
@@ -2368,7 +2386,7 @@
 
             <div class="view-section" id="view-v2leafy-relay">
                 <div class="dashboard-grid">
-                    <div style="display: flex; flex-direction: column; gap: 20px; height: 100%; min-height: 0;">
+                    <div style="display: flex; flex-direction: column; gap: 20px; height: 100%; min-height: 0; overflow-y: auto; overscroll-behavior: contain;">
                         <div class="panel" style="flex: 0 0 auto; display: flex; flex-direction: column;">
                             <div class="panel-body" style="padding: 16px 20px; gap: 14px;">
                                 <div class="form-group">
@@ -2382,6 +2400,10 @@
                                     <label>API Token</label>
                                     <input id="v2leafy-cf-token" type="text" placeholder="Paste your Cloudflare API token here..." autocomplete="off" />
                                 </div>
+                                <div class="form-group">
+                                    <label>Vless Config (from your panel)</label>
+                                    <input id="v2leafy-cf-config" type="text" placeholder="Paste vless://... here — UUID, path & target are auto-extracted (empty = auto-generate)" autocomplete="off" />
+                                </div>
                             </div>
                             <div class="panel-footer" style="padding: 12px 20px 16px 20px;">
                                 <button class="gen-btn" onclick="createV2LeafyRelay()">
@@ -2390,8 +2412,8 @@
                                 </button>
                             </div>
                         </div>
-                        <div class="panel" style="flex: 1; min-height: 0; display: flex; flex-direction: column;">
-                            <div class="panel-body" style="padding: 16px 20px; gap: 14px;">
+                        <div class="panel" style="flex: 1 1 auto; min-height: 220px; display: flex; flex-direction: column;">
+                            <div class="panel-body" style="padding: 14px 20px; gap: 12px;">
                                 <div class="animated-group">
                                     <div class="header-row">
                                         <label>Relay Config</label>
@@ -2400,7 +2422,7 @@
                                             <button type="button" class="mini-btn btn-clear" onclick="document.getElementById('v2leafy-relay-configs').value = '';">Clear</button>
                                         </div>
                                     </div>
-                                    <textarea id="v2leafy-relay-configs" readonly placeholder="Deploy the relay first — your vless:// config will appear here..." style="white-space: pre; overflow-wrap: normal; overflow-x: auto;"></textarea>
+                                    <textarea id="v2leafy-relay-configs" readonly placeholder="Deploy the relay first — your vless:// config will appear here..." style="white-space: pre; overflow-wrap: normal; overflow-x: auto; flex: 1 1 auto; min-height: 140px;"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -2840,6 +2862,59 @@ function relayRandWord(list) { return list[Math.floor(Math.random() * list.lengt
 function relayTimeHash() { return (Date.now().toString(36) + Math.random().toString(36).substring(2,6)).slice(-8); }
 function relayRandIdent() { return relayRandWord(relayWordAdj) + '_' + relayRandWord(relayWordNoun) + '_' + relayTimeHash(); }
 
+// Cloudflare Worker that relays Railway & Cloudflare API calls without the CORS wall.
+// Deploy it once (see proxy/worker.js), then paste the *.workers.dev URL into the
+// V2Leafy "API Proxy" field so in-page deploys work.
+const V2LEAFY_PROXY_WORKER_SRC = `export default {
+  async fetch(request) {
+    const url = new URL(request.url);
+    const origin = request.headers.get("Origin");
+    const cors = {
+      "Access-Control-Allow-Origin": origin || "*",
+      "Access-Control-Allow-Methods": "GET,HEAD,POST,PUT,PATCH,OPTIONS",
+      "Access-Control-Allow-Headers": "Authorization, Content-Type",
+      "Access-Control-Max-Age": "86400",
+      "Vary": "Origin",
+    };
+    if (request.method === "OPTIONS") {
+      return new Response(null, { status: 204, headers: cors });
+    }
+    let target = null;
+    if (url.pathname === "/railway" || url.pathname === "/railway/") {
+      target = "https://backboard.railway.com/graphql/v2";
+    } else if (url.pathname.startsWith("/cloudflare/")) {
+      target = "https://api.cloudflare.com/client/v4/" + url.pathname.slice("/cloudflare/".length) + url.search;
+    }
+    if (!target) return new Response("Not found", { status: 404, headers: cors });
+    const upstreamHeaders = new Headers();
+    const auth = request.headers.get("Authorization");
+    if (auth) upstreamHeaders.set("Authorization", auth);
+    const contentType = request.headers.get("Content-Type");
+    if (contentType) upstreamHeaders.set("Content-Type", contentType);
+    const upstream = await fetch(target, {
+      method: request.method,
+      headers: upstreamHeaders,
+      body: request.body,
+      redirect: "manual",
+    });
+    const resHeaders = new Headers(upstream.headers);
+    for (const [k, v] of Object.entries(cors)) resHeaders.set(k, v);
+    return new Response(upstream.body, {
+      status: upstream.status,
+      statusText: upstream.statusText,
+      headers: resHeaders,
+    });
+  },
+};`;
+
+function copyV2LeafyWorkerSrc() {
+    const text = V2LEAFY_PROXY_WORKER_SRC;
+    if (!text) return;
+    navigator.clipboard?.writeText(text).then(() => showToast("Worker script copied!")).catch(() => {
+        const ta = document.createElement("textarea"); ta.value = text; document.body.appendChild(ta); ta.select(); document.execCommand("copy"); document.body.removeChild(ta); showToast("Worker script copied!");
+    });
+}
+
 const infoData = {
     'ip_sni': {
         title: 'Routing Mode',
@@ -2860,6 +2935,17 @@ const infoData = {
     'lb_url': {
         title: 'Health Check URL',
         body: '<p>The URL used to test if a node has internet access. A lightweight URL like <i>http://www.gstatic.com/generate_204</i> or <i>http://cp.cloudflare.com</i> is recommended.</p>'
+    },
+    'v2leafy_proxy': {
+        title: 'Deploy the API Proxy (Cloudflare Worker)',
+        body: '<p>Railway and Cloudflare refuse direct browser (CORS) requests, so this page can\'t reach them on its own. Deploy one tiny Cloudflare Worker once, then every panel/relay deploy works from the browser:</p>' +
+            '<ol style="margin:8px 0 12px; padding-left:20px;">' +
+            '<li>Cloudflare dashboard <i>Workers &amp; Pages &rarr; Create Worker</i>.</li>' +
+            '<li>Name it anything (e.g. <code>v2leafy-proxy</code>), <b>replace the sample script</b> with the proxy code below, then <b>Deploy</b>.</li>' +
+            '<li>Paste your URL like <code>https://v2leafy-proxy.YOUR-NAME.workers.dev</code> into the <b>API Proxy</b> field below.</li>' +
+            '</ol>' +
+            '<button class="mini-btn" style="cursor:pointer; margin-bottom:10px;" onclick="copyV2LeafyWorkerSrc()">Copy worker.js</button>' +
+            '<textarea readonly onclick="this.select()" style="width:100%; min-height:220px; resize:vertical; font-family:Menlo,Consolas,monospace; font-size:0.7rem; line-height:1.5;">' + V2LEAFY_PROXY_WORKER_SRC.replace(/`/g, '') + '</textarea>'
     }
 };
 
@@ -2895,6 +2981,8 @@ function showToast(msg, isError = false) {
 }
 
 window.onload = () => {
+    const cfConfig = document.getElementById("v2leafy-cf-config");
+    if (cfConfig && !cfConfig.value && v2leafyLastCfConfig) cfConfig.value = v2leafyLastCfConfig;
     renderServerCheckboxes();
     pingDonatedServers();
     ['domain-list', 'ip-list', 'custom-name', 'custom-address', 'custom-user', 'custom-path'].forEach(id => { const el = document.getElementById(id); if (el) el.addEventListener('input', () => { el.classList.remove('status-error'); triggerLiveCountNet(); }); });
@@ -3182,16 +3270,19 @@ function generateNetlifyConfigs() {
 const V2LEAFY_RAILWAY_REPO = "Code-Leafy/V2Leafy";
 const V2LEAFY_RAILWAY_TOKEN_URL = "https://railway.com/account/tokens";
 const V2LEAFY_CF_TOKEN_URL = "https://dash.cloudflare.com/profile/api-tokens?permissionGroupKeys=%5B%7B%22key%22%3A%22workers_scripts%22%2C%22type%22%3A%22edit%22%7D%5D&accountId=*&zoneId=all&name=V2Leafy%20Relay";
+// Railway uses its own region codes (e.g. pdx, iad, sin), not cloud-provider codes.
 const V2LEAFY_REGIONS = {
-    "us-east-1": "US East (Virginia, USA)",
-    "ap-southeast-1": "Southeast Asia (Singapore, Singapore)",
-    "eu-west-1": "EU West (Amsterdam, Netherlands)",
-    "us-west-1": "US West (California, USA)"
+    "pdx": "US West (Portland, Oregon)",
+    "sfo": "US West (San Francisco, California)",
+    "iad": "US East (Washington DC, USA)",
+    "sin": "Asia (Singapore)",
+    "ams": "Europe (Amsterdam, Netherlands)"
 };
 let v2leafyTimerInterval = null;
 let v2leafyTimerStart = 0;
 let v2leafyElapsedSeconds = 0;
 let v2leafyLastRailwayDomain = (localStorage.getItem("v2leafy_railway_domain") || "").trim();
+let v2leafyLastCfConfig = (localStorage.getItem("v2leafy_cf_config") || "").trim();
 
 function v2leafyLog(termId, message, cls = "") {
     const term = document.getElementById(termId);
@@ -3250,17 +3341,90 @@ function v2leafyUuid() {
     });
 }
 
+// Pull the backend VLESS credentials out of a pasted vless:// config so the relay config
+// authenticates against the panel. Returns the client UUID, WS path and server host.
+function v2leafyParseVless(link) {
+    const out = { uuid: "", path: "", host: "" };
+    if (!link) return out;
+    try {
+        const u = new URL(link);
+        if (u.protocol.toLowerCase() !== "vless:") return out;
+        out.uuid = (u.username || "").trim();
+        out.host = (u.hostname || "").trim();
+        const p = u.searchParams.get("path");
+        out.path = (p || "").trim();
+    } catch (e) {}
+    return out;
+}
+
+// Word pool used to obfuscate deployed resource names so panels aren't obviously labeled.
+const V2LEAFY_NAME_WORDS = [
+    "holm", "lithe", "quill", "reed", "moss", "yarn", "elm", "fern", "grove",
+    "heath", "ivy", "juniper", "knot", "larch", "myrtle", "willow", "cedar",
+    "briar", "dune", "ember", "frost", "hollow", "meadow", "nettle", "oak"
+];
+
+// Builds a V2Leafy resource name from random words, letters and digits mixed together,
+// e.g. "v2leafy-cedar-xqz43-mn7" or "v2leafy-ivy-9-tkfq-33". Longer than the old
+// timestamped names and not trivially enumerable, so deployed panels are harder to spot.
+function v2leafySecureName() {
+    const pick = arr => arr[Math.floor(Math.random() * arr.length)];
+    const letters = "abcdefghijklmnopqrstuvwxyz";
+    const digits = "0123456789";
+    const randLetters = () => {
+        const n = 2 + Math.floor(Math.random() * 5);
+        let s = "";
+        for (let i = 0; i < n; i++) s += pick(letters);
+        return s;
+    };
+    const randDigits = () => {
+        const n = 2 + Math.floor(Math.random() * 4);
+        let s = "";
+        for (let i = 0; i < n; i++) s += pick(digits);
+        return s;
+    };
+    const segs = 3 + Math.floor(Math.random() * 3); // 3-5 segments after the prefix
+    const parts = [pick(V2LEAFY_NAME_WORDS)];
+    for (let i = 1; i < segs; i++) {
+        parts.push(Math.random() < 0.6 ? randLetters() : randDigits());
+    }
+    return "v2leafy-" + parts.join("-");
+}
+
 // Railway & Cloudflare both block browser CORS: Railway's API only allows the railway.com
 // origin, and Cloudflare returns no CORS headers. So a direct browser fetch is refused, and
 // we fall back through a couple of public CORS proxies. If every attempt fails we raise a
 // clear, actionable error instead of the bare "Failed to fetch".
+// The preferred path is a Cloudflare Worker proxy (deploy proxy/worker.js) that relays
+// Railway/Cloudflare calls server-side where CORS does not apply. If that isn't configured
+// we fall back to the direct endpoint and a couple of public CORS proxies.
+// Private Cloudflare Worker (proxy/worker.js) that relays Railway & Cloudflare API calls
+// server-side so the browser CORS wall is bypassed. Kept as the deploy backend only.
+const V2LEAFY_WORKER_BASE = "https://broad-shape-08c7.zeus-nxy4tw.workers.dev";
+
 const V2LEAFY_CORS_PROXIES = [
     "https://corsproxy.io/?url=",
     "https://api.allorigins.win/raw?url="
 ];
 
+// Translate a Railway/Cloudflare target URL into the matching route on the worker
+// (e.g. .../railway or .../cloudflare/<api path>).
+function v2leafyWorkerEndpoints(target) {
+    const worker = V2LEAFY_WORKER_BASE.replace(/\/+$/, "");
+    if (target === "https://backboard.railway.com/graphql/v2") {
+        return [worker + "/railway"];
+    }
+    const cfPrefix = "https://api.cloudflare.com/client/v4/";
+    if (target.startsWith(cfPrefix)) {
+        return [worker + "/cloudflare/" + target.slice(cfPrefix.length)];
+    }
+    return [];
+}
+
 async function v2leafyFetchSmart(url, init) {
-    const attempts = [url].concat(V2LEAFY_CORS_PROXIES.map(p => p + encodeURIComponent(url)));
+    const attempts = v2leafyWorkerEndpoints(url)
+        .concat([url])
+        .concat(V2LEAFY_CORS_PROXIES.map(p => p + encodeURIComponent(url)));
     let lastReason = "blocked by the browser";
     for (const endpoint of attempts) {
         const ctrl = new AbortController();
@@ -3274,7 +3438,7 @@ async function v2leafyFetchSmart(url, init) {
             lastReason = (e && e.name === "AbortError") ? "timed out" : "blocked by the browser (CORS)";
         }
     }
-    throw new Error("Railway/Cloudflare refused the request (" + lastReason + ") — their APIs only allow calls from trusted origins, not a browser page. Deploy from a server-side backend, or retry when a CORS proxy is reachable.");
+    throw new Error("Could not reach Railway/Cloudflare (" + lastReason + ") \u2014 the API proxy Worker (" + V2LEAFY_WORKER_BASE + ") didn't respond. Make sure the worker (proxy/worker.js) is deployed and running.");
 }
 
 // Railway GraphQL
@@ -3330,6 +3494,30 @@ function v2leafyCloseResult() {
     if (modal) modal.classList.remove("active");
 }
 
+// With an account token, Railway requires a workspaceId when creating a project. Resolve the
+// token's workspace from the API: token-scoped workspaces first, then me.workspaces, then any
+// existing project's workspace as a fallback.
+async function v2leafyGetWorkspaceId(token) {
+    const tryGet = async (query, path) => {
+        try {
+            const d = await v2leafyRailwayGql(token, query);
+            let arr = path.reduce((o, k) => (o && o[k]), d);
+            if (Array.isArray(arr) && arr.length && arr[0] && arr[0].id) return arr[0].id;
+        } catch (e) {}
+        return null;
+    };
+    let ws = await tryGet("query { apiToken { workspaces { id } } }", ["apiToken", "workspaces"]);
+    if (ws) return ws;
+    ws = await tryGet("query { me { workspaces { id } } }", ["me", "workspaces"]);
+    if (ws) return ws;
+    try {
+        const d = await v2leafyRailwayGql(token, "query { projects { edges { node { workspaceId } } } }");
+        const edge = d && d.projects && d.projects.edges && d.projects.edges[0];
+        if (edge && edge.node && edge.node.workspaceId) return edge.node.workspaceId;
+    } catch (e) {}
+    throw new Error("Could not find a Railway workspace for this token. Make sure the token is an account/workspace token that can create projects.");
+}
+
 async function createV2LeafyPanel() {
     const tokenInput = document.getElementById("v2leafy-token");
     const token = (tokenInput.value || "").trim();
@@ -3347,10 +3535,14 @@ async function createV2LeafyPanel() {
     v2leafyStartTimer("v2leafy-elapsed");
 
     try {
+        v2leafyLog(termId, "Locating your Railway workspace...", "dim");
+        const workspaceId = await v2leafyGetWorkspaceId(token);
+        v2leafyLog(termId, "Workspace: " + workspaceId, "ok");
+
         v2leafyLog(termId, "Creating Railway project...", "dim");
         const project = await v2leafyRailwayGql(token,
             "mutation($input: ProjectCreateInput!) { projectCreate(input: $input) { id name } }",
-            { input: { name: "v2leafy-" + Date.now().toString(36) } });
+            { input: { name: v2leafySecureName(), workspaceId } });
         const projectId = project.projectCreate.id;
         v2leafyLog(termId, "Project created: " + project.projectCreate.name, "ok");
 
@@ -3366,7 +3558,7 @@ async function createV2LeafyPanel() {
         v2leafyLog(termId, "Connecting GitHub repo " + V2LEAFY_RAILWAY_REPO + "...", "dim");
         const service = await v2leafyRailwayGql(token,
             "mutation($input: ServiceCreateInput!) { serviceCreate(input: $input) { id name } }",
-            { input: { projectId, name: "v2leafy", source: { repo: V2LEAFY_RAILWAY_REPO }, branch: "main" } });
+            { input: { projectId, name: v2leafySecureName(), source: { repo: V2LEAFY_RAILWAY_REPO }, branch: "main" } });
         const serviceId = service.serviceCreate.id;
         v2leafyLog(termId, "Service created: " + service.serviceCreate.name, "ok");
 
@@ -3378,8 +3570,8 @@ async function createV2LeafyPanel() {
 
         v2leafyLog(termId, "Generating public domain...", "dim");
         const dom = await v2leafyRailwayGql(token,
-            "mutation($serviceId: String!, $environmentId: String!) { serviceDomainCreate(serviceId: $serviceId, environmentId: $environmentId) { id domain } }",
-            { serviceId, environmentId });
+            "mutation($input: ServiceDomainCreateInput!) { serviceDomainCreate(input: $input) { id domain } }",
+            { input: { serviceId, environmentId } });
         const domain = dom.serviceDomainCreate.domain;
         v2leafyLog(termId, "Domain: " + domain, "ok");
 
@@ -3508,6 +3700,15 @@ async function createV2LeafyRelay() {
     const tokenInput = document.getElementById("v2leafy-cf-token");
     const token = (tokenInput.value || "").trim();
     const termId = "v2leafy-relay-terminal";
+    const cfgEl = document.getElementById("v2leafy-cf-config");
+    const cfgRaw = (cfgEl ? cfgEl.value : "").trim();
+    // Auto-extract the backend's UUID, path and target host from the pasted vless:// config.
+    const parsed = v2leafyParseVless(cfgRaw);
+    const backendUuid = parsed.uuid;
+    const backendPath = parsed.path;
+    // Prefer the host from the pasted config; fall back to the last panel we deployed.
+    const targetHost = (parsed.host || v2leafyLastRailwayDomain).replace(/^https?:\/\//, "").replace(/\/+$/, "");
+    if (cfgRaw) { v2leafyLastCfConfig = cfgRaw; try { localStorage.setItem("v2leafy_cf_config", cfgRaw); } catch (e) {} }
     if (!token) { showError(tokenInput); v2leafyLog(termId, "Error: Cloudflare API token is required.", "err"); return; }
 
     v2leafyLog(termId, "── Starting Cloudflare relay deployment ──", "info");
@@ -3544,13 +3745,13 @@ async function createV2LeafyRelay() {
         }
         v2leafyLog(termId, "workers.dev subdomain: " + subdomain, "ok");
 
-        const scriptName = "v2leafyrelay";
+        const scriptName = v2leafySecureName();
         const relayUrl = "https://" + scriptName + "." + subdomain + ".workers.dev";
 
         v2leafyLog(termId, "Generating worker.js relay script...", "dim");
-        const workerJs = v2leafyBuildWorkerJs(v2leafyLastRailwayDomain);
-        if (v2leafyLastRailwayDomain) v2leafyLog(termId, "Relay target: " + v2leafyLastRailwayDomain, "ok");
-        else v2leafyLog(termId, "Relay target: YOUR-RAILWAY-APP.up.railway.app — edit worker.js in the Cloudflare dashboard to set your panel domain", "warn");
+        const workerJs = v2leafyBuildWorkerJs(targetHost);
+        if (targetHost) v2leafyLog(termId, "Relay target: " + targetHost, "ok");
+        else v2leafyLog(termId, "No relay target found — paste a vless:// config above, or edit TARGET_HOST in worker.js\u2019s dashboard later.", "warn");
 
         v2leafyLog(termId, "Uploading worker \"" + scriptName + "\"...", "dim");
         const boundary = "----v2leafy" + Date.now().toString(36);
@@ -3572,7 +3773,10 @@ async function createV2LeafyRelay() {
 
         v2leafySetDomainLink("v2leafy-relay-link", relayUrl);
         v2leafyLog(termId, "Relay live at " + relayUrl, "ok");
-        v2leafyGenerateRelayConfig(relayUrl);
+        if (backendUuid) v2leafyLog(termId, "Backend UUID: " + backendUuid, "ok");
+        else v2leafyLog(termId, "No backend UUID extracted — using a generated one. If your panel expects its own UUID, paste its vless:// config above.", "warn");
+        if (backendPath) v2leafyLog(termId, "Backend path: " + backendPath, "ok");
+        v2leafyGenerateRelayConfig(relayUrl, backendUuid, backendPath);
         v2leafyShowResult(true, "Relay Deployed", '<a href="' + relayUrl + '" target="_blank" rel="noopener" style="color:var(--accent-success); font-family:Menlo,Consolas,monospace; font-weight:600; word-break:break-all;">' + relayUrl + '</a>');
     } catch (e) {
         v2leafyLog(termId, "✗ " + e.message, "err");
@@ -3580,11 +3784,17 @@ async function createV2LeafyRelay() {
     }
 }
 
-function v2leafyGenerateRelayConfig(relayUrl) {
+function v2leafyGenerateRelayConfig(relayUrl, backendUuid, backendPath) {
     const host = relayUrl.replace(/^https?:\/\//, "").replace(/\/+$/, "");
-    const uuid = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : v2leafyUuid();
+    // Use the backend panel's UUID/path when provided so the config authenticates; otherwise auto-generate.
+    const uuid = (backendUuid && backendUuid.trim())
+        ? backendUuid.trim()
+        : ((window.crypto && crypto.randomUUID) ? crypto.randomUUID() : v2leafyUuid());
+    const path = (backendPath && backendPath.trim())
+        ? (backendPath.trim().charAt(0) === "/" ? backendPath.trim() : "/" + backendPath.trim())
+        : ("/ws/" + uuid);
     const remark = encodeURIComponent("🍃 V2Leafy Relay | " + host);
-    const config = "vless://" + uuid + "@" + host + ":443?encryption=none&security=tls&sni=" + host + "&fp=chrome&alpn=http%2F1.1&type=ws&host=" + host + "&path=%2Fws%2F" + uuid + "#" + remark;
+    const config = "vless://" + uuid + "@" + host + ":443?encryption=none&security=tls&sni=" + host + "&fp=chrome&alpn=http%2F1.1&type=ws&host=" + host + "&path=" + encodeURIComponent(path) + "#" + remark;
     const ta = document.getElementById("v2leafy-relay-configs");
     if (ta) ta.value = config;
 }
