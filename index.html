@@ -2117,6 +2117,254 @@
             max-width: 280px;
             line-height: 1.5;
         }
+
+        /* ══ NetLeafy Panels — V2Leafy deployment registry dashboard ══ */
+        .nl-summary-strip {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: stretch;
+        }
+        .nl-stat-chip {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 3px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-main);
+            border-radius: 16px;
+            padding: 12px 18px;
+            min-width: 112px;
+            box-shadow: var(--shadow-sm);
+        }
+        .nl-stat-chip .v {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            line-height: 1.1;
+        }
+        .nl-stat-chip .k {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .nl-stat-chip.trial-good { border-color: var(--border-success-main); }
+        .nl-stat-chip.trial-good .v { color: var(--accent-success); }
+        .nl-stat-chip.trial-warn { border-color: var(--border-error-light); }
+        .nl-stat-chip.trial-warn .v { color: var(--accent-error); }
+        .nl-toolbar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .nl-toolbar-hint { display: inline-flex; gap: 6px; align-items: center; }
+        .nl-toolbar-hint input { width: 240px; }
+        .nl-account-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-main);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+        .nl-account-head {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 18px 22px;
+            cursor: pointer;
+            flex-wrap: wrap;
+            transition: background-color 0.2s ease;
+        }
+        .nl-account-head:hover { background: var(--bg-hover); }
+        .nl-account-chev { transition: transform 0.25s var(--ease-out-expo); color: var(--text-secondary); display: inline-flex; flex: 0 0 auto; }
+        .nl-account-card.collapsed .nl-account-chev { transform: rotate(-90deg); }
+        .nl-account-card.collapsed .nl-account-body { display: none; }
+        .nl-account-title { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+        .nl-account-name { font-weight: 700; color: var(--text-primary); font-size: 1.02rem; line-height: 1.2; word-break: break-word; }
+        .nl-account-sub { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+        .nl-nickname-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            border-radius: 8px;
+            background: var(--bg-active);
+            color: var(--text-secondary);
+            cursor: pointer;
+            border: 1px dashed var(--border-main);
+            font-size: 0.78rem;
+            flex: 0 0 auto;
+            transition: all 0.2s ease;
+        }
+        .nl-nickname-badge:hover { color: var(--text-primary); border-color: var(--accent-primary); border-style: solid; }
+        .nl-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.78rem;
+            border-radius: 999px;
+            padding: 4px 11px;
+            background: var(--bg-input);
+            color: var(--text-secondary);
+            white-space: nowrap;
+            line-height: 1.2;
+        }
+        .nl-chip.trial { background: var(--bg-success-light); color: var(--text-success-dark); font-weight: 600; }
+        .nl-chip.trial-warn { background: var(--bg-error-light); color: var(--text-error-dark); font-weight: 600; }
+        .nl-chip.tok-ok { color: var(--accent-success); }
+        .nl-chip.tok-bad { background: var(--bg-error-light); color: var(--text-error-dark); }
+        .nl-account-token-row {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            width: 100%;
+        }
+        .nl-account-token-row input { flex: 1; min-width: 0; height: 32px; font-size: 0.8rem; }
+        .nl-account-body { padding: 8px 14px 18px 14px; display: flex; flex-direction: column; }
+        .nl-panel-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px 12px;
+            padding: 12px 14px;
+            border-radius: 14px;
+            cursor: pointer;
+            background: var(--bg-input);
+            border: 1px solid transparent;
+            transition: background-color 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+        }
+        .nl-panel-row:hover {
+            background: var(--bg-hover);
+            border-color: var(--border-main);
+            box-shadow: var(--shadow-sm);
+        }
+        .nl-panel-row + .nl-panel-row { margin-top: 8px; }
+        .nl-p-main { flex: 1 1 240px; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+        .nl-p-titleline { display: flex; align-items: flex-start; gap: 8px; min-width: 0; flex-wrap: wrap; }
+        .nl-p-titleline .nl-chip, .nl-p-titleline .nl-relay-badge { margin-top: -2px; }
+        .nl-p-titleline .nl-p-name { flex: 1 1 0%; min-width: 0; }
+        .nl-title-col { display: flex; flex-direction: column; min-width: 0; padding-top: 4px; }
+        .nl-titleline { display: flex; align-items: flex-start; gap: 10px; flex-wrap: wrap; min-width: 0; }
+        .nl-titleline .nl-detail-title { flex: 1 1 0%; min-width: 0; }
+        .nl-p-name { font-weight: 600; color: var(--text-primary); font-size: 0.92rem; line-height: 1.25; word-break: break-word; }
+        .nl-p-sub { color: var(--text-secondary); font-size: 0.78rem; word-break: break-all; }
+        .nl-p-right { margin-left: auto; display: inline-flex; gap: 8px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
+        .nl-p-time { font-size: 0.72rem; color: var(--text-secondary); white-space: nowrap; }
+        .nl-p-chev { color: var(--text-secondary); opacity: 0.45; flex: 0 0 auto; transition: transform 0.2s var(--ease-out-expo), opacity 0.2s ease; }
+        .nl-panel-row:hover .nl-p-chev { opacity: 1; transform: translateX(2px); }
+        .nl-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--bg-active);
+            flex: 0 0 auto;
+        }
+        .nl-dot.ok { background: var(--accent-success); box-shadow: 0 0 0 3px var(--bg-success-light); }
+        .nl-dot.degraded { background: var(--accent-warning); box-shadow: 0 0 0 3px var(--bg-error-light); }
+        .nl-dot.unreachable { background: var(--accent-error); box-shadow: 0 0 0 3px var(--bg-error-light); }
+        .nl-row-actions { display: inline-flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+        .nl-relay-badge {
+            font-size: 0.72rem;
+            border-radius: 999px;
+            padding: 3px 10px;
+            background: var(--bg-success-light);
+            color: var(--text-success-dark);
+            font-weight: 600;
+            white-space: nowrap;
+            line-height: 1.2;
+        }
+        .nl-detail-head {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            flex-wrap: wrap;
+            padding: 18px 22px;
+            border-bottom: 1px solid var(--border-main);
+        }
+        .nl-detail-title {
+            font-size: 1.12rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            line-height: 1.3;
+            word-break: break-word;
+        }
+        .nl-detail-meta { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+        .nl-detail-actions { display: inline-flex; gap: 6px; align-items: center; flex-wrap: wrap; margin-left: auto; }
+        .nl-primary {
+            color: var(--accent-success);
+            border-color: var(--border-success-main);
+            background: var(--bg-success-light);
+        }
+        .nl-primary:hover { background: var(--bg-success-ultralight); color: var(--text-success-dark); border-color: var(--border-success-main); }
+        .nl-detail-body { padding: 18px 22px; display: flex; flex-direction: column; gap: 20px; }
+        .nl-detail-box { background: var(--bg-input); border-radius: 12px; overflow: hidden; }
+        .nl-detail-row { display: flex; gap: 14px; padding: 12px 16px; align-items: flex-start; }
+        .nl-detail-row + .nl-detail-row { border-top: 1px solid var(--border-main); }
+        .nl-det-k {
+            flex: 0 0 140px;
+            color: var(--text-secondary);
+            font-size: 0.66rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            padding-top: 3px;
+        }
+        .nl-det-v {
+            flex: 1;
+            min-width: 0;
+            color: var(--text-primary);
+            font-size: 0.86rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px;
+            word-break: break-word;
+            line-height: 1.5;
+        }
+        .nl-mono { font-family: Menlo, Consolas, monospace; font-size: 0.8rem; word-break: break-all; }
+        .nl-link {
+            color: var(--accent-success);
+            font-weight: 600;
+            text-decoration: none;
+            font-family: Menlo, Consolas, monospace;
+            font-size: 0.82rem;
+            word-break: break-all;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .nl-link:hover { text-decoration: underline; }
+        .nl-section-head {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+        }
+        .nl-section-head .nl-muted { text-transform: none; font-weight: 400; }
+        .nl-mono-box {
+            background: var(--bg-input);
+            border-radius: 10px;
+            font-family: Menlo, Consolas, monospace;
+            font-size: 0.76rem;
+            color: var(--text-primary);
+            padding: 12px 14px;
+            white-space: pre-wrap;
+            word-break: break-all;
+            max-height: 190px;
+            overflow: auto;
+            line-height: 1.55;
+        }
+        .nl-copy-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-top: 8px; }
+        .nl-empty-sub { padding: 18px; color: var(--text-secondary); font-size: 0.9rem; text-align: center; }
+        .nl-err-text { color: var(--accent-error); font-size: 0.8rem; }
     </style>
     <script>
         const SCANNER_PROFILES = {
@@ -2195,6 +2443,9 @@
             <div class="nav-section-title" data-profile="v2leafy">V2Leafy Tools</div>
             <a href="#" class="nav-item" data-profile="v2leafy" id="nav-v2leafy-install" onclick="switchView('v2leafy-install'); return false;">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg> Installation
+            </a>
+            <a href="#" class="nav-item" data-profile="v2leafy" id="nav-v2leafy-panels" onclick="switchView('v2leafy-panels'); return false;">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg> Panels
             </a>
             <a href="#" class="nav-item" data-profile="v2leafy" id="nav-v2leafy-relay" onclick="switchView('v2leafy-relay'); return false;">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"></path></svg> CloudFlare Relay
@@ -2384,6 +2635,35 @@
                 </div>
             </div>
 
+            <div class="view-section" id="view-v2leafy-panels">
+                <div style="display: flex; flex-direction: column; gap: 16px; height: 100%; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 0 2px 8px 2px;">
+                    <div class="nl-summary-strip" id="nl-panels-summary"></div>
+                    <div class="nl-toolbar" id="nl-panels-toolbar">
+                        <button class="mini-btn" style="height: 32px; padding: 0 12px; font-size: 0.8rem;" onclick="nlAddManualPanelForm()">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 6px;"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                            Add Manual Panel
+                        </button>
+                        <button class="mini-btn" style="height: 32px; padding: 0 12px; font-size: 0.8rem;" onclick="nlRefreshAllIntel()">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 6px;"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+                            Refresh All Intel
+                        </button>
+                        <span class="nl-toolbar-spacer" style="flex: 1;"></span>
+                        <span class="nl-toolbar-hint" id="nl-manual-hint" style="display:none;">
+                            <input id="nl-manual-domain" type="text" placeholder="domain.up.railway.app" style="height: 32px;" />
+                            <button class="mini-btn" style="height: 32px; padding: 0 12px; font-size: 0.8rem;" onclick="nlManualAddConfirm()">Save</button>
+                            <button class="mini-btn btn-clear" style="height: 32px; padding: 0 10px; font-size: 0.8rem;" onclick="nlAddManualPanelForm()">Cancel</button>
+                        </span>
+                    </div>
+                    <div id="nl-panels-groups"></div>
+                    <div id="nl-panels-detail"></div>
+                    <div class="panel" id="nl-panels-empty" style="display: none; padding: 40px; text-align: center; color: var(--text-secondary);">
+                        <div style="font-size: 2rem; margin-bottom: 8px;">🗂️</div>
+                        <div><strong>No panels saved yet.</strong></div>
+                        <div style="font-size: 0.9rem; margin-top: 4px;">Deploy one from the Installation tab — it will show up here grouped by your Railway account. You can also add any existing panel manually above.</div>
+                    </div>
+                </div>
+            </div>
+
             <div class="view-section" id="view-v2leafy-relay">
                 <div class="dashboard-grid">
                     <div style="display: flex; flex-direction: column; gap: 20px; height: 100%; min-height: 0; overflow-y: auto; overscroll-behavior: contain;">
@@ -2401,8 +2681,25 @@
                                     <input id="v2leafy-cf-token" type="text" placeholder="Paste your Cloudflare API token here..." autocomplete="off" />
                                 </div>
                                 <div class="form-group">
-                                    <label>Vless Config (from your panel)</label>
-                                    <input id="v2leafy-cf-config" type="text" placeholder="Paste vless://... here — UUID, path & target are auto-extracted (empty = auto-generate)" autocomplete="off" />
+                                    <label>Relay Target</label>
+                                    <div class="pill-tabs" id="v2leafy-relay-mode" style="width: 100%;">
+                                        <button class="pill-tab active" id="nl-relay-mode-saved" style="flex: 1;" onclick="nlSetRelayMode('saved')">Saved Panel</button>
+                                        <button class="pill-tab" id="nl-relay-mode-custom" style="flex: 1;" onclick="nlSetRelayMode('custom')">Custom Domain</button>
+                                    </div>
+                                </div>
+                                <div class="form-group" id="nl-relay-saved-group">
+                                    <label>Panel</label>
+                                    <select class="styled-select" id="v2leafy-relay-panel" onchange="nlOnRelayPanelChange(this.value)">
+                                        <option value="">— Select a saved panel (optional) —</option>
+                                    </select>
+                                </div>
+                                <div class="form-group" id="nl-relay-custom-group" style="display: none;">
+                                    <label>Panel Domain</label>
+                                    <input id="v2leafy-relay-custom-domain" type="text" placeholder="your-panel.up.railway.app — NetLeafy will try to fetch its real config" autocomplete="off" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Vless Config (optional — auto-synced when a panel is selected)</label>
+                                    <input id="v2leafy-cf-config" type="text" placeholder="Paste vless://... here — UUID, path & target are auto-extracted (empty = auto-sync or generate)" autocomplete="off" />
                                 </div>
                             </div>
                             <div class="panel-footer" style="padding: 12px 20px 16px 20px;">
@@ -3071,6 +3368,9 @@ function switchView(viewId) {
         generateFakeHtmlGrid(false);
         fakeHtmlHasRolled = true;
     }
+
+    if (viewId === 'v2leafy-panels') nlOnPanelsOpen();
+    if (viewId === 'v2leafy-relay' || viewId === 'v2leafy-install') nlPopulateRelayPanelSelect();
 }
 
 function renderServerCheckboxes() {
@@ -3536,7 +3836,9 @@ async function createV2LeafyPanel() {
 
     try {
         v2leafyLog(termId, "Locating your Railway workspace...", "dim");
-        const workspaceId = await v2leafyGetWorkspaceId(token);
+        const wsInfo = await v2leafyGetWorkspaceInfo(token);
+        const workspaceId = wsInfo.id;
+        const workspaceName = wsInfo.name || "";
         v2leafyLog(termId, "Workspace: " + workspaceId, "ok");
 
         v2leafyLog(termId, "Creating Railway project...", "dim");
@@ -3618,7 +3920,25 @@ async function createV2LeafyPanel() {
         v2leafyLastRailwayDomain = domain;
         try { localStorage.setItem("v2leafy_railway_domain", domain); } catch (e) {}
         v2leafyLog(termId, "Web panel: https://" + domain, "ok");
-        v2leafyShowResult(true, "V2Leafy Deployed", '<a href="https://' + domain + '" target="_blank" rel="noopener" style="color:var(--accent-success); font-family:Menlo,Consolas,monospace; font-weight:600; word-break:break-all;">https://' + domain + '</a>');
+        // NetLeafy Panels: persist this deployment so it appears in the Panels dashboard,
+        // remember the token for live trial intel, then sync config + health in the background.
+        nlRememberDeployToken(workspaceId, token);
+        const nlRec = nlRegisterRailwayPanel({
+            name: project.projectCreate.name || v2leafySecureName(),
+            domain: domain,
+            region: region,
+            regionLabel: regionLabel,
+            workspaceId: workspaceId,
+            workspaceName: workspaceName,
+            projectId: projectId,
+            serviceId: serviceId,
+            environmentId: environmentId,
+            deploymentId: deploymentId,
+            deploymentStatus: lastStatus || "SUCCESS"
+        });
+        v2leafyLog(termId, "Saved to Panels dashboard.", "ok");
+        v2leafyShowResult(true, "V2Leafy Deployed", '<a href="https://' + domain + '" target="_blank" rel="noopener" style="color:var(--accent-success); font-family:Menlo,Consolas,monospace; font-weight:600; word-break:break-all;">https://' + domain + '</a>' + '<div style="margin-top:12px; font-size:0.9rem;"><a href="#" onclick="v2leafyCloseResult(); switchView(\'v2leafy-panels\'); return false;" style="color:var(--text-secondary);">Open Panels dashboard →</a></div>');
+        if (nlRec) nlSyncPanelRecord(nlRec).then(() => { try { nlRefreshAccountIntel(workspaceId); } catch (e) {} });
     } catch (e) {
         v2leafyLog(termId, "✗ " + e.message, "err");
         v2leafyShowResult(false, "Deployment Failed", '<p style="margin:0;">' + v2leafyEscapeHtml(e.message) + '</p>');
@@ -3727,14 +4047,32 @@ async function createV2LeafyRelay() {
     const tokenInput = document.getElementById("v2leafy-cf-token");
     const token = (tokenInput.value || "").trim();
     const termId = "v2leafy-relay-terminal";
+    v2leafyRelayPanelRec = null;
     const cfgEl = document.getElementById("v2leafy-cf-config");
-    const cfgRaw = (cfgEl ? cfgEl.value : "").trim();
+    let cfgRaw = (cfgEl ? cfgEl.value : "").trim();
+    // NetLeafy Panels sync: when no config was pasted, try to pull the chosen panel's (or custom
+    // domain's) REAL default config so the relay config is guaranteed to authenticate.
+    if (!cfgRaw) {
+        const tgt = nlResolveRelayTarget();
+        if (tgt && tgt.domain) {
+            v2leafyLog(termId, "Syncing real config from " + tgt.domain + "...", "dim");
+            const synced = await nlSyncConfigFromDomain(tgt.domain);
+            if (synced && synced.vless) {
+                cfgRaw = synced.vless;
+                if (cfgEl) { cfgEl.value = synced.vless; cfgEl.classList.remove("error-border"); }
+                v2leafyLog(termId, "Synced backend config (UUID + path + token) from the panel.", "ok");
+            } else {
+                v2leafyLog(termId, "Could not auto-fetch a config from " + tgt.domain + " — paste its vless:// config below, or deploy with auto-generate.", "warn");
+            }
+        }
+    }
     // Auto-extract the backend's UUID, path and target host from the pasted vless:// config.
     const parsed = v2leafyParseVless(cfgRaw);
     const backendUuid = parsed.uuid;
     const backendPath = parsed.path;
-    // Prefer the host from the pasted config; fall back to the last panel we deployed.
-    const targetHost = (parsed.host || v2leafyLastRailwayDomain).replace(/^https?:\/\//, "").replace(/\/+$/, "");
+    const nlTgt = nlResolveRelayTarget();
+    // Prefer the host from the pasted config; fall back to the selected panel, then the last one we deployed.
+    const targetHost = (parsed.host || (nlTgt && nlTgt.domain) || v2leafyLastRailwayDomain).replace(/^https?:\/\//, "").replace(/\/+$/, "");
     if (cfgRaw) { v2leafyLastCfConfig = cfgRaw; try { localStorage.setItem("v2leafy_cf_config", cfgRaw); } catch (e) {} }
     if (!token) { showError(tokenInput); v2leafyLog(termId, "Error: Cloudflare API token is required.", "err"); return; }
 
@@ -3804,10 +4142,14 @@ async function createV2LeafyRelay() {
         else v2leafyLog(termId, "No backend UUID extracted — using a generated one. If your panel expects its own UUID, paste its vless:// config above.", "warn");
         if (backendPath) v2leafyLog(termId, "Backend path: " + backendPath, "ok");
         v2leafyGenerateRelayConfig(relayUrl, backendUuid, backendPath);
-        v2leafyShowResult(true, "Relay Deployed", '<a href="' + relayUrl + '" target="_blank" rel="noopener" style="color:var(--accent-success); font-family:Menlo,Consolas,monospace; font-weight:600; word-break:break-all;">' + relayUrl + '</a>');
+        // NetLeafy Panels: attach the relay (URL + generated config) to the panel record.
+        const relayCfgTa = document.getElementById("v2leafy-relay-configs");
+        nlAttachRelayToPanel({ url: relayUrl, scriptName: scriptName, targetHost: targetHost, configVless: relayCfgTa ? relayCfgTa.value : "" });
+        v2leafyShowResult(true, "Relay Deployed", '<a href="' + relayUrl + '" target="_blank" rel="noopener" style="color:var(--accent-success); font-family:Menlo,Consolas,monospace; font-weight:600; word-break:break-all;">' + relayUrl + '</a>' + '<div style="margin-top:12px; font-size:0.9rem;"><a href="#" onclick="v2leafyCloseResult(); switchView(\'v2leafy-panels\'); return false;" style="color:var(--text-secondary);">Open Panels dashboard →</a></div>');
     } catch (e) {
         v2leafyLog(termId, "✗ " + e.message, "err");
         v2leafyShowResult(false, "Relay Deployment Failed", '<p style="margin:0;">' + v2leafyEscapeHtml(e.message) + '</p>');
+        v2leafyRelayPanelRec = null;
     }
 }
 
@@ -4591,6 +4933,714 @@ window.pingDonatedServers = async function() {
         setTimeout(() => overlay.style.display = 'none', 400);
     }
 }
+</script>
+<script>
+// ═══ NetLeafy Panels — V2Leafy deployment registry + dashboard ═════════════════
+// localStorage-backed records of every panel the user deployed (or added manually),
+// grouped by Railway account (workspace), with live trial/billing intel, per-panel
+// health + default config, and Cloudflare relay linkage. All new code is prefixed nl*.
+
+const NL_PANELS_KEY = "netleafy.v2.panels.v1";
+const NL_WORKS_KEY = "netleafy.v2.workspaces.v1";
+const NL_RELAY_MODE_KEY = "netleafy.v2.relayMode";
+
+let nlPanels = [];
+let nlWorks = {};
+let nlDetailId = null;
+let nlRelayMode = "saved";
+let v2leafyRelayPanelRec = null;
+
+const NL_CORS_PROXIES = [
+    (u) => u,
+    (u) => "https://corsproxy.io/?url=" + encodeURIComponent(u),
+    (u) => "https://api.allorigins.win/raw?url=" + encodeURIComponent(u)
+];
+
+const NL_RAILWAY_INTEL_QUERY = "query($workspaceId: String!) { workspace(workspaceId: $workspaceId) { name createdAt projectCount customer { billingEmail isTrialing trialDaysRemaining creditBalance remainingUsageCreditBalance currentUsage state hasExhaustedFreePlan billingPeriod { start end } } } }";
+
+function nlLsGet(key) { try { const v = localStorage.getItem(key); return v == null ? null : JSON.parse(v); } catch (e) { return null; } }
+function nlLsSet(key, val) { try { localStorage.setItem(key, JSON.stringify(val)); } catch (e) {} }
+function nlUuid() { return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, c => { const r = Math.random() * 16 | 0; return (c === "x" ? r : (r & 0x3 | 0x8)).toString(16); }); }
+function nlEsc(s) { return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); }
+function nlHostOnly(d) { return String(d || "").trim().replace(/^https?:\/\//, "").replace(/\/+$/, "").toLowerCase(); }
+function nlDomainUrl(d) { const h = nlHostOnly(d); return h ? "https://" + h : ""; }
+function nlUrlFor(d) { const h = nlHostOnly(d); if (!h) return ""; const local = /^(localhost|127\.0\.0\.1|\[::1\])(:|$)/.test(h); return (local ? "http://" : "https://") + h; }
+function nlFmtDate(iso, withTime) { if (!iso) return "—"; try { const d = new Date(iso); return isNaN(d) ? iso : (withTime ? d.toLocaleString() : d.toLocaleDateString()); } catch (e) { return iso; } }
+function nlFmtMoney(v) { return "$" + Number(v == null ? 0 : v).toFixed(2); }
+
+function nlLoadAll() {
+    const p = nlLsGet(NL_PANELS_KEY);
+    nlPanels = Array.isArray(p) ? p : [];
+    const w = nlLsGet(NL_WORKS_KEY);
+    nlWorks = (w && typeof w === "object" && !Array.isArray(w)) ? w : {};
+    nlRelayMode = localStorage.getItem(NL_RELAY_MODE_KEY) === "custom" ? "custom" : "saved";
+    if (nlPanels.length === 0) {
+        const old = (localStorage.getItem("v2leafy_railway_domain") || "").trim();
+        if (old) {
+            nlPanels.push({ id: nlUuid(), name: "Legacy panel", domain: nlHostOnly(old), region: "", regionLabel: "", source: "manual", workspaceId: "", workspaceName: "", deployedAt: new Date().toISOString(), defaultConfig: null, relay: null, lastHealth: null });
+        }
+    }
+    nlSaveAll();
+}
+function nlSaveAll() { nlLsSet(NL_PANELS_KEY, nlPanels); nlLsSet(NL_WORKS_KEY, nlWorks); }
+
+function nlGetPanel(id) { return nlPanels.find(p => p.id === id) || null; }
+function nlFindPanelByDomain(d) { const h = nlHostOnly(d); return nlPanels.find(p => nlHostOnly(p.domain) === h) || null; }
+function nlUpsertPanel(p) { const i = nlPanels.findIndex(x => x.id === p.id); if (i >= 0) nlPanels[i] = p; else nlPanels.push(p); nlSaveAll(); return p; }
+function nlRemovePanel(id) { nlPanels = nlPanels.filter(p => p.id !== id); if (nlDetailId === id) nlDetailId = null; nlSaveAll(); }
+function nlEnsureWorkspace(id, name) {
+    if (!id) return null;
+    const w = nlWorks[id] || { id: id, name: "", nickname: "", token: "", trial: null };
+    if (name && !w.name) w.name = name;
+    nlWorks[id] = w;
+    return w;
+}
+function nlRememberDeployToken(wsId, token) {
+    const t = (token || "").trim();
+    if (!wsId || !t) return;
+    const w = nlEnsureWorkspace(wsId, "");
+    if (w.token !== t) { w.token = t; nlSaveAll(); }
+}
+function nlRegisterRailwayPanel(info) {
+    const existing = nlFindPanelByDomain(info.domain);
+    const rec = existing || { id: nlUuid(), relay: null, defaultConfig: null, lastHealth: null };
+    Object.assign(rec, {
+        name: info.name || rec.name || "Panel",
+        domain: nlHostOnly(info.domain),
+        region: info.region || rec.region || "",
+        regionLabel: info.regionLabel || rec.regionLabel || "",
+        source: "railway",
+        workspaceId: info.workspaceId || rec.workspaceId || "",
+        workspaceName: info.workspaceName || rec.workspaceName || "",
+        projectId: info.projectId || rec.projectId || "",
+        serviceId: info.serviceId || rec.serviceId || "",
+        environmentId: info.environmentId || rec.environmentId || "",
+        deploymentId: info.deploymentId || rec.deploymentId || "",
+        deploymentStatus: info.deploymentStatus || rec.deploymentStatus || "",
+        deployedAt: info.deployedAt || rec.deployedAt || new Date().toISOString()
+    });
+    nlEnsureWorkspace(rec.workspaceId, rec.workspaceName);
+    return nlUpsertPanel(rec);
+}
+function nlAddManualPanel(domain) {
+    const h = nlHostOnly(domain);
+    if (!h || !/^[a-z0-9.-]+(:\d+)?$/i.test(h)) { showToast("Enter a valid domain.", true); return null; }
+    const existing = nlFindPanelByDomain(h);
+    if (existing) { showToast("That panel is already saved."); return existing; }
+    const rec = { id: nlUuid(), name: "Manual " + h.split(".")[0], domain: h, region: "", regionLabel: "", source: "manual", workspaceId: "", workspaceName: "", projectId: "", serviceId: "", environmentId: "", deploymentId: "", deploymentStatus: "", deployedAt: new Date().toISOString(), defaultConfig: null, relay: null, lastHealth: null };
+    return nlUpsertPanel(rec);
+}
+
+// ---- network helpers (direct first, then public CORS proxies) ----
+async function nlFetchText(url, timeoutMs) {
+    const t = timeoutMs || 20000;
+    let lastReason = "";
+    for (const wrap of NL_CORS_PROXIES) {
+        const ctrl = new AbortController();
+        const timer = setTimeout(() => ctrl.abort(), t);
+        try {
+            const res = await fetch(wrap(url), { signal: ctrl.signal, headers: { accept: "text/plain,application/json,text/html,*/*" } });
+            clearTimeout(timer);
+            if (!res.ok) { lastReason = "HTTP " + res.status; continue; }
+            return await res.text();
+        } catch (e) {
+            clearTimeout(timer);
+            lastReason = (e && e.name === "AbortError") ? "timed out" : "blocked by CORS";
+        }
+    }
+    throw new Error("panel unreachable (" + lastReason + ")");
+}
+
+// V2Leafy /sub endpoints return base64-encoded subscription text.
+function nlDecodeSub(txt) {
+    const raw = String(txt || "").trim();
+    if (/vless:\/\/|vmess:\/\/|trojan:\/\//.test(raw)) return raw;
+    try {
+        const dec = atob(raw.replace(/\s+/g, ""));
+        if (/vless:\/\/|vmess:\/\/|trojan:\/\//.test(dec)) return dec;
+    } catch (e) {}
+    return raw;
+}
+function nlFirstVless(text) {
+    const dec = nlDecodeSub(text);
+    const line = String(dec || "").split(/\r?\n/).map(s => s.trim()).find(l => l.indexOf("vless://") === 0);
+    return line || null;
+}
+
+// Fetch a panel's REAL default config via its public /sub endpoint and parse it.
+async function nlSyncConfigFromDomain(domain) {
+    const h = nlHostOnly(domain);
+    if (!h) return null;
+    const probe = "nl" + Math.random().toString(36).slice(2, 10);
+    try {
+        const txt = await nlFetchText(nlUrlFor(h) + "/sub/" + probe + "?raw", 20000);
+        const line = nlFirstVless(txt);
+        if (!line) return null;
+        const parsed = v2leafyParseVless(line);
+        return { uuid: parsed.uuid, path: parsed.path, host: parsed.host || h, vless: line };
+    } catch (e) {
+        return null;
+    }
+}
+
+async function nlSyncPanelRecord(p) {
+    if (!p || !p.domain) return p;
+    const h = nlHostOnly(p.domain);
+    try {
+        const txt = await nlFetchText(nlUrlFor(h) + "/health", 15000);
+        const j = JSON.parse(txt || "{}");
+        p.lastHealth = { status: j.status === "ok" ? "ok" : String(j.status || "degraded"), platform: j.platform || "", gateway: j.gateway || "", checkedAt: new Date().toISOString(), error: "" };
+    } catch (e) {
+        p.lastHealth = { status: "unreachable", platform: "", gateway: "", checkedAt: new Date().toISOString(), error: String((e && e.message) || "").slice(0, 120) };
+    }
+    const sync = await nlSyncConfigFromDomain(h);
+    if (sync) {
+        p.defaultConfig = { vless: sync.vless, subUrl: "https://" + h + "/sub/", fetchedAt: new Date().toISOString(), error: "" };
+    } else {
+        p.defaultConfig = p.defaultConfig || { vless: "", subUrl: "https://" + h + "/sub/", fetchedAt: "", error: "" };
+        p.defaultConfig.error = "Could not auto-fetch the config (panel asleep or has multiple clients) — paste one in Relay → Custom Domain.";
+        p.defaultConfig.fetchedAt = p.defaultConfig.fetchedAt || new Date().toISOString();
+    }
+    return nlUpsertPanel(p);
+}
+
+async function nlRefreshAccountIntel(wsId, silent) {
+    const w = nlWorks[wsId];
+    if (!w) return w;
+    const btn = document.getElementById("nl-intel-" + wsId);
+    if (btn && !silent) { btn.disabled = true; btn.textContent = "Refreshing…"; }
+    try {
+        if (!w.token) throw new Error("No token — add one to enable live intel.");
+        const d = await v2leafyRailwayGql(w.token, NL_RAILWAY_INTEL_QUERY, { workspaceId: wsId });
+        const ws = d && d.workspace;
+        if (!ws) throw new Error("Workspace not accessible with this token.");
+        const c = ws.customer || {};
+        w.trial = {
+            isTrialing: !!c.isTrialing,
+            trialDaysRemaining: (c.trialDaysRemaining == null ? null : c.trialDaysRemaining),
+            creditBalance: (c.creditBalance == null ? null : c.creditBalance),
+            remainingUsageCreditBalance: (c.remainingUsageCreditBalance == null ? null : c.remainingUsageCreditBalance),
+            currentUsage: (c.currentUsage == null ? null : c.currentUsage),
+            state: c.state || "",
+            billingEmail: c.billingEmail || "",
+            hasExhaustedFreePlan: !!c.hasExhaustedFreePlan,
+            billingPeriodStart: (c.billingPeriod && c.billingPeriod.start) || "",
+            billingPeriodEnd: (c.billingPeriod && c.billingPeriod.end) || "",
+            fetchedAt: new Date().toISOString(),
+            tokenInvalid: false,
+            lastError: ""
+        };
+        if (!w.name) w.name = ws.name || "";
+        if (!w.createdAt && ws.createdAt) w.createdAt = ws.createdAt;
+        if (w.projectCount == null && ws.projectCount != null) w.projectCount = ws.projectCount;
+        nlSaveAll();
+    } catch (err) {
+        w.trial = w.trial || {};
+        w.trial.lastError = String((err && err.message) || "refresh failed").slice(0, 300);
+        w.trial.tokenInvalid = /unauthor|forbidden|invalid|not found|permission|scope/i.test(w.trial.lastError);
+        if (!w.trial.fetchedAt) w.trial.fetchedAt = new Date().toISOString();
+        nlSaveAll();
+        if (!silent) showToast("Intel refresh failed: " + w.trial.lastError, true);
+    }
+    if (btn && !silent) { btn.disabled = false; btn.textContent = "Refresh Intel"; }
+    return w;
+}
+async function nlRefreshAllIntel() {
+    const ids = Object.keys(nlWorks);
+    if (ids.length === 0) { showToast("No accounts saved yet."); return; }
+    for (const id of ids) { try { await nlRefreshAccountIntel(id, true); } catch (e) {} }
+    nlRenderPanels();
+    showToast("Intel refreshed for " + ids.length + " account" + (ids.length === 1 ? "" : "s") + ".");
+}
+
+// ---- Cloudflare relay: target selection + record attachment ----
+function nlResolveRelayTarget() {
+    if (nlRelayMode === "saved") {
+        const sel = document.getElementById("v2leafy-relay-panel");
+        const id = sel && sel.value ? sel.value : "";
+        const rec = id ? nlGetPanel(id) : null;
+        v2leafyRelayPanelRec = rec;
+        return rec ? { domain: rec.domain, rec: rec } : null;
+    }
+    const inp = document.getElementById("v2leafy-relay-custom-domain");
+    const dom = inp ? (inp.value || "").trim() : "";
+    v2leafyRelayPanelRec = null;
+    return dom ? { domain: dom, rec: null } : null;
+}
+function nlAttachRelayToPanel(info) {
+    let rec = (v2leafyRelayPanelRec && nlGetPanel(v2leafyRelayPanelRec.id)) || null;
+    if (!rec && info.targetHost) rec = nlFindPanelByDomain(info.targetHost);
+    if (!rec && info.targetHost) {
+        rec = nlAddManualPanel(info.targetHost);
+        if (rec) showToast("Custom target saved to Panels as a manual panel.");
+    }
+    if (rec) {
+        rec.relay = { url: info.url || "", scriptName: info.scriptName || "", configVless: info.configVless || "", targetHost: nlHostOnly(info.targetHost), deployedAt: new Date().toISOString() };
+        nlUpsertPanel(rec);
+        showToast("Relay attached to panel: " + rec.name);
+    }
+    v2leafyRelayPanelRec = null;
+    return rec;
+}
+function nlSetRelayMode(mode) {
+    nlRelayMode = mode === "custom" ? "custom" : "saved";
+    try { localStorage.setItem(NL_RELAY_MODE_KEY, nlRelayMode); } catch (e) {}
+    const b1 = document.getElementById("nl-relay-mode-saved");
+    const b2 = document.getElementById("nl-relay-mode-custom");
+    const sg = document.getElementById("nl-relay-saved-group");
+    const cg = document.getElementById("nl-relay-custom-group");
+    if (b1) b1.classList.toggle("active", nlRelayMode === "saved");
+    if (b2) b2.classList.toggle("active", nlRelayMode === "custom");
+    if (sg) sg.style.display = nlRelayMode === "saved" ? "" : "none";
+    if (cg) cg.style.display = nlRelayMode === "custom" ? "" : "none";
+}
+function nlPopulateRelayPanelSelect() {
+    nlLoadAll();
+    const sel = document.getElementById("v2leafy-relay-panel");
+    if (!sel) return;
+    const cur = sel.value;
+    sel.innerHTML = "";
+    const ph = document.createElement("option");
+    ph.value = ""; ph.textContent = "— Select a saved panel (optional) —";
+    sel.appendChild(ph);
+    const byWs = {};
+    const unlinked = [];
+    nlPanels.forEach(p => { if (p.workspaceId && nlWorks[p.workspaceId]) { (byWs[p.workspaceId] = byWs[p.workspaceId] || []).push(p); } else { unlinked.push(p); } });
+    const wsIds = Object.keys(byWs).sort((a, b) => ((nlWorks[a].nickname || nlWorks[a].name) || a).localeCompare((nlWorks[b].nickname || nlWorks[b].name) || b));
+    wsIds.forEach(wid => {
+        const g = document.createElement("optgroup");
+        g.label = (nlWorks[wid].nickname || nlWorks[wid].name) || wid;
+        byWs[wid].slice().sort((a, b) => String(b.deployedAt).localeCompare(String(a.deployedAt))).forEach(p => {
+            const o = document.createElement("option");
+            o.value = p.id;
+            o.textContent = p.name + " — " + p.domain;
+            g.appendChild(o);
+        });
+        sel.appendChild(g);
+    });
+    if (unlinked.length) {
+        const g = document.createElement("optgroup");
+        g.label = "Unlinked";
+        unlinked.forEach(p => {
+            const o = document.createElement("option");
+            o.value = p.id;
+            o.textContent = p.name + " — " + p.domain;
+            g.appendChild(o);
+        });
+        sel.appendChild(g);
+    }
+    if (cur && nlGetPanel(cur)) sel.value = cur;
+}
+function nlOnRelayPanelChange(id) {
+    const rec = id ? nlGetPanel(id) : null;
+    const cfg = document.getElementById("v2leafy-cf-config");
+    if (!rec) { if (cfg) cfg.value = ""; return; }
+    if (cfg) cfg.value = (rec.defaultConfig && rec.defaultConfig.vless) ? rec.defaultConfig.vless : "";
+    if (!(rec.defaultConfig && rec.defaultConfig.vless)) {
+        nlSyncConfigFromDomain(rec.domain).then(sync => {
+            if (sync) {
+                const el = document.getElementById("v2leafy-cf-config");
+                if (el) el.value = sync.vless;
+                const again = nlGetPanel(rec.id);
+                if (again) {
+                    again.defaultConfig = { vless: sync.vless, subUrl: "https://" + nlHostOnly(rec.domain) + "/sub/", fetchedAt: new Date().toISOString(), error: "" };
+                    nlUpsertPanel(again);
+                }
+                showToast("Real config synced from " + rec.domain);
+            } else {
+                showToast("Could not auto-sync " + rec.domain + " — paste its vless:// config.", true);
+            }
+        });
+    } else {
+        showToast("Loaded config of " + rec.domain);
+    }
+}
+
+// ---- Railway account identity resolution (id + name) ----
+async function v2leafyGetWorkspaceInfo(token) {
+    const tryGet = async (query, path) => {
+        try {
+            const d = await v2leafyRailwayGql(token, query);
+            let arr = path.reduce((o, k) => (o && o[k]), d);
+            if (Array.isArray(arr) && arr.length && arr[0] && arr[0].id) return { id: arr[0].id, name: arr[0].name || "" };
+        } catch (e) {}
+        return null;
+    };
+    let ws = await tryGet("query { apiToken { workspaces { id name } } }", ["apiToken", "workspaces"]);
+    if (ws) return ws;
+    ws = await tryGet("query { me { workspaces { id name } } }", ["me", "workspaces"]);
+    if (ws) return ws;
+    try {
+        const d = await v2leafyRailwayGql(token, "query { projects { edges { node { workspaceId } } } }");
+        const edge = d && d.projects && d.projects.edges && d.projects.edges[0];
+        if (edge && edge.node && edge.node.workspaceId) return { id: edge.node.workspaceId, name: "" };
+    } catch (e) {}
+    throw new Error("Could not find a Railway workspace for this token. Make sure the token is an account/workspace token that can create projects.");
+}
+
+// ---- clipboard helper ----
+function nlCopyText(text, msg) {
+    const t = String(text || "");
+    if (!t) { showToast("Nothing to copy.", true); return; }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(t).then(() => showToast(msg || "Copied!")).catch(() => { nlCopyFallback(t, msg); });
+    } else { nlCopyFallback(t, msg); }
+}
+function nlCopyFallback(t, msg) {
+    try {
+        const ta = document.createElement("textarea");
+        ta.value = t; ta.style.position = "fixed"; ta.style.opacity = "0";
+        document.body.appendChild(ta); ta.select();
+        document.execCommand("copy");
+        document.body.removeChild(ta);
+        showToast(msg || "Copied!");
+    } catch (e) { showToast("Copy failed.", true); }
+}
+
+// ---- Panels view ----
+function nlTrialChip(w) {
+    const tr = w.trial;
+    if (!tr) return '<span class="nl-chip">No intel yet — add a token & refresh</span>';
+    if (tr.tokenInvalid) return '<span class="nl-chip tok-bad">Token invalid — update it</span>';
+    if (tr.lastError && !tr.fetchedAt) return '<span class="nl-chip">' + nlEsc(tr.lastError) + '</span>';
+    if (tr.isTrialing) {
+        const cls = (tr.trialDaysRemaining != null && tr.trialDaysRemaining <= 7) ? "nl-chip trial-warn" : "nl-chip trial";
+        const cred = (tr.remainingUsageCreditBalance != null ? tr.remainingUsageCreditBalance : tr.creditBalance);
+        return '<span class="' + cls + '">Trial · ' + (tr.trialDaysRemaining == null ? "?" : tr.trialDaysRemaining) + 'd left · ' + nlFmtMoney(cred) + ' credit</span>';
+    }
+    if (tr.hasExhaustedFreePlan) return '<span class="nl-chip trial-warn">Free plan exhausted</span>';
+    const parts = [];
+    if (tr.state) parts.push(nlEsc(String(tr.state)));
+    if (tr.creditBalance != null) parts.push(nlFmtMoney(tr.creditBalance) + " credit");
+    if (tr.billingPeriodEnd) parts.push("billing ends " + nlFmtDate(tr.billingPeriodEnd));
+    return parts.length ? '<span class="nl-chip">' + parts.join(" · ") + '</span>' : '<span class="nl-chip">Account intel</span>';
+}
+function nlHealthDot(p) {
+    const h = p.lastHealth;
+    const cls = !h ? "" : (h.status === "ok" ? " ok" : (h.status === "degraded" ? " degraded" : " unreachable"));
+    return '<span class="nl-dot' + cls + '" title="' + nlEsc(h ? (h.status + (h.error ? " — " + h.error : "")) : "health unknown") + '"></span>';
+}
+function nlAccountTokenRow(wsId, w) {
+    const has = !!(w.token && w.token.trim());
+    return '<div class="nl-account-token-row">' +
+        '<span class="nl-chip ' + (has ? "tok-ok" : "") + '" style="flex: 0 0 auto;">' + (has ? "Token saved" : "No token") + '</span>' +
+        '<input id="nl-acct-token-' + wsId + '" type="password" placeholder="Railway token for live trial intel" style="font-size:0.8rem;" />' +
+        '<button class="mini-btn" style="height:30px;padding:0 12px;font-size:0.78rem;" onclick="nlSaveAccountToken(\'' + wsId + '\')">Save</button>' +
+        '</div>';
+}
+function nlRelayTag(p) {
+    return (p.relay && p.relay.url)
+        ? '<span class="nl-relay-badge" title="Cloudflare relay deployed">Relay</span>'
+        : '<span class="nl-chip" title="No Cloudflare relay deployed yet — hit Deploy relay to create one">No relay</span>';
+}
+function nlPanelRow(p) {
+    const region = p.regionLabel || p.region;
+    const right = [];
+    if (region) right.push('<span class="nl-chip">' + nlEsc(region) + '</span>');
+    if (p.deploymentStatus) right.push('<span class="nl-chip">' + nlEsc(p.deploymentStatus) + '</span>');
+    right.push('<span class="nl-p-time">' + nlFmtDate(p.deployedAt, true) + '</span>');
+    return '<div class="nl-panel-row" onclick="nlOpenPanel(\'' + p.id + '\')">' +
+        nlHealthDot(p) +
+        '<div class="nl-p-main">' +
+        '<div class="nl-p-titleline">' + nlRelayTag(p) + '<span class="nl-p-name">' + nlEsc(p.name) + '</span></div>' +
+        '<span class="nl-p-sub">' + nlEsc(p.domain) + '</span>' +
+        '</div>' +
+        '<span class="nl-p-right">' + right.join("") +
+        '<svg class="nl-p-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>' +
+        '</span>' +
+        '</div>';
+}
+function nlRenderPanels() {
+    const root = document.getElementById("nl-panels-groups");
+    const empty = document.getElementById("nl-panels-empty");
+    const detail = document.getElementById("nl-panels-detail");
+    if (!root) return;
+    const sum = document.getElementById("nl-panels-summary");
+    const relayed = nlPanels.filter(p => p.relay && p.relay.url).length;
+    const accounts = new Set(nlPanels.map(p => p.workspaceId).filter(Boolean));
+    const trialDays = [];
+    Object.keys(nlWorks).forEach(id => {
+        const t = nlWorks[id].trial;
+        if (t && t.isTrialing && t.trialDaysRemaining != null) trialDays.push(t.trialDaysRemaining);
+    });
+    let trialChip = "";
+    if (trialDays.length) {
+        const min = Math.min.apply(null, trialDays);
+        trialChip = '<div class="nl-stat-chip ' + (min <= 7 ? "trial-warn" : "trial-good") + '"><span class="v">' + min + 'd</span><span class="k">min trial left</span></div>';
+    }
+    if (sum) {
+        sum.innerHTML =
+            '<div class="nl-stat-chip"><span class="v">' + nlPanels.length + '</span><span class="k">' + (nlPanels.length === 1 ? "panel" : "panels") + '</span></div>' +
+            '<div class="nl-stat-chip"><span class="v">' + accounts.size + '</span><span class="k">' + (accounts.size === 1 ? "account" : "accounts") + '</span></div>' +
+            '<div class="nl-stat-chip"><span class="v">' + relayed + '</span><span class="k">relayed</span></div>' +
+            trialChip;
+    }
+    if (nlPanels.length === 0) {
+        root.innerHTML = "";
+        if (detail) detail.innerHTML = "";
+        if (empty) empty.style.display = "";
+        return;
+    }
+    if (empty) empty.style.display = "none";
+    const byWs = {};
+    const unlinked = [];
+    nlPanels.slice().sort((a, b) => String(b.deployedAt).localeCompare(String(a.deployedAt))).forEach(p => {
+        if (p.workspaceId && nlWorks[p.workspaceId]) { (byWs[p.workspaceId] = byWs[p.workspaceId] || []).push(p); }
+        else unlinked.push(p);
+    });
+    const wsIds = Object.keys(byWs).sort((a, b) => ((nlWorks[a].nickname || nlWorks[a].name) || a).localeCompare((nlWorks[b].nickname || nlWorks[b].name) || b));
+    let html = "";
+    wsIds.forEach(wid => {
+        const w = nlWorks[wid];
+        html += nlAccountCard(wid, w, ((w.nickname || w.name) || wid), byWs[wid]);
+    });
+    if (unlinked.length) {
+        html += '<div class="nl-account-card" id="nl-acct-card-__unlinked__">' +
+            '<div class="nl-account-head" onclick="nlToggleAccount(\'__unlinked__\')">' +
+            '<span class="nl-account-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></span>' +
+            '<div class="nl-account-title">' +
+            '<span class="nl-account-name">Unlinked / Manual</span>' +
+            '<span class="nl-account-sub"><span class="nl-chip">' + unlinked.length + ' panel' + (unlinked.length === 1 ? "" : "s") + '</span></span>' +
+            '</div></div><div class="nl-account-body">' + unlinked.map(p => nlPanelRow(p)).join("") + '</div></div>';
+    }
+    root.innerHTML = html;
+    if (detail) {
+        if (nlDetailId && nlGetPanel(nlDetailId)) nlRenderDetail(nlGetPanel(nlDetailId));
+        else detail.innerHTML = "";
+    }
+}
+function nlAccountCard(wid, w, label, panels) {
+    const hasTok = !!(w.token && w.token.trim());
+    const sub = [];
+    if (w.trial) sub.push(nlTrialChip(w));
+    sub.push('<span class="nl-chip">' + panels.length + ' panel' + (panels.length === 1 ? "" : "s") + '</span>');
+    if (w.createdAt) sub.push('<span class="nl-chip">created ' + nlFmtDate(w.createdAt) + '</span>');
+    return '<div class="nl-account-card" id="nl-acct-card-' + wid + '">' +
+        '<div class="nl-account-head" onclick="nlToggleAccount(\'' + wid + '\')">' +
+        '<span class="nl-account-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></span>' +
+        '<div class="nl-account-title">' +
+        '<div style="display:flex;align-items:center;gap:8px;min-width:0;">' +
+        '<span class="nl-account-name">' + nlEsc(label) + '</span>' +
+        '<span class="nl-nickname-badge" title="' + (w.nickname ? 'Edit nickname (' + nlEsc(w.nickname) + ')' : "Set nickname") + '" onclick="event.stopPropagation(); nlEditNickname(\'' + wid + '\');">✎</span>' +
+        '</div>' +
+        '<span class="nl-account-sub">' + sub.join("") + '</span>' +
+        '</div>' +
+        '<span class="nl-row-actions" style="margin-left:auto;">' +
+        '<button class="mini-btn" id="nl-intel-' + wid + '" style="height:30px;padding:0 12px;font-size:0.78rem;" ' + (hasTok ? '' : 'disabled title="Add a token to enable live intel"') + ' onclick="event.stopPropagation(); nlRefreshAccountIntel(\'' + wid + '\', false).then(() => nlRenderPanels());">Refresh Intel</button>' +
+        '</span>' +
+        '</div>' +
+        '<div class="nl-account-body">' +
+        '<div style="display:flex;flex-direction:column;gap:8px;padding:6px 0 12px 0;">' + nlAccountTokenRow(wid, w) + '</div>' +
+        panels.map(p => nlPanelRow(p)).join("") +
+        '</div></div>';
+}
+function nlToggleAccount(wid) {
+    const card = document.getElementById(wid === "__unlinked__" ? "nl-acct-card-__unlinked__" : "nl-acct-card-" + wid);
+    if (card) card.classList.toggle("collapsed");
+}
+function nlSaveAccountToken(wsId) {
+    const inp = document.getElementById("nl-acct-token-" + wsId);
+    if (!inp) return;
+    const val = (inp.value || "").trim();
+    if (!val) { showToast("Paste a token first.", true); return; }
+    const w = nlEnsureWorkspace(wsId, "");
+    w.token = val;
+    nlSaveAll();
+    inp.value = "";
+    showToast("Token saved for this account.");
+    nlRefreshAccountIntel(wsId, false).then(() => nlRenderPanels());
+}
+function nlEditNickname(wsId) {
+    const w = nlWorks[wsId];
+    if (!w) return;
+    const val = prompt("Account nickname (blank to remove):", w.nickname || "");
+    if (val === null) return;
+    w.nickname = val.trim();
+    nlSaveAll();
+    nlRenderPanels();
+}
+function nlOpenPanel(id) {
+    nlDetailId = id;
+    nlRenderPanels();
+}
+function nlRenderDetail(p) {
+    const detail = document.getElementById("nl-panels-detail");
+    if (!detail) return;
+    const d = p.defaultConfig || {};
+    const h = p.lastHealth || {};
+    const r = p.relay;
+    const ws = p.workspaceId && nlWorks[p.workspaceId] ? nlWorks[p.workspaceId] : null;
+    const EXT = '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>';
+    const lnk = (url, text) => url ? '<a class="nl-link" href="' + nlEsc(url) + '" target="_blank" rel="noopener">' + nlEsc(text || url) + ' ' + EXT + '</a>' : (text || "—");
+    const row = (k, v) => '<div class="nl-detail-row"><div class="nl-det-k">' + k + '</div><div class="nl-det-v">' + v + '</div></div>';
+    const mono = (v) => '<span class="nl-mono">' + nlEsc(v) + '</span>';
+
+    // header meta chips
+    const meta = [];
+    if (ws) meta.push('<span class="nl-chip">' + nlEsc(((ws.nickname || ws.name) || p.workspaceId)) + '</span>');
+    if (p.regionLabel) meta.push('<span class="nl-chip">' + nlEsc(p.regionLabel) + '</span>');
+    const relayTag = nlRelayTag(p);
+
+    // health block value
+    let healthV;
+    if (h.status === "ok") {
+        healthV = '<span class="nl-chip trial">Online</span> <span class="nl-chip">gateway ' + nlEsc(h.gateway || "") + '</span><span class="nl-chip">' + nlEsc(h.platform || "") + '</span>';
+    } else if (h.status === "degraded") {
+        healthV = '<span class="nl-chip trial-warn">Degraded</span>';
+    } else if (h.checkedAt) {
+        healthV = '<span class="nl-chip tok-bad">Unreachable</span><span class="nl-err-text">(may be asleep or deleted)</span>';
+    } else {
+        healthV = '<span class="nl-err-text" style="color:var(--text-secondary);">Not checked yet — run Check health</span>';
+    }
+
+    const rows = [];
+    rows.push(row("DOMAIN", lnk(nlDomainUrl(p.domain), p.domain)));
+    rows.push(row("HEALTH", healthV + (h.checkedAt ? '<span class="nl-chip" style="font-size:0.7rem;">' + nlFmtDate(h.checkedAt, true) + '</span>' : "")));
+    rows.push(row("DEPLOYMENT", (p.deploymentStatus ? '<span class="nl-chip">' + nlEsc(p.deploymentStatus) + '</span>' : '') + '<span class="nl-chip">' + nlFmtDate(p.deployedAt, true) + '</span>' + (p.source ? '<span class="nl-chip">' + nlEsc(p.source) + '</span>' : "")));
+    if (p.projectId) rows.push(row("RAILWAY PROJECT", lnk("https://railway.com/project/" + p.projectId, p.projectId)));
+    if (p.serviceId) rows.push(row("SERVICE ID", mono(p.serviceId)));
+    if (p.deploymentId) rows.push(row("DEPLOYMENT ID", mono(p.deploymentId)));
+    if (p.workspaceId) rows.push(row("WORKSPACE ID", mono(p.workspaceId)));
+
+    // default config section
+    let cfgSection;
+    if (d.vless) {
+        cfgSection =
+            '<div class="nl-section-head">Default Config <span class="nl-muted">· synced ' + nlFmtDate(d.fetchedAt, true) + '</span></div>' +
+            '<div class="nl-mono-box">' + nlEsc(d.vless) + '</div>' +
+            '<div class="nl-copy-row">' +
+            '<button class="mini-btn" onclick="nlCopyText((nlGetPanel(\'' + p.id + '\').defaultConfig||{}).vless, \'Config copied!\')">' +
+            '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px;"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>' +
+            (d.subUrl ? '<button class="mini-btn" onclick="window.open(\'' + nlEsc(d.subUrl) + '\', \'_blank\')">' +
+            '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>Open sub URL</button>' : "") +
+            '</div>';
+    } else {
+        cfgSection =
+            '<div class="nl-section-head">Default Config</div>' +
+            '<div class="nl-detail-box">' + row("SYNC", '<span class="nl-err-text">' + nlEsc(d.error || "Not synced yet — click Re-sync config.") + '</span>') + '</div>';
+    }
+
+    // relay section
+    let relaySection;
+    if (r && r.url) {
+        const rrows = [];
+        rrows.push(row("RELAY URL", lnk(r.url, r.url)));
+        if (r.scriptName) rrows.push(row("WORKER", mono(r.scriptName)));
+        if (r.targetHost) rrows.push(row("TARGET", mono(r.targetHost)));
+        rrows.push(row("DEPLOYED", nlFmtDate(r.deployedAt, true)));
+        relaySection =
+            '<div class="nl-section-head">Cloudflare Relay <span class="nl-muted">· deployed ' + nlFmtDate(r.deployedAt, true) + '</span></div>' +
+            '<div class="nl-detail-box">' + rrows.join("") + '</div>' +
+            (r.configVless ?
+                '<div style="margin-top:10px;"><div class="nl-section-head">Relay Config</div>' +
+                '<div class="nl-mono-box">' + nlEsc(r.configVless) + '</div>' +
+                '<div class="nl-copy-row">' +
+                '<button class="mini-btn" onclick="nlCopyText((nlGetPanel(\'' + p.id + '\').relay||{}).configVless, \'Relay config copied!\')">' +
+                '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px;"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copy</button>' +
+                '</div></div>' : "");
+    } else {
+        relaySection =
+            '<div class="nl-section-head">Cloudflare Relay</div>' +
+            '<div class="nl-detail-box">' + row("STATUS", '<span style="color:var(--text-secondary);">No relay yet — hit “Deploy relay” above with this panel selected.</span>') + '</div>';
+    }
+
+    const titleRow =
+        '<button class="mini-btn" style="height:32px;padding:0 14px;" onclick="nlCloseDetail()" title="Back to panels">' +
+        '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px;"><polyline points="15 18 9 12 15 6"></polyline></svg>Panels</button>' +
+        '<div class="nl-title-col">' +
+        '<div class="nl-titleline">' + relayTag + '<span class="nl-detail-title">' + nlEsc(p.name) + '</span></div>' +
+        '<span class="nl-detail-meta">' + meta.join("") + '</span>' +
+        '</div>' +
+        '<span class="nl-detail-actions">' +
+        '<button class="mini-btn" title="Live-check this panel" onclick="nlCheckPanel(\'' + p.id + '\')">Check health</button>' +
+        '<button class="mini-btn" title="Re-fetch the real default config" onclick="nlReSyncPanel(\'' + p.id + '\')">Re-sync config</button>' +
+        '<button class="mini-btn nl-primary" title="Deploy a Cloudflare relay in front of this panel" onclick="nlGotoRelay(\'' + p.id + '\')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px;"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"></path></svg>Deploy relay</button>' +
+        '<button class="mini-btn btn-clear" title="Remove this panel from the registry" onclick="nlRemovePanelConfirm(\'' + p.id + '\')">Remove</button>' +
+        '</span>';
+
+    detail.innerHTML =
+        '<div class="panel" style="display:flex;flex-direction:column;">' +
+        '<div class="nl-detail-head">' + titleRow + '</div>' +
+        '<div class="nl-detail-body">' +
+        '<div class="nl-detail-box">' + rows.join("") + '</div>' +
+        cfgSection +
+        relaySection +
+        '</div>' +
+        '</div>';
+}
+function nlCloseDetail() { nlDetailId = null; nlRenderPanels(); }
+function nlRemovePanelConfirm(id) {
+    const p = nlGetPanel(id);
+    if (!p) return;
+    if (confirm('Remove "' + p.name + ' (' + p.domain + ')" from the Panels registry? (The deployed panel itself is NOT touched.)')) {
+        nlRemovePanel(id);
+        nlRenderPanels();
+        showToast("Panel removed from registry.");
+    }
+}
+async function nlCheckPanel(id) {
+    const p = nlGetPanel(id);
+    if (!p) return;
+    showToast("Checking health of " + p.domain + "…");
+    await nlSyncPanelRecord(p);
+    nlRenderPanels();
+    showToast("Health: " + (p.lastHealth ? p.lastHealth.status : "unknown"));
+}
+async function nlReSyncPanel(id) {
+    const p = nlGetPanel(id);
+    if (!p) return;
+    showToast("Re-syncing " + p.domain + "…");
+    await nlSyncPanelRecord(p);
+    nlRenderPanels();
+    showToast(p.defaultConfig && p.defaultConfig.vless ? "Config synced." : "Config sync failed.", !(p.defaultConfig && p.defaultConfig.vless));
+}
+function nlGotoRelay(id) {
+    const p = nlGetPanel(id);
+    if (!p) return;
+    nlSetRelayMode("saved");
+    nlPopulateRelayPanelSelect();
+    const sel = document.getElementById("v2leafy-relay-panel");
+    if (sel) { sel.value = p.id; nlOnRelayPanelChange(p.id); }
+    switchView("v2leafy-relay");
+}
+function nlMaybeAutoIntel() {
+    Object.keys(nlWorks).forEach(id => {
+        const w = nlWorks[id];
+        if (w && w.token && w.token.trim()) {
+            const stale = !w.trial || !w.trial.fetchedAt || (Date.now() - new Date(w.trial.fetchedAt).getTime() > 30 * 60 * 1000);
+            if (stale) { try { nlRefreshAccountIntel(id, true).then(() => nlRenderPanels()); } catch (e) {} }
+        }
+    });
+}
+function nlOnPanelsOpen() {
+    nlLoadAll();
+    nlRenderPanels();
+    nlMaybeAutoIntel();
+}
+function nlAddManualPanelForm() {
+    const hint = document.getElementById("nl-manual-hint");
+    if (!hint) return;
+    const vis = hint.style.display !== "none";
+    hint.style.display = vis ? "none" : "inline-flex";
+    if (!vis) { const inp = document.getElementById("nl-manual-domain"); if (inp) inp.focus(); }
+}
+function nlManualAddConfirm() {
+    const inp = document.getElementById("nl-manual-domain");
+    const dom = inp ? (inp.value || "").trim() : "";
+    if (!dom) { showToast("Enter a domain.", true); return; }
+    const rec = nlAddManualPanel(dom);
+    if (rec) {
+        inp.value = "";
+        nlAddManualPanelForm();
+        nlRenderPanels();
+        nlSyncPanelRecord(rec).then(() => { nlRenderPanels(); showToast("Panel added — config synced."); }).catch(() => { nlRenderPanels(); });
+    }
+}
+
+// init
+nlLoadAll();
+nlSetRelayMode(nlRelayMode);
+nlPopulateRelayPanelSelect();
 </script>
 </body>
 </html>
